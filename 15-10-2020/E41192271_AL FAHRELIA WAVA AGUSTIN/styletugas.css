@@ -1,0 +1,29 @@
+body{
+    background-color: #f8ebb1;
+} 
+
+.gambar{
+    height: 500px;
+	width: 500px;
+}
+
+p1{
+    color: green;
+    margin-left: 50px;
+    font-family: sans-serif;
+}
+
+.kotak{
+	padding: 50px;
+	width: 100px;
+	color: #fff;
+	margin: 10px;
+	background: rgb(164, 172, 65);	
+}
+ 
+#kotak{
+	width: 400px;
+	color: #fff;
+	background: rgb(37, 104, 109);
+	padding: 50px;
+}
