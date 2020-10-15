@@ -1,0 +1,50 @@
+*{
+   padding: 0;
+   margin: 0;
+   font-family: sans-serif; 
+}
+body{
+    background-image: url(background.jpg);
+    background-size: cover;
+}
+
+.profile{
+    width: 350px;
+    height: 450px;
+    background: rgba(0,0,0,0.7);
+    margin: 20px auto;
+}
+
+.profile img{
+    width: 115px;
+    height: 120px;
+    border-radius: 80%;
+    margin-left: 120px;
+    margin-top: 20px;
+}
+
+.profile h2{
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 30px;
+
+}
+
+.profile h3{
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+.profile p{
+    color: white;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 13px;
+    margin-left: 15px;
+
+}

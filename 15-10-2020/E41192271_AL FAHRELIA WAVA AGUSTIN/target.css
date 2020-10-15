@@ -1,0 +1,9 @@
+body{
+    background-image: url(kertas.webp);
+}
+
+h1{
+    text-align: center;
+    font-size: 150px;
+    margin-bottom: 30px;
+}
