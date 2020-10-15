@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>FORM DATA KASIR</h1>
+ 
+	<div class="kotak_form">
+		<p class="tulisan_form">Silahkan Isi Form</p>
+ 
+		<form>
+			<label>ID KASIR</label>
+            <input type="text" name="ID" class="form_kasir" placeholder="ID">
+
+			<label>NAMA KASIR</label>
+			<input type="text" name="Nama" class="form_kasir" placeholder="Nama">
+ 
+            <label>ALAMAT KASIR</label>
+            <select name="Pilih Kabupaten" class="form_kasir">
+                <option value="not">--Pilih Kabupaten--</option>
+                <option value="JEMBER">JEMBER</option>
+                <option value="BANYUWANGI">BANYUWANGI</option>
+                <option value="BONDOWOSO">BONDOWOSO</option>
+                <option value="SITUBONDO">SITUBONDO</option>
+                <option value="LUMAJANG">LUMAJANG</option>
+                <option value="PROBOLINGGO">PROBOLINGGO</option>
+            </select>
+
+            <label>TELEPON KASIR</label>
+            <input type="text" name="Telepon_kasir" class="form_kasir" placeholder="08xxxxxx">
+            
+            <label>STATUS</label>
+                <label class="radio_button1">
+                    <input type="radio"  name="radio">PRIA
+                </label>
+                <label>
+                    <input type="radio" class="radio_button" name="radio">WANITA
+                </label>
+            <br><br>
+            <label>USERNAME</label>
+            <input type="text" name="username" class="form_kasir" placeholder="masukkan username">
+
+            <label>PASSWORD</label>
+            <input type="password" name="password" class="form_kasir" placeholder="masukkan password">
+
+			<button type="submit" class="tombol_kirim"><a href="target.html">KIRIM</button>
+		</form>
+		
+	</div>
+</body>
+</html>
