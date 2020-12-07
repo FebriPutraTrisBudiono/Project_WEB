@@ -52,14 +52,6 @@
 <!--------------------------------------------------------------------------------------------------->
 </head>
 <body>
-
- <?php
- if(isset($_GET['pesan'])){
-  if($_GET['pesan']=="gagal"){
-   echo "<div class='alert'>Username dan Password Salah !</div>";
-  }
- }
- ?>
   <div id="header">
     <a href="index.php"><img src="images/logobaru.png" style="margin: 0px 140px"></a>
   </div>
@@ -94,7 +86,7 @@
           <div class="container-login100-form-btn">
             <div class="wrap-login100-form-btn">
               <div class="login100-form-bgbtn"></div>
-              <button class="login100-form-btn" type="submit" name="login">
+              <button class="login100-form-btn" type="submit" name="login" value="login">
                 Login
               </button>
             </div>

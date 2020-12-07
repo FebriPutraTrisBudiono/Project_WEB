@@ -28,15 +28,6 @@
     <link rel="stylesheet" href="css/custom.css">
 </head>
 <body>
- <?php
- session_start();
-
- // cek apakah yang mengakses halaman ini sudah login
- if($_SESSION['level']==""){
-  header("location:login.php?pesan=gagal");
- }
-
- ?>
 <!-- Start Main Top -->
     <header class="main-header">
         <!-- Start Navigation -->
@@ -172,14 +163,14 @@
 
     <?php
     include 'koneksi.php';
-
-    if (@$_SESSION['admin']) {
+    
+    if ($_SESSION['admin']) {
         $sesi = $_SESSION['admin'];
-    }else if (@$_SESSION['pengguna']) {
+    }else if ($_SESSION['pengguna']) {
         $sesi = $_SESSION['pengguna'];
     }
 
-    $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE id='$sesi'");
+    $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE id ='$sesi'");
     $data = mysqli_fetch_array($sql_profil);
     ?>
     <form action="" method="POST">

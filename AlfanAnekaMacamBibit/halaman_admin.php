@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,15 +31,6 @@
     <link rel="stylesheet" href="css/custom.css">
 </head>
 <body>
- <?php
- session_start();
-
- // cek apakah yang mengakses halaman ini sudah login
- if($_SESSION['level']==""){
-  header("location:login.php?pesan=gagal");
- }
-
- ?>
 <!-- Start Main Top -->
     <header class="main-header">
         <!-- Start Navigation -->
