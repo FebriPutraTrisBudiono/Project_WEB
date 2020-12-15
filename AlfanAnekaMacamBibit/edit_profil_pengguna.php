@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +46,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="halaman_pengguna.php">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="gallery.html">List Bibit</a></li>
                             <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Menu Edit</a>
@@ -163,17 +166,15 @@
 
     <?php
     include 'koneksi.php';
-
-    if (@$_SESSION['admin']) {
-        $sesi = $_SESSION['admin'];
-    }else if (@$_SESSION['pengguna']) {
-        $sesi = $_SESSION['pengguna'];
+    
+    if ($_SESSION['username']) {
+        $sesi = $_SESSION['username'];
     }
 
-    $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE id='$sesi'");
+    $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
     $data = mysqli_fetch_array($sql_profil);
     ?>
-    <form action="" method="POST">
+    <form action="update_pengguna.php" method="POST">
     <table>
         <tr>
             <td>Nama</td>
@@ -352,13 +353,13 @@
                             <h4>Contact Us</h4>
                             <ul>
                                 <li>
-                                    <p><i class="fas fa-map-marker-alt"></i>Address: Michael I. Days 3756 <br>Preston Street Wichita,<br> KS 67213 </p>
+                                    <p><i class="fas fa-map-marker-alt"></i>Alamat: Jalan Manggisan <br>Tanggul,<br> Jember </p>
                                 </li>
                                 <li>
-                                    <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+1-888705770">+1-888 705 770</a></p>
+                                    <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+62 813 3037 5018">+62 813 3037 5018</a></p>
                                 </li>
                                 <li>
-                                    <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                                    <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">alfanur@gmail.com</a></p>
                                 </li>
                             </ul>
                         </div>

@@ -65,13 +65,19 @@
             Daftar
           </span>
 
-          <div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
+          <div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required">
             <span class="label-input100">Username</span>
             <input class="input100" type="text" name="username" placeholder="Type your username" id="username">
             <span class="focus-input100" data-symbol="&#xf206;"></span>
           </div>
 
-          <div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
+          <div class="wrap-input100 validate-input m-b-23" data-validate = "Nama is required">
+            <span class="label-input100">Nama</span>
+            <input class="input100" type="text" name="nama" placeholder="Type your name" id="name">
+            <span class="focus-input100" data-symbol="&#xf206;"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-23" data-validate = "No Telepon is required">
             <span class="label-input100">No Telepon</span>
             <input class="input100" type="number" name="no_telepon" placeholder="08*******" id="no_telepon">
             <span class="focus-input100" data-symbol="&#xf206;"></span>
@@ -83,7 +89,7 @@
             <span class="focus-input100" data-symbol="&#xf190;"></span>
           </div>
 
-          <div class="wrap-input100 validate-input" data-validate="Password is required">
+          <div class="wrap-input100 validate-input" data-validate="Password Validate is required">
             <span class="label-input100">Ulangi Password</span>
             <input class="input100" type="password" name="password2" placeholder="Type your password" id="password2">
             <span class="focus-input100" data-symbol="&#xf190;"></span>
@@ -151,17 +157,6 @@
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
-                        <div class="footer-link">
-                            <h4 style="color: #000000">Information</h4>
-                            <ul>
-                                <li><a href="#" style="color: #000000">About Us</a></li>
-                                <li><a href="#" style="color: #000000">Customer Service</a></li>
-                                <li><a href="#" style="color: #000000">Our Sitemap</a></li>
-                                <li><a href="#" style="color: #000000">Terms &amp; Conditions</a></li>
-                                <li><a href="#" style="color: #000000">Privacy Policy</a></li>
-                                <li><a href="#" style="color: #000000">Delivery Information</a></li>
-                            </ul>
-                        </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-link-contact">

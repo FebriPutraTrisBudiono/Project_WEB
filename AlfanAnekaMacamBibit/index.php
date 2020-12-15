@@ -1,3 +1,7 @@
+<?php
+session_start();
+include 'koneksi.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <!-- Basic -->
@@ -41,33 +45,39 @@
         <!-- Start Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
             <div class="container">
-                    <!-- Start Header Navigation -->
-                    <div class="navbar-header" style="margin: auto;">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                        <a class="navbar-brand" href="index.php"><img src="images/logobaru.png" class="logo" alt=""></a>
-                    </div>
-                    <!-- End Header Navigation -->
-    
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="navbar-menu">
-                        <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="list_bibit.php">List Bibit</a></li>
-                            <li class="nav-item"><a class="nav-link" href="about.html">Tentang Kami</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Hubungi Kami</a></li>
-                        </ul>
-                    </div>
-                    <!-- /.navbar-collapse -->
-    
-                    <!-- Start Atribute Navigation -->
-                    <div class="attr-nav">
-                        <ul>
-                            <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                            <li class="profil"><a href="login.php">Login</a></li>
-                        </ul>
-                    </div>
-                    <!-- End Atribute Navigation -->
+                <!-- Start Header Navigation -->
+                <div class="navbar-header" style="margin: auto;">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+                    <a class="navbar-brand" href="index.php">
+                        <?php
+                        $sql_logo_atas = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                        $logo_atas = mysqli_fetch_array($sql_logo_atas);
+                        ?>
+                        <img src="logo/<?php echo $logo_atas['logo_atas']?>" class="logo" alt="">
+                    </a>
                 </div>
+                <!-- End Header Navigation -->
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                        <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="list_bibit.php">List Bibit</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#tentang_kami">Tentang Kami</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+
+                <!-- Start Atribute Navigation -->
+                <div class="attr-nav">
+                    <ul>
+                        <li class="Searchrch"><a href="#"><i class="fa fa-search"></i></a></li>
+                        <li class="profil"><a href="login.php">Login</a></li>
+                    </ul>
+                </div>
+                <!-- End Atribute Navigation -->
+            </div>
             </div>
         </nav>
         <!-- End Navigation -->
@@ -75,7 +85,7 @@
     <!-- End Main Top -->
 
     <!-- Start Main Top -->
-    <div class="main-top" >
+    <div class="main-top">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -83,28 +93,70 @@
                         <div id="offer-box" class="carouselTicker">
                             <ul class="offer-box">
                                 <li>
-                                    <i class="fab fa-opencart"></i> Tersedia 10.000+ bibit setiap hari
+                                    <i class="fab fa-opencart"></i> Selamat Datang, Selamat Berbelanja
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> 50% - 80% off on Vegetables
+                                    <i class="fab fa-opencart"></i> 
+                                    <?php
+
+                                    $sql_highlight1 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight1 = mysqli_fetch_array($sql_highlight1);
+                                    ?>
+                                    <?php echo $highlight1['highlight1']; ?>
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> Off 10%! Shop Vegetables
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight2 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight2 = mysqli_fetch_array($sql_highlight2);
+                                    ?>
+                                    <?php echo $highlight2['highlight2']; ?>
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> Off 50%! Shop Now
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight3 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight3 = mysqli_fetch_array($sql_highlight3);
+                                    ?>
+                                    <?php echo $highlight3['highlight3']; ?>
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> Off 10%! Shop Vegetables
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight4 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight4 = mysqli_fetch_array($sql_highlight4);
+                                    ?>
+                                    <?php echo $highlight4['highlight4']; ?>
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> 50% - 80% off on Vegetables
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight5 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight5 = mysqli_fetch_array($sql_highlight5);
+                                    ?>
+                                    <?php echo $highlight5['highlight5']; ?>
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> 20% off Entire Purchase Promo code: offT30
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight6 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight6 = mysqli_fetch_array($sql_highlight6);
+                                    ?>
+                                    <?php echo $highlight6['highlight6']; ?>
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> Off 50%! Shop Now 
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight7 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight7 = mysqli_fetch_array($sql_highlight7);
+                                    ?>
+                                    <?php echo $highlight7['highlight7']; ?>
                                 </li>
                             </ul>
                         </div>
@@ -173,7 +225,7 @@
                 </div>
             </li>
         </ul>
-        <div class="slides-navigation">
+        <div class="slides-navigation" id="tentang_kami">
             <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
             <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
         </div>
@@ -190,13 +242,18 @@
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-4 col-sm-12 col-xs-12">
-                        <p style="font-size: 180%">Kami adalah pengusaha bibit yang menjunjung tinggi kejujuran dalam bertransaksi dan keaslian bibit yang dijual, dan juga Kami adalah pengusaha tanpa dinaungi oleh CV sehingga harga bibit yang kami jual jauh lebih murah dan bibit yang dihasilkan juga berkualitas.</p>
+                    <?php
+
+                    $sql_aboutus = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                    $about_us = mysqli_fetch_array($sql_aboutus);
+                    ?>
+                    <p style="font-size: 180%; color: black;"><?php echo $about_us['about_us']; ?></p>
                 </div>
             </div>
         </div>
     </div>
     <!-- End Categories -->
-    
+
     <div class="box-add-products">
         <div class="container">
             <div class="row">
@@ -334,78 +391,6 @@
     </div>
     <!-- End Products  -->
 
-    <!-- Start Blog  -->
-    <div class="latest-blog">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="title-all text-center">
-                        <h1>latest blog</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-lg-4 col-xl-4">
-                    <div class="blog-box">
-                        <div class="blog-img">
-                            <img class="img-fluid" src="images/blog-img.jpg" alt="" />
-                        </div>
-                        <div class="blog-content">
-                            <div class="title-blog">
-                                <h3>Fusce in augue non nisi fringilla</h3>
-                                <p>Nulla ut urna egestas, porta libero id, suscipit orci. Quisque in lectus sit amet urna dignissim feugiat. Mauris molestie egestas pharetra. Ut finibus cursus nunc sed mollis. Praesent laoreet lacinia elit id lobortis.</p>
-                            </div>
-                            <ul class="option-blog">
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-comments"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-4">
-                    <div class="blog-box">
-                        <div class="blog-img">
-                            <img class="img-fluid" src="images/blog-img-01.jpg" alt="" />
-                        </div>
-                        <div class="blog-content">
-                            <div class="title-blog">
-                                <h3>Fusce in augue non nisi fringilla</h3>
-                                <p>Nulla ut urna egestas, porta libero id, suscipit orci. Quisque in lectus sit amet urna dignissim feugiat. Mauris molestie egestas pharetra. Ut finibus cursus nunc sed mollis. Praesent laoreet lacinia elit id lobortis.</p>
-                            </div>
-                            <ul class="option-blog">
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-comments"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-4">
-                    <div class="blog-box">
-                        <div class="blog-img">
-                            <img class="img-fluid" src="images/blog-img-02.jpg" alt="" />
-                        </div>
-                        <div class="blog-content">
-                            <div class="title-blog">
-                                <h3>Fusce in augue non nisi fringilla</h3>
-                                <p>Nulla ut urna egestas, porta libero id, suscipit orci. Quisque in lectus sit amet urna dignissim feugiat. Mauris molestie egestas pharetra. Ut finibus cursus nunc sed mollis. Praesent laoreet lacinia elit id lobortis.</p>
-                            </div>
-                            <ul class="option-blog">
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-comments"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Blog  -->
-
-
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">
         <div class="main-instagram owl-carousel owl-theme">
@@ -495,29 +480,46 @@
 
 
     <!-- Start Footer  -->
-    <footer>
+    <footer id="hubungi_kami">
         <div class="footer-main">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-top-box">
-                            <h3>Business Time</h3>
+                            <h3>Jam Kerja</h3>
                             <ul class="list-time">
-                                <li style="font-size: 150%">Setiap Hari</li>
+                                <?php
+
+                                $sql_business_time = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                $business_time = mysqli_fetch_array($sql_business_time);
+                                ?>
+                                <li style="font-size: 150%"><?php echo $business_time['business_time']; ?></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-top-box">
-                            <img src="images/logobaru2.png" class="logo" alt="" style="width: 80%">
+                            <?php
+                            $sql_logo_bawah = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                            $logo_bawah = mysqli_fetch_array($sql_logo_bawah);
+                            ?>
+                            <img src="logo/<?php echo $logo_bawah['logo_bawah']?>" class="logo" alt="" style="width: 80%">
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-top-box">
-                            <h3>Social Media</h3><br>
+                            <h3>Sosial Media</h3><br>
                             <ul>
-                                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a> AlfanAnekaMacamBibit</li><br>
-                                <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a> +62 813 3037 5018</li>
+                                <li style="color: white;"><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a> AlfanAnekaMacamBibit</li><br>
+                                <li style="color: white;">
+                                    <a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a> 
+                                    <?php
+
+                                    $sql_whatsapp = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $whatsapp = mysqli_fetch_array($sql_whatsapp);
+                                    ?>
+                                    <?php echo $whatsapp['whatsapp']; ?>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -526,36 +528,43 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-widget">
-                            <h4>About Freshshop</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p> 
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>                             
+                            <h4>Tentang Kami</h4>
+                            <?php
+
+                            $sql_aboutus = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                            $about_us = mysqli_fetch_array($sql_aboutus);
+                            ?>
+
+                            <p><?php echo $about_us['about_us']; ?></p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
-                        <div class="footer-link">
-                            <h4>Information</h4>
-                            <ul>
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Customer Service</a></li>
-                                <li><a href="#">Our Sitemap</a></li>
-                                <li><a href="#">Terms &amp; Conditions</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Delivery Information</a></li>
-                            </ul>
-                        </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-link-contact">
-                            <h4>Contact Us</h4>
+                            <h4>Hubungi Kami</h4>
                             <ul>
                                 <li>
-                                    <p><i class="fas fa-map-marker-alt"></i>Address: Michael I. Days 3756 <br>Preston Street Wichita,<br> KS 67213 </p>
+                                    <p><i class="fas fa-map-marker-alt"></i>
+                                        <?php
+
+                                        $sql_alamat = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $alamat = mysqli_fetch_array($sql_alamat);
+                                        ?>
+
+                                        <p style="color: white;">Alamat : <?php echo $alamat['alamat']; ?></p>
+                                    </p>
                                 </li>
                                 <li>
-                                    <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+1-888705770">+1-888 705 770</a></p>
-                                </li>
-                                <li>
-                                    <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                                    <p><i class="fas fa-phone-square"></i>
+                                        <?php
+
+                                        $sql_no_telepon = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $no_telepon = mysqli_fetch_array($sql_no_telepon);
+                                        ?>
+
+                                        <p style="color: white;">No Telepon : <?php echo $no_telepon['no_telepon']; ?></p>
+                                    </p>
                                 </li>
                             </ul>
                         </div>

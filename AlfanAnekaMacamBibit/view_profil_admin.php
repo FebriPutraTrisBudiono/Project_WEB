@@ -73,7 +73,7 @@ session_start();
                                 <a href="#">
                                     <i class="fa fa-shopping-bag"></i>
                                     <span class="badge"></span>
-                                    <p>Keranjang</p>
+                                    <p style="color: black;">Keranjang</p>
                                 </a>
                             </li>
                             <li class="dropdown">
@@ -177,21 +177,21 @@ session_start();
     <div class="main">
         <form action="update_admin.php" method="POST">
             <h2 class="name">Nama</h2>
-            <input class="nama" type="text" name="nama" value="<?php echo $data['nama']; ?>" required>
+            <input style="color: white;" class="nama" type="text" name="nama" value="<?php echo $data['nama']; ?>" disabled>
 
             <h2 class="name">Alamat</h2>
-            <textarea class="alamat" name="alamat" required><?php echo $data['alamat']; ?></textarea>
+            <textarea style="color: white;" class="alamat" name="alamat" required disabled=""><?php echo $data['alamat']; ?></textarea>
 
             <h2 class="name">No Telepon</h2>
-            <input class="no_telepon" type="text" name="no_telepon" value="<?php echo $data['no_telepon']; ?>" required>
+            <input style="color: white;" class="no_telepon" type="text" name="no_telepon" value="<?php echo $data['no_telepon']; ?>" disabled required>
 
             <h2 class="name">Username</h2>
-            <input class="username" type="text" name="username" value="<?php echo $data['username']; ?>" required>
+            <input style="color: white;" class="username" type="text" name="username" value="<?php echo $data['username']; ?>" disabled required>
 
             <h2 class="name">Password</h2>
-            <input class="password" type="password" name="password" value="<?php echo $data['password']; ?>" required>
+            <input style="color: white;" class="password" type="password" name="password" value="<?php echo $data['password']; ?>" disabled required>
 
-            <center><td><input type="submit" name="edit" value="edit"> <a href="view_profil_admin.php"><input type="button" value="kembali"></a></td></center>
+            <center><td><input type="submit" name="edit" value="edit" a></center>
         </form>
     </div>
     <br>

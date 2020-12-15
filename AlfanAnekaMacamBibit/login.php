@@ -160,17 +160,6 @@
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
-                        <div class="footer-link">
-                            <h4 style="color: #000000">Information</h4>
-                            <ul>
-                                <li><a href="#" style="color: #000000">About Us</a></li>
-                                <li><a href="#" style="color: #000000">Customer Service</a></li>
-                                <li><a href="#" style="color: #000000">Our Sitemap</a></li>
-                                <li><a href="#" style="color: #000000">Terms &amp; Conditions</a></li>
-                                <li><a href="#" style="color: #000000">Privacy Policy</a></li>
-                                <li><a href="#" style="color: #000000">Delivery Information</a></li>
-                            </ul>
-                        </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-link-contact">

@@ -73,7 +73,7 @@ session_start();
                                 <a href="#">
                                     <i class="fa fa-shopping-bag"></i>
                                     <span class="badge"></span>
-                                    <p>Keranjang</p>
+                                    <p style="color: black;">Keranjang</p>
                                 </a>
                             </li>
                             <li class="dropdown">
@@ -151,10 +151,10 @@ session_start();
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Edit Profil</h2>
+                    <h2>Edit Informasi</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Edit Profil</li>
+                        <li class="breadcrumb-item"><a href="halaman_admin.php">Home</a></li>
+                        <li class="breadcrumb-item active">Edit Informasi</li>
                     </ul>
                 </div>
             </div>
@@ -165,33 +165,54 @@ session_start();
     <br>
     <?php
     include 'koneksi.php';
-    
-    if ($_SESSION['username']) {
-        $sesi = $_SESSION['username'];
-    }
 
-    $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
-    $data = mysqli_fetch_array($sql_profil);
+    $sql_about_us = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+    $data = mysqli_fetch_array($sql_about_us);
     ?>
 <div class="regform"><h1 style="color: white;"> Edit Informasi </h1></div>
     <div class="main">
-        <form action="update_admin.php" method="POST">
-            <h2 class="name">Nama</h2>
-            <input class="nama" type="text" name="nama" value="<?php echo $data['nama']; ?>" required>
+        <form action="update_info.php" method="POST" enctype="multipart/form-data">
 
-            <h2 class="name">Alamat</h2>
-            <textarea class="alamat" name="alamat" required><?php echo $data['alamat']; ?></textarea>
+            <h2 class="name">About Us</h2>
+            <textarea class="alamat" name="about_us" required><?php echo $data['about_us']; ?></textarea>
 
-            <h2 class="name">No Telepon</h2>
-            <input class="no_telepon" type="text" name="no_telepon" value="<?php echo $data['no_telepon']; ?>" required>
+            <h2 class="name">Nama Facebook</h2>
+            <input class="no_telepon" type="text" name="nama_facebook" value="<?php echo $data['nama_facebook']; ?>" required>
 
-            <h2 class="name">Username</h2>
-            <input class="username" type="text" name="username" value="<?php echo $data['username']; ?>" required>
+            <h2 class="name">No WhatsApp</h2>
+            <input class="no_telepon" type="text" name="whatsapp" value="<?php echo $data['whatsapp']; ?>" required>
 
-            <h2 class="name">Password</h2>
-            <input class="password" type="password" name="password" value="<?php echo $data['password']; ?>" required>
+            <h2 class="name">Jam Kerja</h2>
+            <input class="nama" type="text" name="business_time" value="<?php echo $data['business_time']; ?>" required>
 
-            <center><td><input type="submit" name="edit" value="edit"> <a href="view_profil_admin.php"><input type="button" value="kembali"></a></td></center>
+            <h2 class="name">Logo Atas</h2>
+            <input class="nama" type="file" name="logo_atas" required>
+
+            <h2 class="name">Logo Bawah</h2>
+            <input class="nama" type="file" name="logo_bawah" required>
+
+            <h2 class="name">Highlight 1</h2>
+            <input class="nama" type="text" name="highlight1" value="<?php echo $data['highlight1']; ?>">
+
+            <h2 class="name">Highlight 2</h2>
+            <input class="nama" type="text" name="highlight2" value="<?php echo $data['highlight2']; ?>">
+
+            <h2 class="name">Highlight 3</h2>
+            <input class="nama" type="text" name="highlight3" value="<?php echo $data['highlight3']; ?>">
+
+            <h2 class="name">Highlight 4</h2>
+            <input class="nama" type="text" name="highlight4" value="<?php echo $data['highlight4']; ?>">
+
+            <h2 class="name">Highlight 5</h2>
+            <input class="nama" type="text" name="highlight5" value="<?php echo $data['highlight5']; ?>">
+
+            <h2 class="name">Highlight 6</h2>
+            <input class="nama" type="text" name="highlight6" value="<?php echo $data['highlight6']; ?>">
+
+            <h2 class="name">Highlight 7</h2>
+            <input class="nama" type="text" name="highlight7" value="<?php echo $data['highlight7']; ?>">
+
+            <center><td><input type="submit" name="edit" value="edit"> <input type="reset" value="batal"></td></center>
         </form>
     </div>
     <br>
