@@ -31,6 +31,8 @@ session_start();
     <link rel="stylesheet" href="css/custom.css">
 
     <link rel="stylesheet" type="text/css" href="style.css">
+
+    <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
 <!-- Start Main Top -->
@@ -175,7 +177,23 @@ session_start();
     ?>
 <div class="regform"><h1 style="color: white;"> Edit Informasi </h1></div>
     <div class="main">
-        <form action="update_admin.php" method="POST">
+        <form action="update_admin.php" method="POST" enctype="multipart/form-data">
+            <div class="container">
+              <div class="row">
+                <div class="col-6 offset-md-3 ">
+                    <div class="form-group text-center" style="position: relative;" >
+                      <span class="img-div">
+                        <div class="text-center img-placeholder"  onClick="triggerClick()">
+                          <h4>Update image</h4>
+                        </div>
+                        <img src="foto/<?php echo $data['foto']?>" onClick="triggerClick()" id="profileDisplay">
+                        <input type="file" name="foto" onChange="displayImage(this)" id="foto" class="form-control" style="display: none;">
+                      </span>
+                    </div>
+                </div>
+              </div>
+            </div>
+
             <h2 class="name">Nama</h2>
             <input class="nama" type="text" name="nama" value="<?php echo $data['nama']; ?>" required>
 
@@ -373,6 +391,7 @@ session_start();
     <script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
+    <script src="scripts.js"></script>
 
 </body>
 </html>
