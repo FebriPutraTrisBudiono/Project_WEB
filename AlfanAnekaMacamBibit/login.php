@@ -92,25 +92,9 @@
             </div>
           </div>
 
-          <div class="txt1 text-center p-t-20 p-b-20">
-            <span>
-              ----------ATAU---------
-            </span>
-          </div>
-
-          <div class="flex-c-m">
-            <a href="#" class="login100-social-item bg1">
-              <i class="fab fa-facebook"></i>
-            </a>
-
-            <a href="#" class="login100-social-item bg3">
-              <i class="fab fa-google"></i>
-            </a>
-          </div>
-
           <div class="flex-col-c p-t-30">
             <span class="txt1 p-b-17">
-              Or Sign Up Using
+              Belum Punya Akun ?
             </span>
 
             <a href="signup.php" class="txt2">
