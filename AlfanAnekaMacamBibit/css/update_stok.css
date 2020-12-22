@@ -1,0 +1,46 @@
+.nav-pills .nav-item .active {
+	background-color: #ADFF2F;
+	color: black;
+}
+
+.section{
+	margin-left: 100px;
+}
+
+.content{
+	color: black;
+}
+
+.edit{
+	font-weight: bold;
+}
+
+.content .button{
+	background-color: #008000; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.content .filter{
+	float: right;
+}
+
+.content .table-head{
+	background-color: #4CAF50;
+	border-radius: 0px;
+	color: white;
+}
+
+.content .btn-primary{
+	color: red;
+}
+
+/*tab-tambah-stok*/
+.container .mb-3 p{
+	color: black;
+}

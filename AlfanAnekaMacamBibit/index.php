@@ -29,8 +29,6 @@ include 'koneksi.php';
     <link rel="stylesheet" href="css/style.css">
     <!-- Responsive CSS -->
     <link rel="stylesheet" href="css/responsive.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/custom.css">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -72,7 +70,7 @@ include 'koneksi.php';
                 <!-- Start Atribute Navigation -->
                 <div class="attr-nav">
                     <ul>
-                        <li class="Searchrch"><a href="#"><i class="fa fa-search"></i></a></li>
+                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="profil"><a href="login.php">Login</a></li>
                     </ul>
                 </div>

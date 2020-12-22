@@ -1,3 +1,8 @@
+<?php
+session_start();
+
+include 'koneksi.php';
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,7 +65,7 @@
   <div class="limiter">
     <div class="container-login100" style="background-color: #00FF00">
       <div class="wrap-login100 p-l-55 p-r-55 p-t-20 p-b-20">
-        <form class="login100-form validate-form" action="cek_signup.php" method="POST">
+        <form class="login100-form validate-form" action="process/cek_signup.php" method="POST">
           <span class="login100-form-title p-b-49">
             Daftar
           </span>
@@ -119,30 +124,47 @@
     </div>
   </div>
   
-<!-- Start Footer  -->
-    <footer>
-        <div class="footer-main" style="background-color: #fff">
-            <div class="container" style="background-color: #fff">
+    <!-- Start Footer  -->
+    <footer id="hubungi_kami">
+        <div class="footer-main" style="background-color: white;">
+            <div class="container">
                 <div class="row">
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-top-box">
-                            <h3 style="color: #000000">Business Time</h3>
+                            <h3 style="color: black;">Jam Kerja</h3>
                             <ul class="list-time">
-                                <li style="font-size: 150%; color: #000000">Setiap Hari</li>
+                                <?php
+
+                                $sql_business_time = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                $business_time = mysqli_fetch_array($sql_business_time);
+                                ?>
+                                <li style="font-size: 150%; color: black;"><?php echo $business_time['business_time']; ?></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-top-box">
-                            <img src="images/your-logo.png" class="logo" alt="" style="width: 80%">
+                            <?php
+                            $sql_logo_atas = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                            $logo_atas = mysqli_fetch_array($sql_logo_atas);
+                            ?>
+                            <img src="logo/<?php echo $logo_atas['logo_atas']?>" class="logo" alt="" style="width: 80%">
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-top-box">
-                            <h3 style="color: #000000">Social Media</h3><br>
+                            <h3 style="color: black;">Sosial Media</h3><br>
                             <ul>
-                                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true" style="color: #000000"></i></a> AlfanAnekaMacamBibit</li><br>
-                                <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true" style="color: #000000"></i></a> +62 813 3037 5018</li>
+                                <li style="color: black;"><a href="#"><i class="fab fa-facebook" aria-hidden="true" style="color: black;"></i></a> AlfanAnekaMacamBibit</li><br>
+                                <li style="color: black;">
+                                    <a href="#"><i class="fab fa-whatsapp" aria-hidden="true" style="color: black;"></i></a> 
+                                    <?php
+
+                                    $sql_whatsapp = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $whatsapp = mysqli_fetch_array($sql_whatsapp);
+                                    ?>
+                                    <?php echo $whatsapp['whatsapp']; ?>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -151,25 +173,43 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-widget">
-                            <h4 style="color: #000000">About Freshshop</h4>
-                            <p style="color: #000000">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p> 
-                            <p style="color: #000000">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>                             
+                            <h4 style="color: black;">Tentang Kami</h4>
+                            <?php
+
+                            $sql_aboutus = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                            $about_us = mysqli_fetch_array($sql_aboutus);
+                            ?>
+
+                            <p style="color: black;"><?php echo $about_us['about_us']; ?></p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-link-contact">
-                            <h4 style="color: #000000">Contact Us</h4>
+                            <h4 style="color: black;">Hubungi Kami</h4>
                             <ul>
                                 <li>
-                                    <p style="color: #000000"><i class="fas fa-map-marker-alt" style="color: #000000"></i>Address: Michael I. Days 3756 <br>Preston Street Wichita,<br> KS 67213 </p>
+                                    <p><i class="fas fa-map-marker-alt" style="color: black;"></i>
+                                        <?php
+
+                                        $sql_alamat = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $alamat = mysqli_fetch_array($sql_alamat);
+                                        ?>
+
+                                        <p style="color: black;">Alamat : <?php echo $alamat['alamat']; ?></p>
+                                    </p>
                                 </li>
                                 <li>
-                                    <p style="color: #000000"><i class="fas fa-phone-square" style="color: #000000"></i>Phone: <a href="tel:+1-888705770" style="color: #000000">+1-888 705 770</a></p>
-                                </li>
-                                <li>
-                                    <p style="color: #000000"><i class="fas fa-envelope" style="color: #000000"></i>Email: <a href="mailto:contactinfo@gmail.com" style="color: #000000">contactinfo@gmail.com</a></p>
+                                    <p><i class="fas fa-phone-square" style="color: black;"></i>
+                                        <?php
+
+                                        $sql_no_telepon = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $no_telepon = mysqli_fetch_array($sql_no_telepon);
+                                        ?>
+
+                                        <p style="color: black;">No Telepon : <?php echo $no_telepon['no_telepon']; ?></p>
+                                    </p>
                                 </li>
                             </ul>
                         </div>
@@ -179,6 +219,7 @@
         </div>
     </footer>
     <!-- End Footer  -->
+    
   <div id="dropDownSelect1"></div>
   
 <!--===============================================================================================-->

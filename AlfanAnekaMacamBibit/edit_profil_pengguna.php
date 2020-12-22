@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+include 'koneksi.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,6 +31,10 @@ session_start();
     <link rel="stylesheet" href="css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
+
+    <link rel="stylesheet" type="text/css" href="css/form_edit.css">
+
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
 <!-- Start Main Top -->
@@ -48,13 +54,6 @@ session_start();
                         <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                             <li class="nav-item"><a class="nav-link" href="halaman_pengguna.php">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="gallery.html">List Bibit</a></li>
-                            <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Menu Edit</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="shop.html">Sub Menu 1</a></li>
-                                <li><a href="shop-detail.html">Sub Menu 2</a></li>
-                                <li><a href="cart.html">Sub Menu 3</a></li>
-                            </ul>
                         </li>
 
                             <li class="nav-item"><a class="nav-link" href="about.html">Tentang Kami</a></li>
@@ -67,18 +66,16 @@ session_start();
                     <div class="attr-nav">
                         <ul>
                             <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                            <li class="side-menu">
-                                <a href="#">
-                                    <i class="fa fa-shopping-bag"></i>
-                                    <span class="badge"></span>
-                                    <p>Keranjang</p>
-                                </a>
-                            </li>
+                            <li class="nav-item active">
+                            <a class="nav-link" href="keranjang.php">
+                                <i class="fa fa-shopping-bag"> Keranjang</i>
+                            </a>
+                        </li>
                             <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="shop.html">Edit Profil</a></li>
-                                <li><a href="logout.php">Logout</a></li>
+                                <li><a href="view_profil_pengguna.php">View Profil</a></li>
+                                <li><a href="process/logout.php">Logout</a></li>
                             </ul>
                         </li>
                         </ul>
@@ -112,28 +109,70 @@ session_start();
                         <div id="offer-box" class="carouselTicker">
                             <ul class="offer-box">
                                 <li>
-                                    <i class="fab fa-opencart"></i> 20% off Entire Purchase Promo code: offT80
+                                    <i class="fab fa-opencart"></i> Selamat Datang <b><?php echo $_SESSION['username']; ?></b> Anda telah login sebagai <b><?php echo $_SESSION['level']; ?></b>.
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> 50% - 80% off on Vegetables
+                                    <i class="fab fa-opencart"></i> 
+                                    <?php
+
+                                    $sql_highlight1 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight1 = mysqli_fetch_array($sql_highlight1);
+                                    ?>
+                                    <?php echo $highlight1['highlight1']; ?>
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> Off 10%! Shop Vegetables
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight2 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight2 = mysqli_fetch_array($sql_highlight2);
+                                    ?>
+                                    <?php echo $highlight2['highlight2']; ?>
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> Off 50%! Shop Now
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight3 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight3 = mysqli_fetch_array($sql_highlight3);
+                                    ?>
+                                    <?php echo $highlight3['highlight3']; ?>
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> Off 10%! Shop Vegetables
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight4 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight4 = mysqli_fetch_array($sql_highlight4);
+                                    ?>
+                                    <?php echo $highlight4['highlight4']; ?>
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> 50% - 80% off on Vegetables
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight5 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight5 = mysqli_fetch_array($sql_highlight5);
+                                    ?>
+                                    <?php echo $highlight5['highlight5']; ?>
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> 20% off Entire Purchase Promo code: offT30
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight6 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight6 = mysqli_fetch_array($sql_highlight6);
+                                    ?>
+                                    <?php echo $highlight6['highlight6']; ?>
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> Off 50%! Shop Now 
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight7 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight7 = mysqli_fetch_array($sql_highlight7);
+                                    ?>
+                                    <?php echo $highlight7['highlight7']; ?>
                                 </li>
                             </ul>
                         </div>
@@ -151,7 +190,8 @@ session_start();
                 <div class="col-lg-12">
                     <h2>Edit Profil</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="halaman_pengguna.php">Home</a></li>
+                        <li class="breadcrumb-item"><a href="view_profil_pengguna.php">View Profil</a></li>
                         <li class="breadcrumb-item active">Edit Profil</li>
                     </ul>
                 </div>
@@ -160,12 +200,8 @@ session_start();
     </div>
     <!-- End All Title Box -->
 
-<div class="container">
-<fieldset>
-    <legend><b>Edit Profil</b></legend>
-
+<br>
     <?php
-    include 'koneksi.php';
     
     if ($_SESSION['username']) {
         $sesi = $_SESSION['username'];
@@ -174,42 +210,44 @@ session_start();
     $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
     $data = mysqli_fetch_array($sql_profil);
     ?>
-    <form action="update_pengguna.php" method="POST">
-    <table>
-        <tr>
-            <td>Nama</td>
-            <td>:</td>
-            <td><input type="text" name="nama" value="<?php echo $data['nama']; ?>" required></td>
-        </tr>
-        <tr>
-            <td>Alamat</td>
-            <td>:</td>
-            <td><textarea type="text" name="alamat" required><?php echo $data['alamat']; ?></textarea></td>
-        </tr>
-        <tr>
-            <td>No Telepon</td>
-            <td>:</td>
-            <td><input type="text" name="no_telepon" value="<?php echo $data['no_telepon']; ?>" required></td>
-        </tr>
-        <tr>
-            <td>Username</td>
-            <td>:</td>
-            <td><input type="text" name="username" value="<?php echo $data['username']; ?>" required></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td>:</td>
-            <td><input type="password" name="password" value="<?php echo $data['password']; ?>" required></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td><input type="submit" name="edit" value="edit"> <input type="reset" value="batal"></td>
-        </tr>
-    </table>
-    </form>
-</fieldset>
-</div>
+<div class="regform"><h1 style="color: white;"> Edit Profil </h1></div>
+    <div class="main">
+        <form action="process/update_pengguna.php" method="POST" enctype="multipart/form-data">
+            <div class="container">
+              <div class="row">
+                <div class="col-6 offset-md-3 ">
+                    <div class="form-group text-center" style="position: relative;" >
+                      <span class="img-div">
+                        <div class="text-center img-placeholder"  onClick="triggerClick()">
+                          <h4>Update image</h4>
+                        </div>
+                        <img src="foto/<?php echo $data['foto']?>" onClick="triggerClick()" id="profileDisplay">
+                        <input type="file" name="foto" onChange="displayImage(this)" id="foto" class="form-control" style="display: none;">
+                      </span>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <h2 class="name">Nama</h2>
+            <input class="nama" type="text" name="nama" value="<?php echo $data['nama']; ?>" required>
+
+            <h2 class="name">Alamat</h2>
+            <textarea class="alamat" name="alamat" required><?php echo $data['alamat']; ?></textarea>
+
+            <h2 class="name">No Telepon</h2>
+            <input class="no_telepon" type="text" name="no_telepon" value="<?php echo $data['no_telepon']; ?>" required>
+
+            <h2 class="name">Username</h2>
+            <input class="username" type="text" name="username" value="<?php echo $data['username']; ?>" required>
+
+            <h2 class="name">Password</h2>
+            <input class="password" type="password" name="password" value="<?php echo $data['password']; ?>" required>
+
+            <center><td><input type="submit" name="edit" value="edit"> <a href="view_profil_pengguna.php"><input type="button" value="kembali"></a></td></center>
+        </form>
+    </div>
+    <br>
 
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">
@@ -299,29 +337,46 @@ session_start();
     <!-- End Instagram Feed  -->
 
     <!-- Start Footer  -->
-    <footer>
+    <footer id="hubungi_kami">
         <div class="footer-main">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-top-box">
-                            <h3>Business Time</h3>
+                            <h3>Jam Kerja</h3>
                             <ul class="list-time">
-                                <li style="font-size: 150%">Setiap Hari</li>
+                                <?php
+
+                                $sql_business_time = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                $business_time = mysqli_fetch_array($sql_business_time);
+                                ?>
+                                <li style="font-size: 150%"><?php echo $business_time['business_time']; ?></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-top-box">
-                            <img src="images/logobaru2.png" class="logo" alt="" style="width: 80%">
+                            <?php
+                            $sql_logo_bawah = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                            $logo_bawah = mysqli_fetch_array($sql_logo_bawah);
+                            ?>
+                            <img src="logo/<?php echo $logo_bawah['logo_bawah']?>" class="logo" alt="" style="width: 80%">
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-top-box">
-                            <h3>Social Media</h3><br>
+                            <h3>Sosial Media</h3><br>
                             <ul>
-                                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a> AlfanAnekaMacamBibit</li><br>
-                                <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a> +62 813 3037 5018</li>
+                                <li style="color: white;"><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a> AlfanAnekaMacamBibit</li><br>
+                                <li style="color: white;">
+                                    <a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a> 
+                                    <?php
+
+                                    $sql_whatsapp = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $whatsapp = mysqli_fetch_array($sql_whatsapp);
+                                    ?>
+                                    <?php echo $whatsapp['whatsapp']; ?>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -330,36 +385,43 @@ session_start();
                 <div class="row">
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-widget">
-                            <h4>About Freshshop</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p> 
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>                             
+                            <h4>Tentang Kami</h4>
+                            <?php
+
+                            $sql_aboutus = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                            $about_us = mysqli_fetch_array($sql_aboutus);
+                            ?>
+
+                            <p><?php echo $about_us['about_us']; ?></p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
-                        <div class="footer-link">
-                            <h4>Information</h4>
-                            <ul>
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Customer Service</a></li>
-                                <li><a href="#">Our Sitemap</a></li>
-                                <li><a href="#">Terms &amp; Conditions</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Delivery Information</a></li>
-                            </ul>
-                        </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-link-contact">
-                            <h4>Contact Us</h4>
+                            <h4>Hubungi Kami</h4>
                             <ul>
                                 <li>
-                                    <p><i class="fas fa-map-marker-alt"></i>Alamat: Jalan Manggisan <br>Tanggul,<br> Jember </p>
+                                    <p><i class="fas fa-map-marker-alt"></i>
+                                        <?php
+
+                                        $sql_alamat = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $alamat = mysqli_fetch_array($sql_alamat);
+                                        ?>
+
+                                        <p style="color: white;">Alamat : <?php echo $alamat['alamat']; ?></p>
+                                    </p>
                                 </li>
                                 <li>
-                                    <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+62 813 3037 5018">+62 813 3037 5018</a></p>
-                                </li>
-                                <li>
-                                    <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">alfanur@gmail.com</a></p>
+                                    <p><i class="fas fa-phone-square"></i>
+                                        <?php
+
+                                        $sql_no_telepon = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $no_telepon = mysqli_fetch_array($sql_no_telepon);
+                                        ?>
+
+                                        <p style="color: white;">No Telepon : <?php echo $no_telepon['no_telepon']; ?></p>
+                                    </p>
                                 </li>
                             </ul>
                         </div>
@@ -388,6 +450,7 @@ session_start();
     <script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
+    <script src="js/scripts.js"></script>
 
 </body>
 </html>
