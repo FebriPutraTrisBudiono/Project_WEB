@@ -1,58 +1,14 @@
 <?php
 session_start();
-include_once 'koneksi.php';
 
-$id = $_GET['id'];
-$userquery = $koneksi->query("SELECT * FROM barang WHERE idbarang = ".$id);
-$row = $userquery->fetch_object();
+include 'koneksi.php';
 
-if(isset($_POST["ubah"])){
-$nama_barang = $_POST["nama_barang"];
-$jenis_barang = $_POST["jenis_barang"];
-$umur = $_POST["umur"];
-
-//upload gambar
-$ekstensi_diperbolehkan = array('png','jpg');
-$foto_barang = $_FILES['foto_barang']['name'];
-            $x = explode('.', $foto_barang);
-            $ekstensi = strtolower(end($x));
-            $ukuran = $_FILES['foto_barang']['size'];
-            $file_tmp = $_FILES['foto_barang']['tmp_name'];
-
-            if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
-                if($ukuran < 1044070){          
-                    move_uploaded_file($file_tmp, 'foto_barang/'.$foto_barang);
-                }else{
-                    echo 'UKURAN FILE TERLALU BESAR';
-                }
-            }else{
-                echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
-            }
-
-$sql = "UPDATE barang SET nama_barang = '".$nama_barang."', jenis_barang = '".$jenis_barang."', umur = '".$umur."', foto_barang = '".$foto_barang."' WHERE idbarang = ".$id;
-
-if ($koneksi->query($sql) == TRUE) {
-	date_default_timezone_set('Asia/Jakarta');
-	$waktu = date("d/m/Y h:i:s");
-	$kegiatan = "Mengubah nama barang ".$row->nama_barang." menjadi ".$nama_barang." dan mengubah jenis barang ".$row->jenis_barang." menjadi ".$jenis_barang;
-	$sqlhistory = "INSERT INTO history (waktu, jenis_barang, nama_barang, kegiatan) 
-	VALUES ('".$waktu."','".$row->nama_barang."','".$row->jenis_barang."','".$kegiatan."')";	
-    if ($koneksi->query($sqlhistory) == TRUE) {
-	header("Location: tab-barang.php");
-	} else {
-    echo "Error dalam mengubah data: " . $koneksi->error;
-	}
-} else {
-    echo "Error dalam mengubah data: " . $koneksi->error;
-}
-
-$koneksi->close();
-}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+ <title>Halaman admin</title>
+ <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Mobile Metas -->
@@ -78,6 +34,16 @@ $koneksi->close();
     <link rel="stylesheet" href="css/custom.css">
 
     <link rel="stylesheet" type="text/css" href="css/update_stok.css">
+    <script type="application/javascript" src="jquery-2.1.3.js"></script>
+        <script type="application/javascript" src="jquery-ui.js"></script>
+        <script type="application/javascript" src="paging.js"></script> 
+        <script>
+            $(document).ready(function() {
+                $('#tableData').paging({
+                limit:10
+                });
+            });
+        </script>
 
 </head>
 <body>
@@ -251,53 +217,87 @@ $koneksi->close();
     <!-- End All Title Box -->
 
 <br>
-        <ul class="nav nav-pills nav-fill">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="update_stok.php">Info Bibit</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="tab-barang.php">Nama Bibit</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="tab-stok-barang.php">Stok Bibit</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="tab-history.php">History</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li>
-        </ul>
+
+<ul class="nav nav-pills nav-fill">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="update_stok.php">Info Bibit</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" aria-current="page" href="tab-barang.php">Nama Bibit</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="tab-stok-barang.php">Stok Bibit</a>
+  </li>
+</ul>
+
+        <section class="content">
+            <br>
+            <form method="POST" class="filter">
+                <select name="filter" onchange="this.form.submit()">
+                    <option disabled selected>Filter</option>
+                    <option value="remove">Hilangkan Filter</option>
+                    <?php
+                        $filterbarang = "SELECT * FROM barang";
+                        $filterresult = $koneksi->query($filterbarang);
+                        while ($filterrow = $filterresult->fetch_object()) {
+                            echo "<option value=\"{$filterrow->jenis_barang}\">";
+                            echo $filterrow->jenis_barang;
+                            echo "</option>";
+                        }
+                    ?>
+                </select>
+            </form>
+            <?php
+            if(isset($_POST["filter"])){
+                if($_POST["filter"] == "remove"){
+                    $tablebarang = "SELECT * FROM barang";
+                }
+                else{
+                    $tablebarang = "SELECT * FROM barang WHERE jenis_barang IN ('".$_POST["filter"]."')";
+                }
+            }
+            else{
+                $tablebarang = "SELECT * FROM barang";
+            }
+            if ($result = $koneksi->query($tablebarang))
+            {
+            if ($result->num_rows > 0)
+            {
+            echo "<table id='tableData' class='table table-striped'>";
+
+            echo "<thead class='table-head'><tr><th>ID</th><th>Nama Barang</th><th>Jenis Barang</th><th>Stok Barang</th><th>Umur</th><th>Foto Barang</th></tr></thead>";
+
+            while ($row = $result->fetch_object())
+            {
+            ?>
+
+            <tr>
+            <td><?php echo $row->idbarang; ?></td>
+            <td><?php echo $row->nama_barang; ?></td>
+            <td><?php echo $row->jenis_barang; ?></td>
+            <td><?php echo $row->stok_barang; ?></td>
+            <td><?php echo $row->umur; ?></td>
+            <td>
+                <img src="foto_brg/<?php echo $row->foto_barang; ?>" width="100px">
+            </td>
+            <?php
+            }
+
+            echo "</table>";
+            }
+            else
+            {
+            echo "Tidak ada yang dapat ditampilkan !!!";
+            }
+            }
+            else
+            {
+            echo "Error: " . $koneksi->error;
+            }
+            ?>
+        </section>
 
 <br><br>
-
-        <div class="container">
-        <form method="post">
-          <div class="mb-3">
-            <p>ID : <?php echo $id; ?></p>
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Nama Bibit</label>
-            <input type="text" name="nama_barang" class="form-control" value="<?php echo $row->nama_barang; ?>" placeholder="Nama Bibit" required=>
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Jenis Bibit</label>
-            <input type="text" name="jenis_barang" class="form-control" value="<?php echo $row->jenis_barang; ?>" placeholder="Jenis Bibit" required>
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Umur</label>
-            <input type="text" name="umur" class="form-control" value="<?php echo $row->umur; ?>" placeholder="Umur" required>
-          </div>
-          <div class="mb-3">
-              <label for="formFile" class="form-label">Default file input example</label>
-              <input class="form-control" name="foto_barang" type="file" required>
-            </div>
-          <br>
-          <button type="submit" name="ubah" class="btn btn-primary" style="background-color: #008000;">Ubah</button>
-        </form>
-        </div>
-
-<br>
 
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">
@@ -485,13 +485,13 @@ $koneksi->close();
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
     <script>
-		function confirmDelete(link) {
-			if (confirm("Data ini akan dihapus ?")) {
-				doAjax(link.href, "POST"); // doAjax needs to send the "confirm" field
-			}
-			return false;
-		}
-	</script>
+        function confirmDelete(link) {
+            if (confirm("Data ini akan dihapus ?")) {
+                doAjax(link.href, "POST"); // doAjax needs to send the "confirm" field
+            }
+            return false;
+        }
+    </script>
     
     <!-- ALL JS FILES -->
     <script src="js/jquery-3.2.1.min.js"></script>

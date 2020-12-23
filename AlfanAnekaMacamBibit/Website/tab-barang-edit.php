@@ -2,7 +2,11 @@
 session_start();
 include_once 'koneksi.php';
 
-if(isset($_POST["tambah"])){
+$id = $_GET['id'];
+$userquery = $koneksi->query("SELECT * FROM barang WHERE idbarang = ".$id);
+$row = $userquery->fetch_object();
+
+if(isset($_POST["ubah"])){
 $nama_barang = $_POST["nama_barang"];
 $jenis_barang = $_POST["jenis_barang"];
 $umur = $_POST["umur"];
@@ -17,31 +21,29 @@ $foto_barang = $_FILES['foto_barang']['name'];
 
             if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
                 if($ukuran < 1044070){          
-                    move_uploaded_file($file_tmp, '../foto_barang/'.$foto_barang);
+                    move_uploaded_file($file_tmp, 'foto_brg/'.$foto_barang);
                 }else{
                     echo 'UKURAN FILE TERLALU BESAR';
                 }
             }else{
                 echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
             }
-            
-$sql = "INSERT INTO barang (nama_barang, jenis_barang, stok_barang, umur, foto_barang)
-VALUES ('".$nama_barang."','".$jenis_barang."',0,'".$umur."','".$foto_barang."')";
+
+$sql = "UPDATE barang SET nama_barang = '".$nama_barang."', jenis_barang = '".$jenis_barang."', umur = '".$umur."', foto_barang = '".$foto_barang."' WHERE idbarang = ".$id;
 
 if ($koneksi->query($sql) == TRUE) {
-date_default_timezone_set('Asia/Jakarta');
-$waktu = date("d/m/Y h:i:s");
-$kegiatan = "Memabahkan barang baru jenis ".$jenis_barang." dengan nama ".$nama_barang;
-$sqlhistory = "INSERT INTO history (waktu, jenis_barang, nama_barang, kegiatan) 
-VALUES ('".$waktu."','".$nama_barang."','".$jenis_barang."','".$kegiatan."')";
-if ($koneksi->query($sqlhistory) == TRUE) {
-    header("Location: tab-barang.php");
-}
-else {
-echo "Error: " . $sql . "<br>" . $koneksi->error;
-}
+	date_default_timezone_set('Asia/Jakarta');
+	$waktu = date("d/m/Y h:i:s");
+	$kegiatan = "Mengubah nama barang ".$row->nama_barang." menjadi ".$nama_barang." dan mengubah jenis barang ".$row->jenis_barang." menjadi ".$jenis_barang;
+	$sqlhistory = "INSERT INTO history (waktu, jenis_barang, nama_barang, kegiatan) 
+	VALUES ('".$waktu."','".$row->nama_barang."','".$row->jenis_barang."','".$kegiatan."')";	
+    if ($koneksi->query($sqlhistory) == TRUE) {
+	header("Location: tab-barang.php");
+	} else {
+    echo "Error dalam mengubah data: " . $koneksi->error;
+	}
 } else {
-echo "Error: " . $sql . "<br>" . $koneksi->error;
+    echo "Error dalam mengubah data: " . $koneksi->error;
 }
 
 $koneksi->close();
@@ -50,8 +52,7 @@ $koneksi->close();
 <!DOCTYPE html>
 <html>
 <head>
- <title>Halaman admin</title>
- <meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Mobile Metas -->
@@ -269,33 +270,34 @@ $koneksi->close();
         </ul>
 
 <br><br>
-        
 
         <div class="container">
-        <form method="post">
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Nama Bibit</label>
-              <input type="text" name="nama_barang" class="form-control" placeholder="Nama Bibit" required>
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Jenis Bibit</label>
-              <input type="text" name="jenis_barang" class="form-control" placeholder="Jenis Bibit" required>
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Umur</label>
-              <input type="text" name="umur" class="form-control" placeholder="Umur" required>
-            </div>
-            <div class="mb-3">
-              <label for="formFile" class="form-label">Default file input example</label>
-              <input class="form-control" name="foto_barang" type="file" id="formFile" required>
+        <form method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <p>ID : <?php echo $id; ?></p>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Nama Bibit</label>
+            <input type="text" name="nama_barang" class="form-control" value="<?php echo $row->nama_barang; ?>" placeholder="Nama Bibit" required=>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Jenis Bibit</label>
+            <input type="text" name="jenis_barang" class="form-control" value="<?php echo $row->jenis_barang; ?>" placeholder="Jenis Bibit" required>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Umur</label>
+            <input type="text" name="umur" class="form-control" value="<?php echo $row->umur; ?>" placeholder="Umur" required>
+          </div>
+          <div class="mb-3">
+              <h2 class="name">foto</h2>
+            <input class="nama" type="file" name="foto_barang" required>
             </div>
           <br>
-          <button type="submit" name="tambah" class="btn btn-primary" style="background-color: #008000;">Tambah</button>
+          <button type="submit" name="ubah" class="btn btn-primary" style="background-color: #008000;">Ubah</button>
         </form>
         </div>
-        
 
-<br><br>
+<br>
 
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">

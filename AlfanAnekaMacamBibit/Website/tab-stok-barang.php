@@ -217,29 +217,20 @@ include 'koneksi.php';
     <!-- End All Title Box -->
 
 <br>
-
-<ul class="nav nav-pills nav-fill">
-  <li class="nav-item">
-    <a class="nav-link" aria-current="page" href="update_stok.php">Info Bibit</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="tab-barang.php">Nama Bibit</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="tab-stok-barang.php">Stok Bibit</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="tab-history.php">History</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-  </li>
-</ul>
+        <ul class="nav nav-pills nav-fill">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="update_stok.php">Info Bibit</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="tab-barang.php">Nama Bibit</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="tab-stok-barang.php">Stok Bibit</a>
+          </li>
+        </ul>
 
         <section class="content">
             <br><br>
-			<a href="tab-barang-tambah.php"><div class="button">+Tambah Data</div></a>
-            <br>
 			<form method="POST" class="filter">
 				<select name="filter" onchange="this.form.submit()">
 					<option disabled selected>Filter</option>
@@ -273,27 +264,19 @@ include 'koneksi.php';
 			{
 			echo "<table id='tableData' class='table table-striped'>";
 
-            echo "<thead class='table-head'><tr><th>ID</th><th>Nama Barang</th><th>Jenis Barang</th><th>Umur</th><th>Foto Barang</th><th></th><th></th></tr></thead>";
+			echo "<thead class='table-head'><tr><th>ID</th><th>Nama Barang</th><th>Jenis Barang</th><th>Stok Barang</th><th></th><th></th></tr></th></tr></thead>";
 
 			while ($row = $result->fetch_object())
 			{
-            ?>
-
-            <tr>
-                <td><?php echo $row->idbarang; ?></td>
-                <td><?php echo $row->nama_barang; ?></td>
-                <td><?php echo $row->jenis_barang; ?></td>
-                <td><?php echo $row->umur; ?></td>
-                <td>
-                    <img src="foto_barang/<?php echo $row->foto_barang; ?>" width="100px">
-                </td>
-                <?php
-			echo "<td><a class='edit'href='tab-barang-edit.php?id=" . $row->idbarang . "'>Ubah</a></td>";
-			echo "<td><a class='edit'onclick='return confirmDelete(this);'href='tab-barang-del.php?id=" . $row->idbarang . "'>Hapus</a></td>";
+			echo "<tr>";
+			echo "<td>" . $row->idbarang . "</td>";
+			echo "<td>" . $row->nama_barang . "</td>";
+			echo "<td>" . $row->jenis_barang . "</td>";
+			echo "<td>" . $row->stok_barang . "</td>";
+			echo "<td><a class='edit'href='tab-tambah-stok.php?id=" . $row->idbarang . "'>Tambah Stok</a></td>";
+			echo "<td><a class='edit'href='tab-kurangi-stok.php?id=" . $row->idbarang . "'>Kurangi Stok</a></td>";
 			echo "</tr>";
-
-			
-            }
+			}
 
 			echo "</table>";
 			}
@@ -309,7 +292,7 @@ include 'koneksi.php';
 			?>
 		</section>
 
-<br><br>
+<br>
 
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">
