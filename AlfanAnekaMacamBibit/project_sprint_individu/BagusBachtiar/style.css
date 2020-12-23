@@ -1,0 +1,59 @@
+.header{
+    background-image: url("all-bg-title.jpg");
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-weight: bold;
+
+}
+
+.judul{
+    background-color: green;
+    margin-top: 15px;
+}
+
+/*.w3-card{
+    display: flex;
+    justify-content: center;
+	font-size: 18px;
+	font-weight: 700;
+	border: solid;
+}*/
+p{
+    
+}
+.col-md-4
+{
+    margin: 35px auto;
+    background-color: white;
+    padding: 20px;
+    overflow: hidden;
+
+}
+
+.list-produk{
+    
+    border: 1px solid gainsboro;
+    padding: 10px;
+    float: left;
+    width: 200px;
+    margin: 5px;
+}
+
+a:link, a:visited {
+    background-color: #f44336;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  a:hover, a:active {
+    background-color: red;
+  }
+  section {
+    display: -webkit-flex;
+    display: flex;
+  }
+
+  
