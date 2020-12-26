@@ -3,12 +3,69 @@ session_start();
 
 include 'koneksi.php';
 
+// add, remove, empty
+if (!empty($_GET['action'])) {
+    switch ($_GET['action']) {
+        // add product to cart
+        case 'add':
+            if (!empty($_POST['quantity'])) {
+                $pid = $_GET['pid'];
+                $query = "SELECT * FROM products WHERE id=" . $pid;
+                $result = mysqli_query($koneksi, $query);
+                while ($product = mysqli_fetch_array($result)) {
+                    $itemArray = [
+                        $product['code'] => [
+                            'name' => $product['name'],
+                            'code' => $product['code'],
+                            'quantity' => $_POST['quantity'],
+                            'price' => $product['price'],
+                            'image' => $product['image']
+                        ]
+                    ];
+                    if (isset($_SESSION['cart_item']) &&!empty($_SESSION['cart_item'])) {
+                        if (in_array($product['code'], array_keys($_SESSION['cart_item']))) {
+                            foreach ($_SESSION['cart_item'] as $key => $value) {
+                                if ($product['code'] == $key) {
+                                    if (empty($_SESSION['cart_item'][$key]["quantity"])) {
+                                        $_SESSION['cart_item'][$key]['quantity'] = 0;
+                                    }
+                                    $_SESSION['cart_item'][$key]['quantity'] += $_POST['quantity'];
+                                }
+                            }
+                        } else {
+                            $_SESSION['cart_item'] += $itemArray;
+                        }
+                    } else {
+                        $_SESSION['cart_item'] = $itemArray;
+                    }
+                }
+            }
+            break;
+        case 'remove':
+            if (!empty($_SESSION['cart_item'])) {
+                foreach ($_SESSION['cart_item'] as $key => $value) {
+                    if ($_GET['code'] == $key) {
+                        unset($_SESSION['cart_item'][$key]);
+                    }
+                    if (empty($_SESSION['cart_item'])) {
+                        unset($_SESSION['cart_item']);
+                    }
+                }
+            }
+            break;
+        case 'empty':
+            unset($_SESSION['cart_item']);
+            break;
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html>
+
 <head>
- <title>Halaman admin</title>
- <meta charset="utf-8">
+    <title>Halaman admin</title>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Mobile Metas -->
@@ -33,72 +90,68 @@ include 'koneksi.php';
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
 
-    <link rel="stylesheet" type="text/css" href="css/update_stok.css">
-    <script type="application/javascript" src="jquery-2.1.3.js"></script>
-		<script type="application/javascript" src="jquery-ui.js"></script>
-		<script type="application/javascript" src="paging.js"></script> 
-		<script>
-			$(document).ready(function() {
-                $('#tableData').paging({
-				limit:10
-				});
-            });
-		</script>
-
 </head>
+
 <body>
-<!-- Start Main Top -->
+    <!-- Start Main Top -->
     <header class="main-header">
         <!-- Start Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
             <div class="container" style="max-width: 1600px">
-                    <!-- Start Header Navigation -->
-                    <div class="navbar-header" style="margin: auto;">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                        <a class="navbar-brand" href="index.php"><img src="images/logobaru.png" class="logo" alt=""></a>
-                    </div>
-                    <!-- End Header Navigation -->
-    
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="navbar-menu">
-                        <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                            <li class="nav-item"><a class="nav-link" href="halaman_admin.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="gallery.html">List Bibit</a></li>
-                            <li class="dropdown">
+                <!-- Start Header Navigation -->
+                <div class="navbar-header" style="margin: auto;">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+                    <a class="navbar-brand" href="index.php"><img src="images/logobaru.png" class="logo" alt=""></a>
+                </div>
+                <!-- End Header Navigation -->
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                        <li class="nav-item"><a class="nav-link" href="halaman_admin.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="gallery.html">List Bibit</a></li>
+                        <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Menu Edit</a>
                             <ul class="dropdown-menu">
                                 <li><a href="edit_informasi.php">Edit Informasi</a></li>
-                                <li><a href="update_stok.php">Update Stok Bibit</a></li>
+                                <li><a href="shop-detail.html">Sub Menu 2</a></li>
                                 <li><a href="cart.html">Sub Menu 3</a></li>
                             </ul>
                         </li>
 
-                            <li class="nav-item"><a class="nav-link" href="about.html">Tentang Kami</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Hubungi Kami</a></li>
-                        </ul>
-                    </div>
-                    <!-- /.navbar-collapse -->
-    
-                    <!-- Start Atribute Navigation -->
-                    <div class="attr-nav">
-                        <ul>
-                            <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                            <li class="nav-item active">
+                        <li class="nav-item"><a class="nav-link" href="#tentang_kami">Tentang Kami</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+
+                <!-- Start Atribute Navigation -->
+                <div class="attr-nav">
+                    <ul>
+                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                        <li class="nav-item active">
                             <a class="nav-link" href="keranjang.php">
                                 <i class="fa fa-shopping-bag"> Keranjang</i>
                             </a>
                         </li>
-                            <li class="dropdown">
+                        <!--<li class="side-menu">
+                            <a href="#">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="badge"></span>
+                                <p style="color: black;">Keranjang</p>
+                            </a>
+                        </li>-->
+                        <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="view_profil_admin.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
                         </li>
-                        </ul>
-                    </div>
-                    <!-- End Atribute Navigation -->
+                    </ul>
                 </div>
+                <!-- End Atribute Navigation -->
+            </div>
             </div>
         </nav>
         <!-- End Navigation -->
@@ -118,7 +171,7 @@ include 'koneksi.php';
     <!-- End Top Search -->
 
     <!-- Start Main Top -->
-    <div class="main-top" >
+    <div class="main-top">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -199,114 +252,110 @@ include 'koneksi.php';
         </div>
     </div>
     <!-- End Main Top -->
+<br>
 
-    <!-- Start All Title Box -->
-    <div class="all-title-box">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2>Edit Informasi</h2>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="halaman_admin.php">Home</a></li>
-                        <li class="breadcrumb-item active">Edit Informasi</li>
-                    </ul>
+<div class="container py-5">
+    <div class="d-flex justify-content-between mb-2">
+        <h3>Cart</h3>
+        <a class="btn btn-danger" href="keranjang.php?action=empty">All Item Remove</a>
+    </div>
+    <div class="row">
+        <?php
+            $total_quantity = 0;
+            $total_price = 0;
+        ?>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th class="text-left">Name</th>
+                <th class="text-left">Code</th>
+                <th class="text-right">Quantity</th>
+                <th class="text-right">Item Price</th>
+                <th class="text-right">Price</th>
+                <th class="text-center">Remove</th>
+            </tr>
+            <?php
+            if (isset($_SESSION['cart_item']) && !empty($_SESSION['cart_item'])){
+                foreach ($_SESSION['cart_item'] as $item) {
+                    $item_price = $item['quantity'] * $item['price'];
+                    ?>
+                    <tr>
+                        <td class="text-left">
+                            <img src="<?php $item['image'] ?>" alt="<?= $item['name'] ?>" class="img-fluid" width="100">
+                            <?= $item['name'] ?>
+                        </td>
+                        <td class="text-left"><?= $item['code'] ?></td>
+                        <td class="text-right"><?= $item['quantity'] ?></td>
+                        <td class="text-right">₹<?= number_format($item['price'], 2) ?></td>
+                        <td class="text-right">₹<?= number_format($item_price, 2) ?></td>
+                        <td class="text-center">
+                            <a href="keranjang.php?action=remove&code=<?= $item['code']; ?>" class="btn btn-danger">X</a>
+                        </td>
+                    </tr>
+
+                    <?php
+                    $total_quantity += $item["quantity"];
+                    $total_price += ($item["price"]*$item["quantity"]);
+                }
+            }
+
+            if (isset($_SESSION['cart_item']) && !empty($_SESSION['cart_item'])){
+                ?>
+                <tr>
+                    <td colspan="2" align="right">Total:</td>
+                    <td align="right"><strong><?= $total_quantity ?></strong></td>
+                    <td></td>
+                    <td align="right"><strong>₹<?= number_format($total_price, 2); ?></strong></td>
+                    <td></td>
+                </tr>
+
+            <?php }
+
+                ?>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- first done this -->
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Products List</h1>
+            <div class="d-flex">
+                <div class="card-deck">
+                    <?php
+                    $query = "SELECT * FROM products";
+                    $product = mysqli_query($koneksi, $query);
+                    if (!empty($product)) {
+                        while ($row = mysqli_fetch_array($product)) { ?>
+                            <form action="keranjang.php?action=add&pid=<?= $row['id']; ?>" method="post">
+                                <div class="card" style="width:18rem">
+                                    <img class="card-img-top"
+                                         src="produk/<?php echo $row['image']; ?>"
+                                         alt="<?= $row['name']; ?>"
+                                         width="150">
+                                    <div class="card-header d-flex justify-content-between">
+                                        <span><?= $row['name']; ?></span>
+                                        <span>₹<?= number_format($row['price'], 2); ?></span>
+                                    </div>
+                                    <div class="card-body d-flex justify-content-between">
+                                        <input type="text" name="quantity" value="1" size="2">
+                                        <input type="submit" value="Add to Cart" class="btn btn-success btn-sm">
+                                    </div>
+                                </div>
+                            </form>
+                        <?php }
+                    } else {
+                        echo "no products available";
+                    }
+                    ?>
                 </div>
             </div>
         </div>
     </div>
-    <!-- End All Title Box -->
+</div>
 
 <br>
-
-<ul class="nav nav-pills nav-fill">
-  <li class="nav-item">
-    <a class="nav-link" aria-current="page" href="update_stok.php">Info Bibit</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="tab-barang.php">Nama Bibit</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="tab-stok-barang.php">Stok Bibit</a>
-  </li>
-</ul>
-
-        <section class="content">
-            <br><br>
-			<a href="tab-barang-tambah.php"><div class="button">+Tambah Data</div></a>
-            <br>
-			<form method="POST" class="filter">
-				<select name="filter" onchange="this.form.submit()">
-					<option disabled selected>Filter</option>
-					<option value="remove">Hilangkan Filter</option>
-					<?php
-						$filterbarang = "SELECT * FROM barang";
-						$filterresult = $koneksi->query($filterbarang);
-						while ($filterrow = $filterresult->fetch_object()) {
-							echo "<option value=\"{$filterrow->jenis_barang}\">";
-							echo $filterrow->jenis_barang;
-							echo "</option>";
-						}
-					?>
-				</select>
-			</form>
-			<?php
-			if(isset($_POST["filter"])){
-				if($_POST["filter"] == "remove"){
-					$tablebarang = "SELECT * FROM barang";
-				}
-				else{
-					$tablebarang = "SELECT * FROM barang WHERE jenis_barang IN ('".$_POST["filter"]."')";
-				}
-			}
-			else{
-				$tablebarang = "SELECT * FROM barang";
-			}
-			if ($result = $koneksi->query($tablebarang))
-			{
-			if ($result->num_rows > 0)
-			{
-			echo "<table id='tableData' class='table table-striped'>";
-
-            echo "<thead class='table-head'><tr><th>ID</th><th>Nama Barang</th><th>Jenis Barang</th><th>Umur</th><th>Harga</th><th>Foto Barang</th><th>Deskripsi Produk</th><th></th><th></th></tr></thead>";
-
-			while ($row = $result->fetch_object())
-			{
-            ?>
-
-            <tr>
-                <td><?php echo $row->idbarang; ?></td>
-                <td><?php echo $row->nama_barang; ?></td>
-                <td><?php echo $row->jenis_barang; ?></td>
-                <td><?php echo $row->umur; ?></td>
-                <td><?php echo $row->harga; ?></td>
-                <td>
-                    <img src="foto_brg/<?php echo $row->foto_barang; ?>" width="100px">
-                </td>
-                <td><?php echo $row->deskripsi; ?></td>
-                <?php
-			echo "<td><a class='edit'href='tab-barang-edit.php?id=" . $row->idbarang . "'>Ubah</a></td>";
-			echo "<td><a class='edit'onclick='return confirmDelete(this);'href='tab-barang-del.php?id=" . $row->idbarang . "'>Hapus</a></td>";
-			echo "</tr>";
-
-			
-            }
-
-			echo "</table>";
-			}
-			else
-			{
-			echo "Tidak ada yang dapat ditampilkan !!!";
-			}
-			}
-			else
-			{
-			echo "Error: " . $koneksi->error;
-			}
-			?>
-		</section>
-
-<br><br>
-
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">
         <div class="main-instagram owl-carousel owl-theme">
@@ -393,6 +442,7 @@ include 'koneksi.php';
         </div>
     </div>
     <!-- End Instagram Feed  -->
+
 
     <!-- Start Footer  -->
     <footer id="hubungi_kami">
@@ -492,15 +542,6 @@ include 'koneksi.php';
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
-    <script>
-		function confirmDelete(link) {
-			if (confirm("Data ini akan dihapus ?")) {
-				doAjax(link.href, "POST"); // doAjax needs to send the "confirm" field
-			}
-			return false;
-		}
-	</script>
-    
     <!-- ALL JS FILES -->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -519,4 +560,5 @@ include 'koneksi.php';
     <script src="js/custom.js"></script>
 
 </body>
+
 </html>

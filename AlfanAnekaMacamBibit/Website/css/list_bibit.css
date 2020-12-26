@@ -1,0 +1,38 @@
+.container-fluid .row .card .card-body h3{
+	text-align: left;
+	font-weight: bold;
+}
+
+.container-fluid .row .card .card-body h4{
+	color: red;
+	font-weight: bold;
+}
+
+.container-fluid .row .card .card-body p{
+	color: black;
+}
+
+
+.container-fluid .row .card .card-body .btn{
+	float: left;
+	width: 100%;
+}
+
+.container-fluid .row .card:hover{
+	box-shadow: 2px 2px 2px rgba(0,0,0,0.4);
+	transform: scale(1.02);
+}
+
+.filter_umur{
+	float: right;
+	margin-right: 200px;
+}
+
+.filter_umur p{
+	color: black;
+	font-weight: bold;
+}
+
+.filter_umur label{
+	color: black;
+}

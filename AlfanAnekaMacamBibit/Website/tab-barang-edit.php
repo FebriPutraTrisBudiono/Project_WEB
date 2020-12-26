@@ -10,6 +10,8 @@ if(isset($_POST["ubah"])){
 $nama_barang = $_POST["nama_barang"];
 $jenis_barang = $_POST["jenis_barang"];
 $umur = $_POST["umur"];
+$harga = $_POST["harga"];
+$deskripsi = $_POST["deskripsi"];
 
 //upload gambar
 $ekstensi_diperbolehkan = array('png','jpg');
@@ -29,7 +31,7 @@ $foto_barang = $_FILES['foto_barang']['name'];
                 echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
             }
 
-$sql = "UPDATE barang SET nama_barang = '".$nama_barang."', jenis_barang = '".$jenis_barang."', umur = '".$umur."', foto_barang = '".$foto_barang."' WHERE idbarang = ".$id;
+$sql = "UPDATE barang SET nama_barang = '".$nama_barang."', jenis_barang = '".$jenis_barang."', umur = '".$umur."', foto_barang = '".$foto_barang."', harga = '".$harga."', deskripsi = '".$deskripsi."' WHERE idbarang = ".$id;
 
 if ($koneksi->query($sql) == TRUE) {
 	date_default_timezone_set('Asia/Jakarta');
@@ -287,6 +289,14 @@ $koneksi->close();
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Umur</label>
             <input type="text" name="umur" class="form-control" value="<?php echo $row->umur; ?>" placeholder="Umur" required>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Harga</label>
+            <input type="text" name="harga" class="form-control" value="<?php echo $row->harga; ?>" placeholder="Harga" required>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Deskripsi Produk</label>
+            <textarea name="deskripsi" class="form-control" required><?php echo $row->deskripsi; ?></textarea>
           </div>
           <div class="mb-3">
               <h2 class="name">foto</h2>

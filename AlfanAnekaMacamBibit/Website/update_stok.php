@@ -265,7 +265,7 @@ include 'koneksi.php';
             {
             echo "<table id='tableData' class='table table-striped'>";
 
-            echo "<thead class='table-head'><tr><th>ID</th><th>Nama Barang</th><th>Jenis Barang</th><th>Stok Barang</th><th>Umur</th><th>Foto Barang</th></tr></thead>";
+            echo "<thead class='table-head'><tr><th>ID</th><th>Nama Barang</th><th>Jenis Barang</th><th>Stok Barang</th><th>Umur</th><th>Harga</th><th>Foto Barang</th><th>Desikripsi Produk</th></tr></thead>";
 
             while ($row = $result->fetch_object())
             {
@@ -277,9 +277,11 @@ include 'koneksi.php';
             <td><?php echo $row->jenis_barang; ?></td>
             <td><?php echo $row->stok_barang; ?></td>
             <td><?php echo $row->umur; ?></td>
+            <td><?php echo $row->harga; ?></td>
             <td>
                 <img src="foto_brg/<?php echo $row->foto_barang; ?>" width="100px">
             </td>
+            <td><?php echo $row->deskripsi; ?></td>
             <?php
             }
 

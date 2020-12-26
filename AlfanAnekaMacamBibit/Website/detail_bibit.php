@@ -1,49 +1,40 @@
-<?php
-session_start();
-
-include 'koneksi.php';
-
-?>
-<!DOCTYPE html>
+<?php 
+	session_start();
+	include"koneksi.php";	
+ ?>
+<!DOCTYPE HTML>
 <html>
 <head>
- <title>Halaman admin</title>
- <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Free Aditii Website Template | Home :: w3layouts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+<link href="css/detail_bibit.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/detail_bibit2.css" media="all" />
+<script type="text/javascript" src="asset/js/jquery.min.js"></script>
+<!-- start slider -->		
+	<script type="text/javascript" src="asset/js/cloud-zoom.1.0.3.min.js"></script>
+	<!--<script type="text/javascript" src="asset/js/productviewgallery.js"></script>-->
+	<link href="css/detail_bibit3.css" rel="stylesheet" type="text/css" media="all" />
+	<script type="text/javascript" src="asset/js/modernizr.custom.28468.js"></script>
+	<script type="text/javascript" src="asset/js/jquery.cslider.js"></script>
+	<script type="text/javascript">
+		
+	</script>
+			</script>
 
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Site Icons -->
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 
-    <!-- Site Metas -->
-    <title>AlfanAnekaMacamBibit</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Site Icons -->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Site CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Responsive CSS -->
-    <link rel="stylesheet" href="css/responsive.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/custom.css">
-
-    <link rel="stylesheet" type="text/css" href="css/update_stok.css">
-    <script type="application/javascript" src="jquery-2.1.3.js"></script>
-		<script type="application/javascript" src="jquery-ui.js"></script>
-		<script type="application/javascript" src="paging.js"></script> 
-		<script>
-			$(document).ready(function() {
-                $('#tableData').paging({
-				limit:10
-				});
-            });
-		</script>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Site CSS -->
+<link rel="stylesheet" href="css/style.css">
+<!-- Responsive CSS -->
+<link rel="stylesheet" href="css/responsive.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="css/custom.css">
 
 </head>
 <body>
@@ -63,7 +54,7 @@ include 'koneksi.php';
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                             <li class="nav-item"><a class="nav-link" href="halaman_admin.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="gallery.html">List Bibit</a></li>
+                            <li class="nav-item active"><a class="nav-link" href="list_bibit.php">List Bibit</a></li>
                             <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Menu Edit</a>
                             <ul class="dropdown-menu">
@@ -110,7 +101,9 @@ include 'koneksi.php';
         <div class="container">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search">
+                <form method="get" action="">
+                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
+                </form>
                 <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
             </div>
         </div>
@@ -205,109 +198,113 @@ include 'koneksi.php';
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Edit Informasi</h2>
+                    <h2>Detail Bibit</h2>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="halaman_admin.php">Home</a></li>
-                        <li class="breadcrumb-item active">Edit Informasi</li>
+                        <li class="breadcrumb-item"><a href="list_bibit.php">List Bibit</a></li>
+                        <li class="breadcrumb-item active">Detail Bibit</li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
     <!-- End All Title Box -->
+    <br>
 
-<br>
+<!----start-cursual---->
+<?php 
+	$idbarang = $_GET['idbarang'];
+	$sql = $koneksi->query("SELECT*FROM barang WHERE idbarang='$idbarang'");	
+	$review = $sql->fetch_array();
+ ?>
+<div class="wrap">	
+	<div class="main">
+		<!-- start content -->
+		<div class="single">
+			<!-- start span1_of_1 -->
+			<div class="left_content">
+				<div class="span1_of_1">
+					<!-- start product_slider -->
+					<div class="product-view">
+				    	<div class="product-essential">
+				        	<div class="product-img-box">
+				    			<div class="product-image"> 
+				        			<a class="cs-fancybox-thumbs cloud-zoom" rel="adjustX:30,adjustY:0,position:'right',tint:'#202020',tintOpacity:0.5,smoothMove:2,showTitle:true,titleOpacity:0.5" data-fancybox-group="thumb" href="foto_brg/<?=$review['foto_barang']?>" title="<?=$review['nama_barang']?>" alt="<?=$review['nama_barang']?>">
+				           			<img src="foto_brg/<?=$review['foto_barang']?>" style="width: 350px; height: 350px;" alt="<?=$review['nama_barang']?>" title="<?=$review['nama_barang']?>" />
+				        			</a>
+				   				</div>
+					
+							</div>
+						</div>
+					</div>
+					<!-- end product_slider -->
+				</div>
+			<!-- start span1_of_1 -->
+			<div class="span1_of_1_des">
+				<div class="desc1">
+					<h3 style="color: black; font-weight: bold;"><?=$review['nama_barang']?></h3>					
+					<h5 style="color: red;">Rp. <?=number_format($review['harga'])?></h5>
+					<div class="available">
+						<h4>Available Options :</h4>
+						<ul>
+							<input type="text" name="quantity" value="1" size="2">
+						</ul>
+						<div class="btn_form">
+							<form>
+								<input type="submit" value="add to cart" title="" />
+							</form>
+						</div>
+						<span class="span_right"><a href="login.php">login to add in cart </a></span>
+						<div class="clear"></div>
+						<br>
+						<button style="width: 300px; color: white; height: 50px; font-size: 20px;" class="btn btn-success btn-sm fab fa-whatsapp"> Beli Sekarang</button>
+					</div>
+			   	 </div>
+			   	</div>
+			   	<div class="clear"></div>
+			   	<!-- start tabs -->
+				   	<section class="tabs">
+		            <input id="tab-1" type="radio" name="radio-set" class="tab-selector-1" checked="checked">
+			        <label for="tab-1" class="tab-label-1">Deskripsi Barang</label>
+	          
+				    <div class="clear-shadow"></div>
+					
+			        <div class="content">
+				        <div class="content-1">
+				        	<?=$review['deskripsi']?>
+							<div class="clear"></div>
+						</div>
+				        <div class="content-2">
+							<p class="para"><span>WELCOME </span> Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections </p>
+							<ul class="qua_nav">
+								<li>Multimedia Systems</li>
+								<li>Digital media adapters</li>
+								<li>Set top boxes for HDTV and IPTV Player applications on various Operating Systems and Hardware Platforms</li>
+							</ul>
+						</div>
+				        <div class="content-3">
+				        	<p class="para top"><span>LOREM IPSUM</span> There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined </p>
+							<ul>
+								<li>Research</li>
+								<li>Design and Development</li>
+								<li>Porting and Optimization</li>
+								<li>System integration</li>
+								<li>Verification, Validation and Testing</li>
+								<li>Maintenance and Support</li>
+							</ul>
+							<div class="clear"></div>
+						</div>
+			        </div>
+			        </section>
+		         	<!-- end tabs -->
+			   	</div>
+          	    <div class="clear"></div>
+	       </div>	
+	<!-- end content -->
+	</div>
+</div>
 
-<ul class="nav nav-pills nav-fill">
-  <li class="nav-item">
-    <a class="nav-link" aria-current="page" href="update_stok.php">Info Bibit</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="tab-barang.php">Nama Bibit</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="tab-stok-barang.php">Stok Bibit</a>
-  </li>
-</ul>
-
-        <section class="content">
-            <br><br>
-			<a href="tab-barang-tambah.php"><div class="button">+Tambah Data</div></a>
-            <br>
-			<form method="POST" class="filter">
-				<select name="filter" onchange="this.form.submit()">
-					<option disabled selected>Filter</option>
-					<option value="remove">Hilangkan Filter</option>
-					<?php
-						$filterbarang = "SELECT * FROM barang";
-						$filterresult = $koneksi->query($filterbarang);
-						while ($filterrow = $filterresult->fetch_object()) {
-							echo "<option value=\"{$filterrow->jenis_barang}\">";
-							echo $filterrow->jenis_barang;
-							echo "</option>";
-						}
-					?>
-				</select>
-			</form>
-			<?php
-			if(isset($_POST["filter"])){
-				if($_POST["filter"] == "remove"){
-					$tablebarang = "SELECT * FROM barang";
-				}
-				else{
-					$tablebarang = "SELECT * FROM barang WHERE jenis_barang IN ('".$_POST["filter"]."')";
-				}
-			}
-			else{
-				$tablebarang = "SELECT * FROM barang";
-			}
-			if ($result = $koneksi->query($tablebarang))
-			{
-			if ($result->num_rows > 0)
-			{
-			echo "<table id='tableData' class='table table-striped'>";
-
-            echo "<thead class='table-head'><tr><th>ID</th><th>Nama Barang</th><th>Jenis Barang</th><th>Umur</th><th>Harga</th><th>Foto Barang</th><th>Deskripsi Produk</th><th></th><th></th></tr></thead>";
-
-			while ($row = $result->fetch_object())
-			{
-            ?>
-
-            <tr>
-                <td><?php echo $row->idbarang; ?></td>
-                <td><?php echo $row->nama_barang; ?></td>
-                <td><?php echo $row->jenis_barang; ?></td>
-                <td><?php echo $row->umur; ?></td>
-                <td><?php echo $row->harga; ?></td>
-                <td>
-                    <img src="foto_brg/<?php echo $row->foto_barang; ?>" width="100px">
-                </td>
-                <td><?php echo $row->deskripsi; ?></td>
-                <?php
-			echo "<td><a class='edit'href='tab-barang-edit.php?id=" . $row->idbarang . "'>Ubah</a></td>";
-			echo "<td><a class='edit'onclick='return confirmDelete(this);'href='tab-barang-del.php?id=" . $row->idbarang . "'>Hapus</a></td>";
-			echo "</tr>";
-
-			
-            }
-
-			echo "</table>";
-			}
-			else
-			{
-			echo "Tidak ada yang dapat ditampilkan !!!";
-			}
-			}
-			else
-			{
-			echo "Error: " . $koneksi->error;
-			}
-			?>
-		</section>
-
-<br><br>
-
-    <!-- Start Instagram Feed  -->
+<!-- Start Instagram Feed  -->
     <div class="instagram-box">
         <div class="main-instagram owl-carousel owl-theme">
             <div class="item">
@@ -491,15 +488,6 @@ include 'koneksi.php';
     <!-- End Footer  -->
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
-
-    <script>
-		function confirmDelete(link) {
-			if (confirm("Data ini akan dihapus ?")) {
-				doAjax(link.href, "POST"); // doAjax needs to send the "confirm" field
-			}
-			return false;
-		}
-	</script>
     
     <!-- ALL JS FILES -->
     <script src="js/jquery-3.2.1.min.js"></script>
