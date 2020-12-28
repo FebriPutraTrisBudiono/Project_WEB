@@ -205,10 +205,10 @@ include 'koneksi.php';
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Edit Informasi</h2>
+                    <h2>Update Stok Bibit</h2>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="halaman_admin.php">Home</a></li>
-                        <li class="breadcrumb-item active">Edit Informasi</li>
+                        <li class="breadcrumb-item active">Update Stok Bibit</li>
                     </ul>
                 </div>
             </div>
