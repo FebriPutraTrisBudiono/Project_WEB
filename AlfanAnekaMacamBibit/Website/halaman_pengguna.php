@@ -1,13 +1,16 @@
 <?php
 session_start();
+if (!isset($_SESSION['username'])) {
+  header("location: login.php");
+}
 
 include 'koneksi.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
-<!-- Basic -->
+<html>
 
 <head>
+    <title>Halaman admin</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -32,12 +35,6 @@ include 'koneksi.php';
     <link rel="stylesheet" href="css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
-
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
 </head>
 
 <body>
@@ -45,90 +42,56 @@ include 'koneksi.php';
     <header class="main-header">
         <!-- Start Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
-            <div class="container">
-                    <!-- Start Header Navigation -->
-                    <div class="navbar-header" style="margin: auto;">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                        <a class="navbar-brand" href="index.php"><img src="images/logobaru.png" class="logo" alt=""></a>
-                    </div>
-                    <!-- End Header Navigation -->
-    
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="navbar-menu">
-                        <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="list_bibit.php">List Bibit</a></li>
-                            <li class="nav-item"><a class="nav-link" href="about.html">Tentang Kami</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Hubungi Kami</a></li>
-                        </ul>
-                    </div>
-                    <!-- /.navbar-collapse -->
-    
-                    <!-- Start Atribute Navigation -->
-                    <div class="attr-nav">
-                        <ul>
-                            <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                            <li class="nav-item active">
+            <div class="container" style="max-width: 1600px">
+                <!-- Start Header Navigation -->
+                <div class="navbar-header" style="margin: auto;">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+                    <a class="navbar-brand" href="index.php"><img src="images/logobaru.png" class="logo" alt=""></a>
+                </div>
+                <!-- End Header Navigation -->
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                        <li class="nav-item active"><a class="nav-link" href="halaman_pengguna.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="list_bibit-pengguna.php">List Bibit</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#tentang_kami">Tentang Kami</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+
+                <!-- Start Atribute Navigation -->
+                <div class="attr-nav">
+                    <ul>
+                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                        <li class="nav-item">
                             <a class="nav-link" href="keranjang.php">
                                 <i class="fa fa-shopping-bag"> Keranjang</i>
                             </a>
                         </li>
-                            <li class="dropdown">
+                        <!--<li class="side-menu">
+                            <a href="#">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="badge"></span>
+                                <p style="color: black;">Keranjang</p>
+                            </a>
+                        </li>-->
+                        <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="view_profil_pengguna.php">View Profil</a></li>
+                                <li><a href="view_profil_admin.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
                         </li>
-                        </ul>
-                    </div>
-                    <!-- End Atribute Navigation -->
+                    </ul>
                 </div>
+                <!-- End Atribute Navigation -->
+            </div>
             </div>
         </nav>
         <!-- End Navigation -->
     </header>
-    <!-- End Main Top -->
-
-    <!-- Start Main Top -->
-    <div class="main-top" >
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="text-slid-box">
-                        <div id="offer-box" class="carouselTicker">
-                            <ul class="offer-box">
-                                <li>
-                                    <i class="fab fa-opencart"></i> Selamat Datang <b><?php echo $_SESSION['username']; ?></b> Anda telah login sebagai <b><?php echo $_SESSION['level']; ?></b>.
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> 50% - 80% off on Vegetables
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> Off 10%! Shop Vegetables
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> Off 50%! Shop Now
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> Off 10%! Shop Vegetables
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> 50% - 80% off on Vegetables
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> 20% off Entire Purchase Promo code: offT30
-                                </li>
-                                <li>
-                                    <i class="fab fa-opencart"></i> Off 50%! Shop Now 
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- End Main Top -->
 
     <!-- Start Top Search -->
@@ -143,21 +106,97 @@ include 'koneksi.php';
     </div>
     <!-- End Top Search -->
 
+    <!-- Start Main Top -->
+    <div class="main-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="text-slid-box">
+                        <div id="offer-box" class="carouselTicker">
+                            <ul class="offer-box">
+                                <li>
+                                    <i class="fab fa-opencart"></i> Selamat Datang <b><?php echo $_SESSION['username']; ?></b> Anda telah login sebagai <b><?php echo $_SESSION['level']; ?></b>.
+                                </li>
+                                <li>
+                                    <i class="fab fa-opencart"></i> 
+                                    <?php
+
+                                    $sql_highlight1 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight1 = mysqli_fetch_array($sql_highlight1);
+                                    ?>
+                                    <?php echo $highlight1['highlight1']; ?>
+                                </li>
+                                <li>
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight2 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight2 = mysqli_fetch_array($sql_highlight2);
+                                    ?>
+                                    <?php echo $highlight2['highlight2']; ?>
+                                </li>
+                                <li>
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight3 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight3 = mysqli_fetch_array($sql_highlight3);
+                                    ?>
+                                    <?php echo $highlight3['highlight3']; ?>
+                                </li>
+                                <li>
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight4 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight4 = mysqli_fetch_array($sql_highlight4);
+                                    ?>
+                                    <?php echo $highlight4['highlight4']; ?>
+                                </li>
+                                <li>
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight5 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight5 = mysqli_fetch_array($sql_highlight5);
+                                    ?>
+                                    <?php echo $highlight5['highlight5']; ?>
+                                </li>
+                                <li>
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight6 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight6 = mysqli_fetch_array($sql_highlight6);
+                                    ?>
+                                    <?php echo $highlight6['highlight6']; ?>
+                                </li>
+                                <li>
+                                    <i class="fab fa-opencart"></i>
+                                    <?php
+
+                                    $sql_highlight7 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                    $highlight7 = mysqli_fetch_array($sql_highlight7);
+                                    ?>
+                                    <?php echo $highlight7['highlight7']; ?>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Main Top -->
+
     <!-- Start Slider -->
     <div id="slides-shop" class="cover-slides">
         <ul class="slides-container">
-            <li class="text-center">
+            <li class="#">
                 <img src="images/banner-01.jpg" alt="">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>Welcome To</strong></h1>
-                            <h1 class="m-b-40" style="font-size: 350%"><strong>AlfanAneka</strong></h1>
-                            <h1 class="m-b-40" style="font-size: 300%"><strong>MacamBibit</strong></h1>
-                            <p class="m-b-40">Penjualan Bibit Tanaman Terpercaya, Murah dan Berkualitas<br> Menerima Pengiriman secara diantar langsung maupun melalui jasa</p>
-                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
-                        </div>
-                    </div>
+                <div class="container" style="column-count: 2">
+                    <p style="margin: 500px auto;">Penjualan Bibit Tanaman Terpercaya, Murah dan Berkualitas<br> Menerima Pengiriman secara diantar langsung maupun melalui jasa</p>
+                    <p>Penjualan Bibit Tanaman Terpercaya, Murah dan Berkualitas<br> Menerima Pengiriman secara diantar langsung maupun melalui jasa</p>
                 </div>
             </li>
             <li class="text-center">
@@ -189,7 +228,7 @@ include 'koneksi.php';
                 </div>
             </li>
         </ul>
-        <div class="slides-navigation">
+        <div class="slides-navigation" id="tentang_kami">
             <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
             <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
         </div>
@@ -206,13 +245,13 @@ include 'koneksi.php';
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-4 col-sm-12 col-xs-12">
-                        <p style="font-size: 180%; color: black;">Kami adalah pengusaha bibit yang menjunjung tinggi kejujuran dalam bertransaksi dan keaslian bibit yang dijual, dan juga Kami adalah pengusaha tanpa dinaungi oleh CV sehingga harga bibit yang kami jual jauh lebih murah dan bibit yang dihasilkan juga berkualitas.</p>
+                    <p style="font-size: 180%; color: black;">Kami adalah pengusaha bibit yang menjunjung tinggi kejujuran dalam bertransaksi dan keaslian bibit yang dijual, dan juga Kami adalah pengusaha tanpa dinaungi oleh CV sehingga harga bibit yang kami jual jauh lebih murah dan bibit yang dihasilkan juga berkualitas.</p>
                 </div>
             </div>
         </div>
     </div>
     <!-- End Categories -->
-    
+
     <div class="box-add-products">
         <div class="container">
             <div class="row">
@@ -552,6 +591,7 @@ include 'koneksi.php';
     <script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
+
 </body>
 
 </html>

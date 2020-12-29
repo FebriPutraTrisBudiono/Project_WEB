@@ -63,8 +63,8 @@ include 'koneksi.php';
                             </ul>
                         </li>
 
-                            <li class="nav-item"><a class="nav-link" href="about.html">Tentang Kami</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Hubungi Kami</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->

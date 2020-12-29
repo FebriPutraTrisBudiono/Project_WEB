@@ -42,7 +42,7 @@ include 'koneksi.php';
     <header class="main-header">
         <!-- Start Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
-            <div class="container">
+            <div class="container" style="max-width: 1600px">
                 <!-- Start Header Navigation -->
                 <div class="navbar-header" style="margin: auto;">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
@@ -60,7 +60,7 @@ include 'koneksi.php';
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                         <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="list_bibit.php">List Bibit</a></li>
+                        <li class="nav-item"><a class="nav-link" href="list_bibit-guest.php">List Bibit</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tentang_kami">Tentang Kami</a></li>
                         <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
                     </ul>

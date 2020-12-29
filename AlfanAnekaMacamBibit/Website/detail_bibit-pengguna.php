@@ -1,40 +1,41 @@
-<?php
-session_start();
-
-include 'koneksi.php';
-?>
-<!DOCTYPE html>
+<?php 
+	session_start();
+	include"koneksi.php";	
+ ?>
+<!DOCTYPE HTML>
 <html>
 <head>
- <title>Halaman admin</title>
- <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Free Aditii Website Template | Home :: w3layouts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+<link href="css/detail_bibit.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/detail_bibit2.css" media="all" />
+<script type="text/javascript" src="asset/js/jquery.min.js"></script>
+<!-- start slider -->		
+	<script type="text/javascript" src="asset/js/cloud-zoom.1.0.3.min.js"></script>
+	<!--<script type="text/javascript" src="asset/js/productviewgallery.js"></script>-->
+	<link href="css/detail_bibit3.css" rel="stylesheet" type="text/css" media="all" />
+	<script type="text/javascript" src="asset/js/modernizr.custom.28468.js"></script>
+	<script type="text/javascript" src="asset/js/jquery.cslider.js"></script>
+	<script type="text/javascript">
+		
+	</script>
+			</script>
 
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Site Icons -->
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 
-    <!-- Site Metas -->
-    <title>AlfanAnekaMacamBibit</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Site CSS -->
+<link rel="stylesheet" href="css/style.css">
+<!-- Responsive CSS -->
+<link rel="stylesheet" href="css/responsive.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="css/custom.css">
 
-    <!-- Site Icons -->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Site CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Responsive CSS -->
-    <link rel="stylesheet" href="css/responsive.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/custom.css">
-
-    <link rel="stylesheet" type="text/css" href="css/form_edit.css">
-
-    <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
 <!-- Start Main Top -->
@@ -53,9 +54,7 @@ include 'koneksi.php';
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                             <li class="nav-item"><a class="nav-link" href="halaman_pengguna.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="list_bibit-pengguna.php">List Bibit</a></li>
-                        </li>
-
+                            <li class="nav-item active"><a class="nav-link" href="list_bibit-pengguna.php">List Bibit</a></li>
                             <li class="nav-item"><a class="nav-link" href="about.html">Tentang Kami</a></li>
                             <li class="nav-item"><a class="nav-link" href="contact-us.html">Hubungi Kami</a></li>
                         </ul>
@@ -74,7 +73,7 @@ include 'koneksi.php';
                             <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="view_profil_pengguna.php">View Profil</a></li>
+                                <li><a href="view_profil_admin.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
                         </li>
@@ -93,7 +92,9 @@ include 'koneksi.php';
         <div class="container">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search">
+                <form method="get" action="">
+                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
+                </form>
                 <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
             </div>
         </div>
@@ -188,68 +189,113 @@ include 'koneksi.php';
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Edit Profil</h2>
+                    <h2>Detail Bibit</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="halaman_pengguna.php">Home</a></li>
-                        <li class="breadcrumb-item"><a href="view_profil_pengguna.php">View Profil</a></li>
-                        <li class="breadcrumb-item active">Edit Profil</li>
+                        <li class="breadcrumb-item"><a href="halaman_admin.php">Home</a></li>
+                        <li class="breadcrumb-item"><a href="list_bibit.php">List Bibit</a></li>
+                        <li class="breadcrumb-item active">Detail Bibit</li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
     <!-- End All Title Box -->
-
-<br>
-    <?php
-    
-    if ($_SESSION['username']) {
-        $sesi = $_SESSION['username'];
-    }
-
-    $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
-    $data = mysqli_fetch_array($sql_profil);
-    ?>
-<div class="regform"><h1 style="color: white;"> Edit Profil </h1></div>
-    <div class="main">
-        <form action="process/update_pengguna.php" method="POST" enctype="multipart/form-data">
-            <div class="container">
-              <div class="row">
-                <div class="col-6 offset-md-3 ">
-                    <div class="form-group text-center" style="position: relative;" >
-                      <span class="img-div">
-                        <div class="text-center img-placeholder"  onClick="triggerClick()">
-                          <h4>Update image</h4>
-                        </div>
-                        <img src="foto/<?php echo $data['foto']?>" onClick="triggerClick()" id="profileDisplay">
-                        <input type="file" name="foto" onChange="displayImage(this)" id="foto" class="form-control" style="display: none;">
-                      </span>
-                    </div>
-                </div>
-              </div>
-            </div>
-
-            <h2 class="name">Nama</h2>
-            <input class="nama" type="text" name="nama" value="<?php echo $data['nama']; ?>" required>
-
-            <h2 class="name">Alamat</h2>
-            <textarea class="alamat" name="alamat" required><?php echo $data['alamat']; ?></textarea>
-
-            <h2 class="name">No Telepon</h2>
-            <input class="no_telepon" type="text" name="no_telepon" value="<?php echo $data['no_telepon']; ?>" required>
-
-            <h2 class="name">Username</h2>
-            <input class="username" type="text" name="username" value="<?php echo $data['username']; ?>" required>
-
-            <h2 class="name">Password</h2>
-            <input class="password" type="password" name="password" value="<?php echo $data['password']; ?>" required>
-
-            <center><td><input type="submit" name="edit" value="edit"> <a href="view_profil_pengguna.php"><input type="button" value="kembali"></a></td></center>
-        </form>
-    </div>
     <br>
 
-    <!-- Start Instagram Feed  -->
+<!----start-cursual---->
+<?php 
+	$idbarang = $_GET['idbarang'];
+	$sql = $koneksi->query("SELECT*FROM barang WHERE idbarang='$idbarang'");	
+	$review = $sql->fetch_array();
+ ?>
+<div class="wrap">	
+	<div class="main">
+		<!-- start content -->
+		<div class="single">
+			<!-- start span1_of_1 -->
+			<div class="left_content">
+				<div class="span1_of_1">
+					<!-- start product_slider -->
+					<div class="product-view">
+				    	<div class="product-essential">
+				        	<div class="product-img-box">
+				    			<div class="product-image"> 
+				        			<a class="cs-fancybox-thumbs cloud-zoom" rel="adjustX:30,adjustY:0,position:'right',tint:'#202020',tintOpacity:0.5,smoothMove:2,showTitle:true,titleOpacity:0.5" data-fancybox-group="thumb" href="foto_brg/<?=$review['foto_barang']?>" title="<?=$review['nama_barang']?>" alt="<?=$review['nama_barang']?>">
+				           			<img src="foto_brg/<?=$review['foto_barang']?>" style="width: 350px; height: 350px;" alt="<?=$review['nama_barang']?>" title="<?=$review['nama_barang']?>" />
+				        			</a>
+				   				</div>
+					
+							</div>
+						</div>
+					</div>
+					<!-- end product_slider -->
+				</div>
+			<!-- start span1_of_1 -->
+			<div class="span1_of_1_des">
+				<div class="desc1">
+					<h3 style="color: black; font-weight: bold;"><?=$review['nama_barang']?></h3>					
+					<h5 style="color: red;">Rp. <?=number_format($review['harga'])?></h5>
+					<div class="available">
+						<h4>Available Options :</h4>
+						<ul>
+							<input type="text" name="quantity" value="1" size="2">
+						</ul>
+						<div class="btn_form">
+							<form>
+								<input type="submit" value="add to cart" title="" />
+							</form>
+						</div>
+						<span class="span_right"><a href="login.php">login to add in cart </a></span>
+						<div class="clear"></div>
+						<br>
+						<button style="width: 300px; color: white; height: 50px; font-size: 20px;" class="btn btn-success btn-sm fab fa-whatsapp"> Beli Sekarang</button>
+					</div>
+			   	 </div>
+			   	</div>
+			   	<div class="clear"></div>
+			   	<!-- start tabs -->
+				   	<section class="tabs">
+		            <input id="tab-1" type="radio" name="radio-set" class="tab-selector-1" checked="checked">
+			        <label for="tab-1" class="tab-label-1">Deskripsi Barang</label>
+	          
+				    <div class="clear-shadow"></div>
+					
+			        <div class="content">
+				        <div class="content-1">
+				        	<?=$review['deskripsi']?>
+							<div class="clear"></div>
+						</div>
+				        <div class="content-2">
+							<p class="para"><span>WELCOME </span> Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections </p>
+							<ul class="qua_nav">
+								<li>Multimedia Systems</li>
+								<li>Digital media adapters</li>
+								<li>Set top boxes for HDTV and IPTV Player applications on various Operating Systems and Hardware Platforms</li>
+							</ul>
+						</div>
+				        <div class="content-3">
+				        	<p class="para top"><span>LOREM IPSUM</span> There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined </p>
+							<ul>
+								<li>Research</li>
+								<li>Design and Development</li>
+								<li>Porting and Optimization</li>
+								<li>System integration</li>
+								<li>Verification, Validation and Testing</li>
+								<li>Maintenance and Support</li>
+							</ul>
+							<div class="clear"></div>
+						</div>
+			        </div>
+			        </section>
+		         	<!-- end tabs -->
+			   	</div>
+          	    <div class="clear"></div>
+	       </div>	
+	<!-- end content -->
+	</div>
+</div>
+
+<!-- Start Instagram Feed  -->
     <div class="instagram-box">
         <div class="main-instagram owl-carousel owl-theme">
             <div class="item">
@@ -433,7 +479,7 @@ include 'koneksi.php';
     <!-- End Footer  -->
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
-
+    
     <!-- ALL JS FILES -->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -450,7 +496,6 @@ include 'koneksi.php';
     <script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
-    <script src="js/scripts.js"></script>
 
 </body>
 </html>

@@ -53,7 +53,7 @@ include 'koneksi.php';
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                             <li class="nav-item"><a class="nav-link" href="halaman_pengguna.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="gallery.html">List Bibit</a></li>
+                            <li class="nav-item"><a class="nav-link" href="list_bibit-pengguna.php">List Bibit</a></li>
                         </li>
 
                             <li class="nav-item"><a class="nav-link" href="about.html">Tentang Kami</a></li>

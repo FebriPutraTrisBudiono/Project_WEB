@@ -1,13 +1,12 @@
 <?php
 session_start();
 
-include 'koneksi.php';
+include "koneksi.php";
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
- <title>Halaman admin</title>
- <meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Mobile Metas -->
@@ -32,9 +31,7 @@ include 'koneksi.php';
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
 
-    <link rel="stylesheet" type="text/css" href="css/form_edit.css">
-
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/list_bibit.css">
 </head>
 <body>
 <!-- Start Main Top -->
@@ -53,9 +50,7 @@ include 'koneksi.php';
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                             <li class="nav-item"><a class="nav-link" href="halaman_pengguna.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="list_bibit-pengguna.php">List Bibit</a></li>
-                        </li>
-
+                            <li class="nav-item active"><a class="nav-link" href="list_bibit-pengguna.php">List Bibit</a></li>
                             <li class="nav-item"><a class="nav-link" href="about.html">Tentang Kami</a></li>
                             <li class="nav-item"><a class="nav-link" href="contact-us.html">Hubungi Kami</a></li>
                         </ul>
@@ -93,7 +88,9 @@ include 'koneksi.php';
         <div class="container">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search">
+                <form method="get" action="">
+                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
+                </form>
                 <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
             </div>
         </div>
@@ -188,11 +185,10 @@ include 'koneksi.php';
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Edit Profil</h2>
+                    <h2>List Bibit</h2>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="halaman_pengguna.php">Home</a></li>
-                        <li class="breadcrumb-item"><a href="view_profil_pengguna.php">View Profil</a></li>
-                        <li class="breadcrumb-item active">Edit Profil</li>
+                        <li class="breadcrumb-item active">List Bibit</li>
                     </ul>
                 </div>
             </div>
@@ -201,53 +197,73 @@ include 'koneksi.php';
     <!-- End All Title Box -->
 
 <br>
-    <?php
-    
-    if ($_SESSION['username']) {
-        $sesi = $_SESSION['username'];
+<?php 
+$query_mysqli = mysqli_query($koneksi,"SELECT * from barang");
+$nomor = 1;
+
+if (isset($_GET['cari'])) {
+   $query_mysqli = mysqli_query($koneksi, "SELECT * FROM barang WHERE nama_barang LIKE'%".$_GET['cari']."%'");
+   
+}
+   if(isset($_GET['umur'])){
+    $umur=$_GET['umur'];
+    $where = "";
+    if ($umur==-1){
+       $where = "WHERE umur < 6";
     }
-
-    $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
-    $data = mysqli_fetch_array($sql_profil);
+    if ($umur==0){
+       $where = "WHERE umur = 6";
+    }
+    if ($umur==1){
+       $where = "WHERE umur > 6";
+    }
+    var_dump($where);
+    $query_mysqli = mysqli_query($koneksi, "SELECT * FROM barang $where");
+}
     ?>
-<div class="regform"><h1 style="color: white;"> Edit Profil </h1></div>
-    <div class="main">
-        <form action="process/update_pengguna.php" method="POST" enctype="multipart/form-data">
-            <div class="container">
-              <div class="row">
-                <div class="col-6 offset-md-3 ">
-                    <div class="form-group text-center" style="position: relative;" >
-                      <span class="img-div">
-                        <div class="text-center img-placeholder"  onClick="triggerClick()">
-                          <h4>Update image</h4>
-                        </div>
-                        <img src="foto/<?php echo $data['foto']?>" onClick="triggerClick()" id="profileDisplay">
-                        <input type="file" name="foto" onChange="displayImage(this)" id="foto" class="form-control" style="display: none;">
-                      </span>
-                    </div>
-                </div>
-              </div>
+
+<div class="filter_umur">
+    <form method="get" action="">
+      <p>Filter Bibit:</p>
+      <input type="radio"  name="umur" value="-1">
+      <label > kurang dari 6 Bulan</label><br>
+      <input type="radio"  name="umur" value="0">
+      <label >6 Bulan</label><br>
+      <input type="radio"  name="umur" value="1">
+      <label >lebih dari 6 Bulan</label><br>
+      <input type="submit" name="button" value="Submit">
+    </form>
+</div>
+
+<div class="container-fluid" style="width: 1600px;">
+    <div class="row mx-auto">
+        <?php while ($data = mysqli_fetch_array($query_mysqli)){ ?>
+        <div class="card ml-2 mr-4 mt-5" style="width: 16rem;">
+            <center><img src="foto_brg/<?php echo $data['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 150px; height: 150px;"></center>
+            <div class="card-body">
+                <h3><?php echo $data['nama_barang']; ?></h3>
+                <h4>Rp<?php echo $data['harga']; ?></h4>
+                <p><?php echo $data['umur']; ?> Bulan</p><br>
+                <a href="detail_bibit-pengguna.php?idbarang=<?=$data['idbarang']?>" class="btn btn-primary" style="width: 213px;">Detail</a>
+                <a href="keranjang.php" class="btn btn-primary" style="background-color: red; border-width: 0px;">Tambahkan ke Keranjang</a>
+                
             </div>
-
-            <h2 class="name">Nama</h2>
-            <input class="nama" type="text" name="nama" value="<?php echo $data['nama']; ?>" required>
-
-            <h2 class="name">Alamat</h2>
-            <textarea class="alamat" name="alamat" required><?php echo $data['alamat']; ?></textarea>
-
-            <h2 class="name">No Telepon</h2>
-            <input class="no_telepon" type="text" name="no_telepon" value="<?php echo $data['no_telepon']; ?>" required>
-
-            <h2 class="name">Username</h2>
-            <input class="username" type="text" name="username" value="<?php echo $data['username']; ?>" required>
-
-            <h2 class="name">Password</h2>
-            <input class="password" type="password" name="password" value="<?php echo $data['password']; ?>" required>
-
-            <center><td><input type="submit" name="edit" value="edit"> <a href="view_profil_pengguna.php"><input type="button" value="kembali"></a></td></center>
-        </form>
+        </div>
+        <?php } ?> 
     </div>
-    <br>
+</div>
+
+<!--<select name="umur" id="s_jurusan" style="width: 200px;">
+    <option value="">Filter Bibit</option>
+    <option value="-1" name="umur"> <6 Bulan </option>
+    <option value="0" name="umur"> 6 Bulan </option>
+    <option value="1" name="umur"> >6 Bulan </option>
+    <input type="submit" name="button" value="Submit">
+</select>-->
+
+
+
+<br>
 
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">
@@ -434,6 +450,15 @@ include 'koneksi.php';
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
+    <script>
+    function confirmDelete(link) {
+      if (confirm("Data ini akan dihapus ?")) {
+        doAjax(link.href, "POST"); // doAjax needs to send the "confirm" field
+      }
+      return false;
+    }
+  </script>
+    
     <!-- ALL JS FILES -->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -450,7 +475,5 @@ include 'koneksi.php';
     <script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
-    <script src="js/scripts.js"></script>
-
 </body>
 </html>
