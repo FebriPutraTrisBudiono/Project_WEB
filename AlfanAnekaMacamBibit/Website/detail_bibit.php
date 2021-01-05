@@ -1,6 +1,87 @@
 <?php 
 	session_start();
-	include"koneksi.php";	
+	include "koneksi.php";
+
+$idbarang = $_GET['idbarang'];
+
+    if(isset($_POST['addprod'])){
+    if(!isset($_SESSION['username']))
+        {   
+            header('location:login.php');
+        } else {
+                $ui = $_SESSION['username'];
+                $cek = mysqli_query($koneksi,"SELECT * from cart where username='$ui' and status='Cart'");
+                $liat = mysqli_num_rows($cek);
+                $f = mysqli_fetch_array($cek);
+                $orid = $f['orderid'];
+                
+                //kalo ternyata udeh ada order id nya
+                if($liat>0){
+                            
+                            //cek barang serupa
+                            $cekbrg = mysqli_query($koneksi,"SELECT * from detailorder where idbarang='$idbarang' and orderid='$orid'");
+                            $liatlg = mysqli_num_rows($cekbrg);
+                            $brpbanyak = mysqli_fetch_array($cekbrg);
+                            $jmlh = $brpbanyak['qty'];
+                            
+                            //kalo ternyata barangnya ud ada
+                            if($liatlg>0){
+                                $i=1;
+                                $baru = $jmlh + $i;
+                                
+                                $updateaja = mysqli_query($koneksi,"update detailorder set qty='$baru' where orderid='$orid' and idbarang='$idbarang'");
+                                
+                                if($updateaja){
+                                    echo " <div class='alert alert-success'>
+                                Barang sudah pernah dimasukkan ke keranjang, jumlah akan ditambahkan
+                              </div>
+                              <meta http-equiv='refresh' content='1; url= detail_bibit.php?idbarang=".$idbarang."'/>";
+                                } else {
+                                    echo "<div class='alert alert-warning'>
+                                Gagal menambahkan ke keranjang
+                              </div>
+                              <meta http-equiv='refresh' content='1; url= detail_bibit.php?idbarang=".$idbarang."'/>";
+                                }
+                                
+                            } else {
+                            
+                            $tambahdata = mysqli_query($koneksi,"INSERT into detailorder (orderid,idbarang,qty) values('$orid','$idbarang','1')");
+                            if ($tambahdata){
+                            echo " <div class='alert alert-success'>
+                                Berhasil menambahkan ke keranjang
+                              </div>
+                            <meta http-equiv='refresh' content='1; url= detail_bibit.php?idbarang=".$idbarang."'/>  ";
+                            } else { echo "<div class='alert alert-warning'>
+                                Gagal menambahkan ke keranjang
+                              </div>
+                             <meta http-equiv='refresh' content='1; url= detail_bibit.php?idbarang=".$idbarang."'/> ";
+                            }
+                            };
+                } else {
+                    
+                    //kalo belom ada order id nya
+                        $oi = crypt(rand(22,999),time());
+                        
+                        $bikincart = mysqli_query($koneksi,"INSERT into cart (orderid, username) values('$oi','$ui')");
+                        
+                        if($bikincart){
+                            $tambahuser = mysqli_query($koneksi,"INSERT into detailorder (orderid,idbarang,qty) values('$oi','$idbarang','1')");
+                            if ($tambahuser){
+                            echo " <div class='alert alert-success'>
+                                Berhasil menambahkan ke keranjang
+                              </div>
+                            <meta http-equiv='refresh' content='1; url= detail_bibit.php?idbarang=".$idbarang."'/>  ";
+                            } else { echo "<div class='alert alert-warning'>
+                                Gagal menambahkan ke keranjang
+                              </div>
+                             <meta http-equiv='refresh' content='1; url= detail_bibit.php?idbarang=".$idbarang."'/> ";
+                            }
+                        } else {
+                            echo "gagal bikin cart";
+                        }
+                }
+        }
+};	
  ?>
 <!DOCTYPE HTML>
 <html>
@@ -55,14 +136,7 @@
                         <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                             <li class="nav-item"><a class="nav-link" href="halaman_admin.php">Home</a></li>
                             <li class="nav-item active"><a class="nav-link" href="list_bibit.php">List Bibit</a></li>
-                            <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Menu Edit</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="edit_informasi.php">Edit Informasi</a></li>
-                                <li><a href="update_stok.php">Update Stok Bibit</a></li>
-                                <li><a href="cart.html">Sub Menu 3</a></li>
-                            </ul>
-                        </li>
+                            <li class="nav-item"><a class="nav-link" href="admin/index.php">Menu Edit</a></li>
 
                             <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
                             <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
@@ -73,20 +147,27 @@
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-                            <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                            <li class="nav-item active">
+                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                        <li class="nav-item">
                             <a class="nav-link" href="keranjang.php">
-                                <i class="fa fa-shopping-bag"> Keranjang</i>
+                                <i class="fa fa-shopping-bag"></i>
                             </a>
                         </li>
-                            <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"></i></a>
-                            <ul class="dropdown-menu">
+                        <!--<li class="side-menu">
+                            <a href="#">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="badge"></span>
+                                <p style="color: black;">Keranjang</p>
+                            </a>
+                        </li>-->
+                        <li class="dropdown">
+                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></a>
+                            <ul class="dropdown-menu" style="left:-35px;">
                                 <li><a href="view_profil_admin.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
                         </li>
-                        </ul>
+                    </ul>
                     </div>
                     <!-- End Atribute Navigation -->
                 </div>
@@ -213,7 +294,7 @@
 
 <!----start-cursual---->
 <?php 
-	$idbarang = $_GET['idbarang'];
+	
 	$sql = $koneksi->query("SELECT*FROM barang WHERE idbarang='$idbarang'");	
 	$review = $sql->fetch_array();
  ?>
@@ -250,14 +331,14 @@
 							<input type="text" name="quantity" value="1" size="2">
 						</ul>
 						<div class="btn_form">
-							<form>
-								<input type="submit" value="add to cart" title="" />
+							<form method="POST" action="">
+								<input type="submit" value="add to cart" name="addprod" title="">
+                                <div class="clear"></div>
+                                <br>
+                                <button style="width: 300px; color: white; height: 50px; font-size: 20px;" class="btn btn-success btn-sm fab fa-whatsapp"> Beli Sekarang</button>
 							</form>
 						</div>
-						<span class="span_right"><a href="login.php">login to add in cart </a></span>
-						<div class="clear"></div>
-						<br>
-						<button style="width: 300px; color: white; height: 50px; font-size: 20px;" class="btn btn-success btn-sm fab fa-whatsapp"> Beli Sekarang</button>
+						
 					</div>
 			   	 </div>
 			   	</div>

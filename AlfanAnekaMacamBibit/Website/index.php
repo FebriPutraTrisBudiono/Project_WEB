@@ -42,7 +42,7 @@ include 'koneksi.php';
     <header class="main-header">
         <!-- Start Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
-            <div class="container" style="max-width: 1600px">
+            <div class="container">
                 <!-- Start Header Navigation -->
                 <div class="navbar-header" style="margin: auto;">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
@@ -59,7 +59,7 @@ include 'koneksi.php';
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="list_bibit-guest.php">List Bibit</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tentang_kami">Tentang Kami</a></li>
                         <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
@@ -81,6 +81,20 @@ include 'koneksi.php';
         <!-- End Navigation -->
     </header>
     <!-- End Main Top -->
+
+    <!-- Start Top Search -->
+    <div class="top-search">
+        <div class="container">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <form method="get" action="list_bibit-guest.php">
+                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
+                </form>
+                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+            </div>
+        </div>
+    </div>
+    <!-- End Top Search -->
 
     <!-- Start Main Top -->
     <div class="main-top">
@@ -164,18 +178,6 @@ include 'koneksi.php';
         </div>
     </div>
     <!-- End Main Top -->
-
-    <!-- Start Top Search -->
-    <div class="top-search">
-        <div class="container">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search">
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
-            </div>
-        </div>
-    </div>
-    <!-- End Top Search -->
 
     <!-- Start Slider -->
     <div id="slides-shop" class="cover-slides">

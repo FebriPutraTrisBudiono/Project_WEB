@@ -2,6 +2,13 @@
 session_start();
 
 include "koneksi.php";
+
+if ($_SESSION['username']) {
+        $sesi = $_SESSION['username'];
+    }
+
+    $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
+    $data_sesi = mysqli_fetch_array($sql_profil);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +45,7 @@ include "koneksi.php";
     <header class="main-header">
         <!-- Start Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
-            <div class="container" style="max-width: 1600px">
+            <div class="container">
                     <!-- Start Header Navigation -->
                     <div class="navbar-header" style="margin: auto;">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
@@ -51,15 +58,7 @@ include "koneksi.php";
                         <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                             <li class="nav-item"><a class="nav-link" href="halaman_admin.php">Home</a></li>
                             <li class="nav-item active"><a class="nav-link" href="list_bibit.php">List Bibit</a></li>
-                            <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Menu Edit</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="edit_informasi.php">Edit Informasi</a></li>
-                                <li><a href="update_stok.php">Update Stok Bibit</a></li>
-                                <li><a href="cart.html">Sub Menu 3</a></li>
-                            </ul>
-                        </li>
-
+                            <li class="nav-item"><a class="nav-link" href="admin/index.php">Menu Edit</a></li>
                             <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
                             <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
                         </ul>
@@ -69,20 +68,27 @@ include "koneksi.php";
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-                            <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                            <li class="nav-item active">
+                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                        <li class="nav-item">
                             <a class="nav-link" href="keranjang.php">
-                                <i class="fa fa-shopping-bag"> Keranjang</i>
+                                <i class="fa fa-shopping-bag"></i>
                             </a>
                         </li>
-                            <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"></i></a>
-                            <ul class="dropdown-menu">
+                        <!--<li class="side-menu">
+                            <a href="#">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="badge"></span>
+                                <p style="color: black;">Keranjang</p>
+                            </a>
+                        </li>-->
+                        <li class="dropdown">
+                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></a>
+                            <ul class="dropdown-menu" style="left:-35px;">
                                 <li><a href="view_profil_admin.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
                         </li>
-                        </ul>
+                    </ul>
                     </div>
                     <!-- End Atribute Navigation -->
                 </div>
@@ -253,7 +259,7 @@ if (isset($_GET['cari'])) {
                 <h3><?php echo $data['nama_barang']; ?></h3>
                 <h4>Rp<?php echo $data['harga']; ?></h4>
                 <p><?php echo $data['umur']; ?> Bulan</p><br>
-                <a href="detail_bibit.php?idbarang=<?=$data['idbarang']?>" class="btn btn-primary" style="width: 213px;">Detail</a>
+                <a href="detail_bibit.php?username=<?=$data_sesi['username']?>&&idbarang=<?=$data['idbarang']?>" class="btn btn-primary" style="width: 213px;">Detail</a>
                 <a href="keranjang.php" class="btn btn-primary" style="background-color: red; border-width: 0px;">Tambahkan ke Keranjang</a>
                 
             </div>

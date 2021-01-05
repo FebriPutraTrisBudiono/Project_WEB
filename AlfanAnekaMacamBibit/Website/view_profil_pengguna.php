@@ -41,11 +41,11 @@ include 'koneksi.php';
     <header class="main-header">
         <!-- Start Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
-            <div class="container" style="max-width: 1600px">
+            <div class="container">
                     <!-- Start Header Navigation -->
                     <div class="navbar-header" style="margin: auto;">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                        <a class="navbar-brand" href="index.php"><img src="images/logobaru.png" class="logo" alt=""></a>
+                        <a class="navbar-brand" href="halaman_pengguna.php"><img src="images/logobaru.png" class="logo" alt=""></a>
                     </div>
                     <!-- End Header Navigation -->
     
@@ -65,20 +65,27 @@ include 'koneksi.php';
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-                            <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                            <li class="nav-item active">
-                            <a class="nav-link" href="keranjang.php">
-                                <i class="fa fa-shopping-bag"> Keranjang</i>
+                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="keranjang-pengguna.php">
+                                <i class="fa fa-shopping-bag"></i>
                             </a>
                         </li>
-                            <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"></i></a>
-                            <ul class="dropdown-menu">
+                        <!--<li class="side-menu">
+                            <a href="#">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="badge"></span>
+                                <p style="color: black;">Keranjang</p>
+                            </a>
+                        </li>-->
+                        <li class="dropdown">
+                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></a>
+                            <ul class="dropdown-menu" style="left:-35px;">
                                 <li><a href="view_profil_pengguna.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
                         </li>
-                        </ul>
+                    </ul>
                     </div>
                     <!-- End Atribute Navigation -->
                 </div>
@@ -93,7 +100,9 @@ include 'koneksi.php';
         <div class="container">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search">
+                <form method="get" action="list_bibit-pengguna.php">
+                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
+                </form>
                 <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
             </div>
         </div>

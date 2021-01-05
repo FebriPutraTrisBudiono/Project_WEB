@@ -82,8 +82,8 @@ include 'koneksi.php';
           </div>
           
           <div class="text-right p-t-8 p-b-31">
-            <a href="#">
-              Forgot password?
+            <a href="forgot_pass.php">
+              Lupa password?
             </a>
           </div>
           

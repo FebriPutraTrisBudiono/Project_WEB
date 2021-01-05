@@ -1,17 +1,11 @@
-<?php
+<?php 
+// isi nama host, username mysql, dan password mysql anda
+$conn = mysqli_connect("localhost","root","","latihan_tokopekita");
 
-/* Dibuat Oleh D_ziem */
-
-  $DB_host = "localhost";
-  $DB_user = "root";
-  $DB_pass = "";
-  $DB_name = "stok_barang";
-  
-  $MySQLi_CON = new MySQLi($DB_host,$DB_user,$DB_pass,$DB_name);
-    
-     if($MySQLi_CON->connect_errno)
-     {
-         die("ERROR : -> ".$MySQLi_CON->connect_error);
-     }
+if(!$conn){
+	echo "gagal konek database menn";
+} else {
+	
+};
 
 ?>

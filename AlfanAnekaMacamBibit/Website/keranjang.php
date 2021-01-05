@@ -1,137 +1,116 @@
 <?php
 session_start();
-
 include 'koneksi.php';
 
-// add, remove, empty
-if (!empty($_GET['action'])) {
-    switch ($_GET['action']) {
-        // add product to cart
-        case 'add':
-            if (!empty($_POST['quantity'])) {
-                $pid = $_GET['pid'];
-                $query = "SELECT * FROM products WHERE id=" . $pid;
-                $result = mysqli_query($koneksi, $query);
-                while ($product = mysqli_fetch_array($result)) {
-                    $itemArray = [
-                        $product['code'] => [
-                            'name' => $product['name'],
-                            'code' => $product['code'],
-                            'quantity' => $_POST['quantity'],
-                            'price' => $product['price'],
-                            'image' => $product['image']
-                        ]
-                    ];
-                    if (isset($_SESSION['cart_item']) &&!empty($_SESSION['cart_item'])) {
-                        if (in_array($product['code'], array_keys($_SESSION['cart_item']))) {
-                            foreach ($_SESSION['cart_item'] as $key => $value) {
-                                if ($product['code'] == $key) {
-                                    if (empty($_SESSION['cart_item'][$key]["quantity"])) {
-                                        $_SESSION['cart_item'][$key]['quantity'] = 0;
-                                    }
-                                    $_SESSION['cart_item'][$key]['quantity'] += $_POST['quantity'];
-                                }
-                            }
-                        } else {
-                            $_SESSION['cart_item'] += $itemArray;
-                        }
-                    } else {
-                        $_SESSION['cart_item'] = $itemArray;
-                    }
-                }
-            }
-            break;
-        case 'remove':
-            if (!empty($_SESSION['cart_item'])) {
-                foreach ($_SESSION['cart_item'] as $key => $value) {
-                    if ($_GET['code'] == $key) {
-                        unset($_SESSION['cart_item'][$key]);
-                    }
-                    if (empty($_SESSION['cart_item'])) {
-                        unset($_SESSION['cart_item']);
-                    }
-                }
-            }
-            break;
-        case 'empty':
-            unset($_SESSION['cart_item']);
-            break;
+if(!isset($_SESSION['username'])){
+    header('location:login.php');
+} else {
+    
+};
+    
+    $uid = $_SESSION['username'];
+    $caricart = mysqli_query($koneksi,"SELECT * from cart where username='$uid' and status='Cart'");
+    $fetc = mysqli_fetch_array($caricart);
+    $orderidd = $fetc['orderid'];
+    $itungtrans = mysqli_query($koneksi,"SELECT count(detailid) as jumlahtrans from detailorder where orderid='$orderidd'");
+    $itungtrans2 = mysqli_fetch_assoc($itungtrans);
+    $itungtrans3 = $itungtrans2['jumlahtrans'];
+    
+if(isset($_POST["update"])){
+    $kode = $_POST['idbarangnya'];
+    $jumlah = $_POST['jumlah'];
+    $q1 = mysqli_query($koneksi, "UPDATE detailorder set qty='$jumlah' where idbarang='$kode' and orderid='$orderidd'");
+    if($q1){
+        echo "Berhasil Update Cart
+        <meta http-equiv='refresh' content='1; url= keranjang.php'/>";
+    } else {
+        echo "Gagal update cart
+        <meta http-equiv='refresh' content='1; url= keranjang.php'/>";
+    }
+} else if(isset($_POST["hapus"])){
+    $kode = $_POST['idbarangnya'];
+    $q2 = mysqli_query($koneksi, "DELETE from detailorder where idbarang='$kode' and orderid='$orderidd'");
+    if($q2){
+        echo "Berhasil Hapus";
+    } else {
+        echo "Gagal Hapus";
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Halaman admin</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Tokopekita - Keranjang Saya</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Tokopekita, Richard's Lab" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+        function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //for-mobile-apps -->
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
 
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Site Metas -->
-    <title>AlfanAnekaMacamBibit</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Site Icons -->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Site CSS -->
     <link rel="stylesheet" href="css/style.css">
     <!-- Responsive CSS -->
     <link rel="stylesheet" href="css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
 
+<link href="css/keranjang.css" rel="stylesheet" type="text/css" media="all" />
+<!-- font-awesome icons -->
+<link href="" rel="stylesheet"> 
+<!-- //font-awesome icons -->
+<!-- js -->
+<script src="js/jquery-1.11.1.min.js"></script>
+<!-- //js -->
+<link href='//fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<!-- start-smoth-scrolling -->
+<script type="text/javascript" src="js/move-top.js"></script>
+<script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $(".scroll").click(function(event){     
+            event.preventDefault();
+            $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+        });
+    });
+</script>
+<!-- start-smoth-scrolling -->
 </head>
-
-<body>
-    <!-- Start Main Top -->
+<!-- Start Main Top -->
     <header class="main-header">
         <!-- Start Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
-            <div class="container" style="max-width: 1600px">
-                <!-- Start Header Navigation -->
-                <div class="navbar-header" style="margin: auto;">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                    <a class="navbar-brand" href="index.php"><img src="images/logobaru.png" class="logo" alt=""></a>
-                </div>
-                <!-- End Header Navigation -->
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="navbar-menu">
-                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item"><a class="nav-link" href="halaman_admin.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="gallery.html">List Bibit</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Menu Edit</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="edit_informasi.php">Edit Informasi</a></li>
-                                <li><a href="shop-detail.html">Sub Menu 2</a></li>
-                                <li><a href="cart.html">Sub Menu 3</a></li>
-                            </ul>
+            <div class="container">
+                    <!-- Start Header Navigation -->
+                    <div class="navbar-header" style="margin: auto;">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+                        <a class="navbar-brand" href="index.php"><img src="images/logobaru.png" class="logo" alt=""></a>
+                    </div>
+                    <!-- End Header Navigation -->
+    
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="navbar-menu">
+                        <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                            <li class="nav-item"><a class="nav-link" href="halaman_admin.php">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="list_bibit.php">List Bibit</a></li>
+                            <li class="nav-item"><a class="nav-link" href="admin/index.php">Menu Edit</a></li>
                         </li>
 
-                        <li class="nav-item"><a class="nav-link" href="#tentang_kami">Tentang Kami</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-
-                <!-- Start Atribute Navigation -->
-                <div class="attr-nav">
-                    <ul>
+                            <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+    
+                    <!-- Start Atribute Navigation -->
+                    <div class="attr-nav">
+                        <ul>
                         <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="keranjang.php">
-                                <i class="fa fa-shopping-bag"> Keranjang</i>
+                                <i class="fa fa-shopping-bag"></i>
                             </a>
                         </li>
                         <!--<li class="side-menu">
@@ -142,36 +121,36 @@ if (!empty($_GET['action'])) {
                             </a>
                         </li>-->
                         <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"></i></a>
-                            <ul class="dropdown-menu">
+                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></a>
+                            <ul class="dropdown-menu" style="left:-35px;">
                                 <li><a href="view_profil_admin.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
                         </li>
                     </ul>
+                    </div>
+                    <!-- End Atribute Navigation -->
                 </div>
-                <!-- End Atribute Navigation -->
-            </div>
             </div>
         </nav>
         <!-- End Navigation -->
     </header>
     <!-- End Main Top -->
-
     <!-- Start Top Search -->
     <div class="top-search">
         <div class="container">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search">
+                <form method="get" action="list_bibit.php">
+                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
+                </form>
                 <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
             </div>
         </div>
     </div>
     <!-- End Top Search -->
-
     <!-- Start Main Top -->
-    <div class="main-top">
+    <div class="main-top" >
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -252,198 +231,138 @@ if (!empty($_GET['action'])) {
         </div>
     </div>
     <!-- End Main Top -->
-<br>
-
-<div class="container py-5">
-    <div class="d-flex justify-content-between mb-2">
-        <h3>Cart</h3>
-        <a class="btn btn-danger" href="keranjang.php?action=empty">All Item Remove</a>
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Keranjang</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="halaman_admin.php">Home</a></li>
+                        <li class="breadcrumb-item active">Keranjang</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row">
-        <?php
-            $total_quantity = 0;
-            $total_price = 0;
-        ?>
-        <table class="table">
-            <tbody>
-            <tr>
-                <th class="text-left">Name</th>
-                <th class="text-left">Code</th>
-                <th class="text-right">Quantity</th>
-                <th class="text-right">Item Price</th>
-                <th class="text-right">Price</th>
-                <th class="text-center">Remove</th>
-            </tr>
-            <?php
-            if (isset($_SESSION['cart_item']) && !empty($_SESSION['cart_item'])){
-                foreach ($_SESSION['cart_item'] as $item) {
-                    $item_price = $item['quantity'] * $item['price'];
+    <!-- End All Title Box -->
+
+
+<body>
+<!-- checkout -->
+    <div class="checkout">
+        <div class="container">
+            <h2 style="font-size: 20px; font-weight: bold;">Dalam keranjangmu ada : <span><?php echo $itungtrans3 ?> barang</span></h2>
+            <div class="checkout-right">
+                <table class="timetable_sub">
+                    <thead>
+                        <tr>
+                            <th>No.</th>    
+                            <th>Produk</th>
+                            <th>Nama Produk</th>
+                            <th>Umur</th>
+                            <th>Jumlah</th>
+                            
+                        
+                            <th>Harga Satuan</th>
+                            <th>Sub Total</th>
+                            <th>Hapus</th>
+                        </tr>
+                    </thead>
+                    
+                    <?php 
+                        $brg=mysqli_query($koneksi,"SELECT * from detailorder d, barang p where orderid='$orderidd' and d.idbarang=p.idbarang order by d.idbarang ASC");
+                        $no=1;
+                        while($b=mysqli_fetch_array($brg)){
+
                     ?>
-                    <tr>
-                        <td class="text-left">
-                            <img src="<?php $item['image'] ?>" alt="<?= $item['name'] ?>" class="img-fluid" width="100">
-                            <?= $item['name'] ?>
+                    <tr class="rem1"><form method="post">
+                        <td class="invert"><?php echo $no++ ?></td>
+                        <td class="invert"><a href="detail_bibit.php?idbarang=<?php echo $b['idbarang'] ?>"><img src="foto_brg/<?=$b['foto_barang'] ?>" width="100px" height="100px" /></a></td>
+                        <td class="invert"><?php echo $b['nama_barang'] ?></td>
+                        <td class="invert"><?php echo $b['umur']?></td>
+                        <td class="invert">
+                             <div class="quantity"> 
+                                <div class="quantity-SELECT">                     
+                                    <input type="number" name="jumlah" class="form-control" height="100px" value="<?php echo $b['qty'] ?>" \>
+                                </div>
+                            </div>
                         </td>
-                        <td class="text-left"><?= $item['code'] ?></td>
-                        <td class="text-right"><?= $item['quantity'] ?></td>
-                        <td class="text-right">₹<?= number_format($item['price'], 2) ?></td>
-                        <td class="text-right">₹<?= number_format($item_price, 2) ?></td>
-                        <td class="text-center">
-                            <a href="keranjang.php?action=remove&code=<?= $item['code']; ?>" class="btn btn-danger">X</a>
+                
+                        <td class="invert">Rp<?php echo number_format($b['harga']) ?></td>
+                        <td class="invert">
+                            <?php
+                            $hrg = $b['harga'];
+                            $qtyy = $b['qty'];
+                            $totalharga = $hrg * $qtyy;
+                            ?>
+                            Rp<?php echo number_format($totalharga) ?></td>
+                        <td class="invert">
+                            <div class="rem">
+                            
+                                <input type="submit" name="update" class="form-control" value="Update" \>
+                                <input type="hidden" name="idbarangnya" value="<?php echo $b['idbarang'] ?>" \>
+                                <input type="submit" name="hapus" class="form-control" value="Hapus" \>
+                            </form>
+                            </div>
+                            <script>$(document).ready(function(c) {
+                                $('.close1').on('click', function(c){
+                                    $('.rem1').fadeOut('slow', function(c){
+                                        $('.rem1').remove();
+                                    });
+                                    });   
+                                });
+                           </script>
                         </td>
                     </tr>
-
                     <?php
-                    $total_quantity += $item["quantity"];
-                    $total_price += ($item["price"]*$item["quantity"]);
-                }
-            }
-
-            if (isset($_SESSION['cart_item']) && !empty($_SESSION['cart_item'])){
-                ?>
-                <tr>
-                    <td colspan="2" align="right">Total:</td>
-                    <td align="right"><strong><?= $total_quantity ?></strong></td>
-                    <td></td>
-                    <td align="right"><strong>₹<?= number_format($total_price, 2); ?></strong></td>
-                    <td></td>
-                </tr>
-
-            <?php }
-
-                ?>
-            </tbody>
-        </table>
-    </div>
-
-
-    <!-- first done this -->
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Products List</h1>
-            <div class="d-flex">
-                <div class="card-deck">
-                    <?php
-                    $query = "SELECT * FROM products";
-                    $product = mysqli_query($koneksi, $query);
-                    if (!empty($product)) {
-                        while ($row = mysqli_fetch_array($product)) { ?>
-                            <form action="keranjang.php?action=add&pid=<?= $row['id']; ?>" method="post">
-                                <div class="card" style="width:18rem">
-                                    <img class="card-img-top"
-                                         src="produk/<?php echo $row['image']; ?>"
-                                         alt="<?= $row['name']; ?>"
-                                         width="150">
-                                    <div class="card-header d-flex justify-content-between">
-                                        <span><?= $row['name']; ?></span>
-                                        <span>₹<?= number_format($row['price'], 2); ?></span>
-                                    </div>
-                                    <div class="card-body d-flex justify-content-between">
-                                        <input type="text" name="quantity" value="1" size="2">
-                                        <input type="submit" value="Add to Cart" class="btn btn-success btn-sm">
-                                    </div>
-                                </div>
-                            </form>
-                        <?php }
-                    } else {
-                        echo "no products available";
-                    }
+                        }
                     ?>
+                    
+                                <!--quantity-->
+                                    <script>
+                                    $('.value-plus').on('click', function(){
+                                        var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
+                                        divUpd.text(newVal);
+                                    });
+
+                                    $('.value-minus').on('click', function(){
+                                        var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
+                                        if(newVal>=1) divUpd.text(newVal);
+                                    });
+                                    </script>
+                                <!--quantity-->
+                </table>
+            </div>
+            <div class="checkout-left"> 
+                <div class="checkout-left-basket">
+                    <h4>Total Harga</h4>
+                    <ul>
+                        <?php 
+                        $brg=mysqli_query($koneksi,"SELECT * from detailorder d, barang p where orderid='$orderidd' and d.idbarang=p.idbarang order by d.idbarang ASC");
+                            $no=1;
+                            $subtotal = 0;
+                        while($b=mysqli_fetch_array($brg)){
+                        $hrg = $b['harga'];
+                        $qtyy = $b['qty'];
+                        $totalharga = $hrg * $qtyy;
+                        $subtotal += $totalharga
+                        ?>
+                        <?php
+                        }
+                        ?>
+                        <li>Total<i></i> <span>Rp<?php echo number_format($subtotal) ?></span></li>
+                    </ul>
                 </div>
+                <div class="checkout-right-basket">
+                    <a href="list_bibit.php"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Continue Shopping</a>
+                    <a href="checkout.php"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>Checkout</a>
+                </div>
+                <div class="clearfix"> </div>
             </div>
         </div>
     </div>
-</div>
-
-<br>
-    <!-- Start Instagram Feed  -->
-    <div class="instagram-box">
-        <div class="main-instagram owl-carousel owl-theme">
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-01.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-02.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-03.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-04.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-06.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-07.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-08.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-09.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Instagram Feed  -->
-
-
+<!-- //checkout -->
     <!-- Start Footer  -->
     <footer id="hubungi_kami">
         <div class="footer-main">
@@ -559,6 +478,41 @@ if (!empty($_GET['action'])) {
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
 
-</body>
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
 
+<!-- top-header and slider -->
+<!-- here stars scrolling icon -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            
+                var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 4000,
+                easingType: 'linear' 
+                };
+            
+                                
+            $().UItoTop({ easingType: 'easeOutQuart' });
+                                
+            });
+    </script>
+<!-- //here ends scrolling icon -->
+
+<!-- main slider-banner -->
+<script src="js/skdslider.min.js"></script>
+<link href="css/skdslider.css" rel="stylesheet">
+<script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery('#demo1').skdslider({'delay':5000, 'animationSpeed': 2000,'showNextPrev':true,'showPlayButton':true,'autoSlide':true,'animationType':'fading'});
+                        
+            jQuery('#responsive').change(function(){
+              $('#responsive_wrapper').width(jQuery(this).val());
+            });
+            
+        });
+</script>   
+<!-- //main slider-banner --> 
+</body>
 </html>

@@ -40,7 +40,7 @@ include 'koneksi.php';
     <header class="main-header">
         <!-- Start Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
-            <div class="container" style="max-width: 1600px">
+            <div class="container">
                     <!-- Start Header Navigation -->
                     <div class="navbar-header" style="margin: auto;">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
@@ -52,15 +52,8 @@ include 'koneksi.php';
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                             <li class="nav-item"><a class="nav-link" href="halaman_admin.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="gallery.html">List Bibit</a></li>
-                            <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Menu Edit</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="edit_informasi.php">Edit Informasi</a></li>
-                                <li><a href="shop-detail.html">Sub Menu 2</a></li>
-                                <li><a href="cart.html">Sub Menu 3</a></li>
-                            </ul>
-                        </li>
+                            <li class="nav-item"><a class="nav-link" href="list_bibit.php">List Bibit</a></li>
+                            <li class="nav-item"><a class="nav-link" href="admin/index.php">Menu Edit</a></li>
 
                             <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
                             <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
@@ -71,20 +64,27 @@ include 'koneksi.php';
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-                            <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                            <li class="nav-item active">
+                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                        <li class="nav-item">
                             <a class="nav-link" href="keranjang.php">
-                                <i class="fa fa-shopping-bag"> Keranjang</i>
+                                <i class="fa fa-shopping-bag"></i>
                             </a>
                         </li>
-                            <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"></i></a>
-                            <ul class="dropdown-menu">
+                        <!--<li class="side-menu">
+                            <a href="#">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="badge"></span>
+                                <p style="color: black;">Keranjang</p>
+                            </a>
+                        </li>-->
+                        <li class="dropdown">
+                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></a>
+                            <ul class="dropdown-menu" style="left:-35px;">
                                 <li><a href="view_profil_admin.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
                         </li>
-                        </ul>
+                    </ul>
                     </div>
                     <!-- End Atribute Navigation -->
                 </div>
@@ -99,13 +99,14 @@ include 'koneksi.php';
         <div class="container">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search">
+                <form method="get" action="list_bibit.php">
+                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
+                </form>
                 <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
             </div>
         </div>
     </div>
     <!-- End Top Search -->
-
     <!-- Start Main Top -->
     <div class="main-top" >
         <div class="container-fluid">

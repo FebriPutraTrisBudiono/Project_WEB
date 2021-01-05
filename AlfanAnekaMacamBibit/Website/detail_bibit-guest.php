@@ -42,7 +42,7 @@
     <header class="main-header">
         <!-- Start Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
-            <div class="container" style="max-width: 1600px">
+            <div class="container">
                     <!-- Start Header Navigation -->
                     <div class="navbar-header" style="margin: auto;">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
@@ -224,17 +224,9 @@
 				<div class="desc1">
 					<h3 style="color: black; font-weight: bold;"><?=$review['nama_barang']?></h3>					
 					<h5 style="color: red;">Rp. <?=number_format($review['harga'])?></h5>
+                    <label style="color: black; font-size: 18px;">Umur : <?=$review['umur']?></label>
 					<div class="available">
-						<h4>Available Options :</h4>
-						<ul>
-							<input type="text" name="quantity" value="1" size="2">
-						</ul>
-						<div class="btn_form">
-							<form>
-								<input type="submit" value="add to cart" title="" />
-							</form>
-						</div>
-						<span class="span_right"><a href="login.php">login to add in cart </a></span>
+						<span class="span_left"><a href="login.php">login to add in cart </a></span>
 						<div class="clear"></div>
 						<br>
 						<button style="width: 300px; color: white; height: 50px; font-size: 20px;" class="btn btn-success btn-sm fab fa-whatsapp"> Beli Sekarang</button>

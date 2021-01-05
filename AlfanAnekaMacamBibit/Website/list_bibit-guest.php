@@ -38,7 +38,7 @@ include "koneksi.php";
     <header class="main-header">
         <!-- Start Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
-            <div class="container" style="max-width: 1600px">
+            <div class="container">
                     <!-- Start Header Navigation -->
                     <div class="navbar-header" style="margin: auto;">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
@@ -77,7 +77,7 @@ include "koneksi.php";
         <div class="container">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <form method="get" action="">
+                <form method="get" action="list_bibit-guest.php">
                     <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
                 </form>
                 <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
@@ -234,8 +234,6 @@ if (isset($_GET['cari'])) {
                 <h4>Rp<?php echo $data['harga']; ?></h4>
                 <p><?php echo $data['umur']; ?> Bulan</p><br>
                 <a href="detail_bibit-guest.php?idbarang=<?=$data['idbarang']?>" class="btn btn-primary" style="width: 213px;">Detail</a>
-                <a href="keranjang.php" class="btn btn-primary" style="background-color: red; border-width: 0px;">Tambahkan ke Keranjang</a>
-                
             </div>
         </div>
         <?php } ?> 
