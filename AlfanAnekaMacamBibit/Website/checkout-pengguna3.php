@@ -1,41 +1,6 @@
 <?php
 session_start();
 include 'koneksi.php';
-
-if(!isset($_SESSION['username'])){
-    header('location:login.php');
-} else {
-    
-};
-    
-    $uid = $_SESSION['username'];
-    $caricart = mysqli_query($koneksi,"SELECT * from cart where username='$uid' and status='Cart'");
-    $fetc = mysqli_fetch_array($caricart);
-    $orderidd = $fetc['orderid'];
-    $itungtrans = mysqli_query($koneksi,"SELECT count(detailid) as jumlahtrans from detailorder where orderid='$orderidd'");
-    $itungtrans2 = mysqli_fetch_assoc($itungtrans);
-    $itungtrans3 = $itungtrans2['jumlahtrans'];
-    
-if(isset($_POST["update"])){
-    $kode = $_POST['idbarangnya'];
-    $jumlah = $_POST['jumlah'];
-    $q1 = mysqli_query($koneksi, "UPDATE detailorder set qty='$jumlah' where idbarang='$kode' and orderid='$orderidd'");
-    if($q1){
-        echo "Berhasil Update Cart
-        <meta http-equiv='refresh' content='1; url= keranjang-pengguna.php'/>";
-    } else {
-        echo "Gagal update cart
-        <meta http-equiv='refresh' content='1; url= keranjang-pengguna.php'/>";
-    }
-} else if(isset($_POST["hapus"])){
-    $kode = $_POST['idbarangnya'];
-    $q2 = mysqli_query($koneksi, "DELETE from detailorder where idbarang='$kode' and orderid='$orderidd'");
-    if($q2){
-        echo "Berhasil Hapus";
-    } else {
-        echo "Gagal Hapus";
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -240,11 +205,6 @@ if(isset($_POST["update"])){
 <br>
 <div class="container">
     <div class="grid-container">
-        <form class="contact100-form validate-form" id="whatsapp">
-        <div><label style="color: green;">Alamat Pengiriman</label></div>
-        <div></div>
-        <div></div>
-        <div></div>
         <?php
     
         if ($_SESSION['username']) {
@@ -254,6 +214,11 @@ if(isset($_POST["update"])){
         $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
         $data = mysqli_fetch_array($sql_profil);
         ?>
+        <form class="contact100-form validate-form" id="whatsapp">
+        <div><label style="color: green;">Alamat Pengiriman</label></div>
+        <div></div>
+        <div></div>
+        <div></div>
         <div>
             <input class="tujuan" type="hidden" id="noAdmin">
           <div class="wrap-input100">
@@ -279,20 +244,8 @@ if(isset($_POST["update"])){
         <div>
             <a href="#" style="color: blue;">Ubah</a>
         </div>
-        <div><div><label style="color: green;">Produk Dipesan</label></div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-
-        <?php 
-            $brg=mysqli_query($koneksi,"SELECT * from detailorder d, barang p where orderid='$orderidd' and d.idbarang=p.idbarang order by d.idbarang ASC");
-            
-            $no=1;
-            while($b=mysqli_fetch_array($brg)){
-        ?>
         <div>
-            <img src="foto_brg/<?=$b['foto_barang'] ?>" width="100px" height="100px" />
-            <input class="input100 namabarang" type="text" style="background-color: white; border-style: none;" value=" <?php echo $b['nama_barang'] ?>" disabled>
+            1
         </div>
         <div>
             2
@@ -304,9 +257,6 @@ if(isset($_POST["update"])){
             4
         </div>
 
-        <?php
-        }
-        ?>
           <div class="container-contact100-form-btn">
             <div class="wrap-contact100-form-btn">
               <div class="contact100-form-bgbtn"></div>
@@ -410,8 +360,6 @@ if(isset($_POST["update"])){
                 </div>
             </div>
         </div>
-
-        <p id="nama_bibit" style="color: black"></p>
     </footer>
     <!-- End Footer  -->
 
@@ -428,23 +376,8 @@ if(isset($_POST["update"])){
     $("#whatsapp input, #whatsapp textarea").keypress(function () {
       if (event.which == 13) WhatsApp();
     });
-
-    const dataBarang = async() =>{
-        const url = "http://localhost/Project_Web/AlfanAnekaMacamBibit/Website/databarang.php"
-        let response = await fetch(url)
-        .then(response => response.json())
-        .then(data => okoc(data))
-    }
-
-     function okoc(data){
-        data.forEach(e => document.getElementById('nama_bibit').innerHTML += ` ${e.nama_barang},`)
-     }
-
-
-    dataBarang()
-
     var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-    function WhatsApp(data) {
+    function WhatsApp() {
       var ph = '';
       if ($('#whatsapp .nama').val() == '') { // Cek Nama
         ph = $('#whatsapp .nama').attr('placeholder');
@@ -461,11 +394,6 @@ if(isset($_POST["update"])){
         alert('Silahkan tulis ' + ph);
         $('#whatsapp .alamat').focus();
         return false;
-      } else if ($('#whatsapp .namabarang').val() == '') { // Cek Alamat
-        ph = $('#whatsapp .namabarang').attr('placeholder');
-        alert('Silahkan tulis ' + ph);
-        $('#whatsapp .namabarang').focus();
-        return false;
       } else {
         // Check Device (Mobile/Desktop)
         var url_wa = 'https://web.whatsapp.com/send';
@@ -477,12 +405,8 @@ if(isset($_POST["update"])){
           via_url = location.href,
           nama = $('#whatsapp .nama').val(),
           nowhatsapp = $('#whatsapp .nowhatsapp').val(),
-          alamat = $('#whatsapp .alamat').val(),
-          namabarang = $('#whatsapp .namabarang').val();
-          namaBrg = document.getElementById('nama_bibit').innerHTML
-
-        $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Whatsapp: ' + nowhatsapp + '%0AAlamat: ' + alamat + '%0A======================' + '%0ANama Barang: ' + namaBrg + ' %0A%0Avia ' + via_url);
-
+          alamat = $('#whatsapp .alamat').val();
+        $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Whatsapp: ' + nowhatsapp + '%0AAlamat: ' + alamat + ' %0A%0Avia ' + via_url);
         var w = 960,
           h = 540,
           left = Number((screen.width / 2) - (w / 2)),
