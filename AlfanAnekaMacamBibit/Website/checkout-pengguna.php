@@ -308,9 +308,15 @@ if(isset($_POST["update"])){
         }
         ?>
           <div class="container-contact100-form-btn">
+          </div>
+          <div class="container-contact100-form-btn">
+          </div>
+          <div class="container-contact100-form-btn">
+          </div>
+          <div class="container-contact100-form-btn">
             <div class="wrap-contact100-form-btn">
               <div class="contact100-form-bgbtn"></div>
-              <a class="contact100-form-btn submit">Kirim</a>
+              <a class="contact100-form-btn submit btn btn-primary btn-lg btn-block" style="color: white; padding: right;">Kirim</a>
             </div>
           </div>
         </form>

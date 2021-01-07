@@ -232,7 +232,7 @@ if (isset($_GET['cari'])) {
             <div class="card-body">
                 <h3><?php echo $data['nama_barang']; ?></h3>
                 <h4>Rp<?php echo $data['harga']; ?></h4>
-                <p><?php echo $data['umur']; ?> Bulan</p><br>
+                <p><?php echo $data['umur']; ?></p><br>
                 <a href="detail_bibit-guest.php?idbarang=<?=$data['idbarang']?>" class="btn btn-primary" style="width: 213px;">Detail</a>
             </div>
         </div>
