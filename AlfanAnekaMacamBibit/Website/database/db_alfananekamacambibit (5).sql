@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 07, 2021 at 11:41 AM
+-- Generation Time: Jan 05, 2021 at 03:27 AM
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.2.0
 
@@ -45,10 +45,10 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`idbarang`, `nama_barang`, `jenis_barang`, `stok_barang`, `umur`, `foto_barang`, `harga`, `deskripsi`, `tgldibuat`) VALUES
-(5, 'Bibit Nangka', 'Bibit', 500, '6 bulan', 'unnamed.jpg', '5000', 'tes1', '2021-01-03 04:59:12'),
-(7, 'Bibit salak', 'Bibit', 50, '3 bulan', 'salak.jpg', '5000', 'tes', '2021-01-03 04:59:12'),
-(9, 'Bibit Rambutan', 'Bibit', 0, '8 bulan', 'rambutan.jpg', '2000', 'tes', '2021-01-03 04:59:12'),
-(12, 'Bibit semangka', 'Bibit', 0, '10 bulan', 'semangka.jpg', '3000', 'tes', '2021-01-03 04:59:12');
+(5, 'Bibit Nangka', 'Bibit', 500, '>6 bulan', 'Hukum-Positif-Dakwatuna.jpg', '5000', 'tes1', '2021-01-03 04:59:12'),
+(7, 'Bibit mangga', 'Bibit', 50, '<6 bulan', '34710059_76f24fd2-8723-4c9f-b734-bb4bd77b955d_684_684.jpg', '5000', 'tes', '2021-01-03 04:59:12'),
+(9, 'Bibit Rambutan', 'Bibit', 0, '<6 bulan', 'rambutan.jpg', '2000', 'tes', '2021-01-03 04:59:12'),
+(12, 'Bibit semangka', 'Bibit', 0, '<6 bulan', 'semangka.jpg', '3000', 'tes', '2021-01-03 04:59:12');
 
 -- --------------------------------------------------------
 
@@ -94,8 +94,7 @@ INSERT INTO `detailorder` (`detailid`, `orderid`, `idbarang`, `qty`) VALUES
 (33, '16ff3tWDAkotU', 9, 10),
 (34, '16UpoZHn5meDw', 5, 1),
 (35, '16ff3tWDAkotU', 7, 1),
-(38, '16ff3tWDAkotU', 12, 5),
-(39, '16ff3tWDAkotU', 5, 1);
+(38, '16ff3tWDAkotU', 12, 5);
 
 -- --------------------------------------------------------
 
@@ -227,13 +226,7 @@ INSERT INTO `history` (`idhistory`, `waktu`, `jenis_barang`, `nama_barang`, `keg
 (109, '03/01/2021 11:32:34', 'dsjbaj', 'abskdbsj', 'Meghapus nama barang dsjbaj dengan jenis barang abskdbsj'),
 (110, '03/01/2021 11:48:35', 'Bibit mangga', 'Bibit', 'Menambah stok barang Bibit mangga berjulmah 0 sebanyak 200 sehingga stok barang Bibit mangga menjadi 200'),
 (111, '03/01/2021 11:51:27', 'Bibit mangga', 'Bibit', 'Mengurangi stok barang Bibit mangga berjulmah 200 sebanyak 100 sehingga stok barang Bibit mangga menjadi 100'),
-(112, '03/01/2021 11:51:47', 'Bibit mangga', 'Bibit', 'Mengurangi stok barang Bibit mangga berjulmah 100 sebanyak 50 sehingga stok barang Bibit mangga menjadi 50'),
-(113, '07/01/2021 05:24:36', 'Bibit Nangka', 'Bibit', 'Mengubah nama barang Bibit Nangka menjadi Bibit Nangka dan mengubah jenis barang Bibit menjadi Bibit'),
-(114, '07/01/2021 05:25:35', 'Bibit Rambutan', 'Bibit', 'Mengubah nama barang Bibit Rambutan menjadi Bibit Rambutan dan mengubah jenis barang Bibit menjadi Bibit'),
-(115, '07/01/2021 05:29:21', 'Bibit Rambutan', 'Bibit', 'Mengubah nama barang Bibit Rambutan menjadi Bibit Rambutan dan mengubah jenis barang Bibit menjadi Bibit'),
-(116, '07/01/2021 05:31:30', 'Bibit mangga', 'Bibit', 'Mengubah nama barang Bibit mangga menjadi Bibit mangga dan mengubah jenis barang Bibit menjadi Bibit'),
-(117, '07/01/2021 05:31:58', 'Bibit mangga', 'Bibit', 'Mengubah nama barang Bibit mangga menjadi Bibit salak dan mengubah jenis barang Bibit menjadi Bibit'),
-(118, '07/01/2021 05:32:17', 'Bibit semangka', 'Bibit', 'Mengubah nama barang Bibit semangka menjadi Bibit semangka dan mengubah jenis barang Bibit menjadi Bibit');
+(112, '03/01/2021 11:51:47', 'Bibit mangga', 'Bibit', 'Mengurangi stok barang Bibit mangga berjulmah 100 sebanyak 50 sehingga stok barang Bibit mangga menjadi 50');
 
 -- --------------------------------------------------------
 
@@ -375,13 +368,13 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `detailorder`
 --
 ALTER TABLE `detailorder`
-  MODIFY `detailid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `detailid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `idhistory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+  MODIFY `idhistory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
 
 --
 -- AUTO_INCREMENT for table `keranjang`
