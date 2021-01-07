@@ -2,43 +2,23 @@
 session_start();
 include 'koneksi.php';
 
-if(!isset($_SESSION['username'])){
+if (!isset($_SESSION['username'])) {
     header('location:login.php');
 } else {
-    
 };
-    
-    $uid = $_SESSION['username'];
-    $caricart = mysqli_query($koneksi,"SELECT * from cart where username='$uid' and status='Cart'");
-    $fetc = mysqli_fetch_array($caricart);
-    $orderidd = $fetc['orderid'];
-    $itungtrans = mysqli_query($koneksi,"SELECT count(detailid) as jumlahtrans from detailorder where orderid='$orderidd'");
-    $itungtrans2 = mysqli_fetch_assoc($itungtrans);
-    $itungtrans3 = $itungtrans2['jumlahtrans'];
-    
-if(isset($_POST["update"])){
-    $kode = $_POST['idbarangnya'];
-    $jumlah = $_POST['jumlah'];
-    $q1 = mysqli_query($koneksi, "UPDATE detailorder set qty='$jumlah' where idbarang='$kode' and orderid='$orderidd'");
-    if($q1){
-        echo "Berhasil Update Cart
-        <meta http-equiv='refresh' content='1; url= keranjang-pengguna.php'/>";
-    } else {
-        echo "Gagal update cart
-        <meta http-equiv='refresh' content='1; url= keranjang-pengguna.php'/>";
-    }
-} else if(isset($_POST["hapus"])){
-    $kode = $_POST['idbarangnya'];
-    $q2 = mysqli_query($koneksi, "DELETE from detailorder where idbarang='$kode' and orderid='$orderidd'");
-    if($q2){
-        echo "Berhasil Hapus";
-    } else {
-        echo "Gagal Hapus";
-    }
-}
+
+$uid = $_SESSION['username'];
+$caricart = mysqli_query($koneksi, "SELECT * from cart where username='$uid' and status='Cart'");
+$fetc = mysqli_fetch_array($caricart);
+$orderidd = $fetc['orderid'];
+$itungtrans = mysqli_query($koneksi, "SELECT count(detailid) as jumlahtrans from detailorder where orderid='$orderidd'");
+$itungtrans2 = mysqli_fetch_assoc($itungtrans);
+$itungtrans3 = $itungtrans2['jumlahtrans'];
+
 ?>
 
 <!DOCTYPE html>
+
 <head>
     <title>AlfanAnekaMacamBibit</title>
     <meta charset="utf-8">
@@ -66,8 +46,9 @@ if(isset($_POST["update"])){
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
     <link rel="stylesheet" type="text/css" href="css/checkout.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
+
 <body style="background-color: #cccccc;">
     <!-- Start Main Top -->
     <header class="main-header">
@@ -151,7 +132,7 @@ if(isset($_POST["update"])){
                                     <i class="fab fa-opencart"></i> Selamat Datang <b><?php echo $_SESSION['username']; ?></b> Anda telah login sebagai <b><?php echo $_SESSION['level']; ?></b>.
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> 
+                                    <i class="fab fa-opencart"></i>
                                     <?php
 
                                     $sql_highlight1 = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
@@ -237,87 +218,105 @@ if(isset($_POST["update"])){
         </div>
     </div>
     <!-- End All Title Box -->
-<br>
-<div class="container">
-    <div class="grid-container">
-        <form class="contact100-form validate-form" id="whatsapp">
-        <div><label style="color: green;">Alamat Pengiriman</label></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <?php
-    
-        if ($_SESSION['username']) {
-            $sesi = $_SESSION['username'];
-        }
-    
-        $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
-        $data = mysqli_fetch_array($sql_profil);
-        ?>
-        <div>
-            <input class="tujuan" type="hidden" id="noAdmin">
-          <div class="wrap-input100">
-            <label>
-              <input class="input100 nama" type="text" style="background-color: white; width: 150px; border-style: none;" value="<?php echo $data['nama']; ?>" disabled>
-            </label>
-          </div>
-        </div>
-        <div>
-            <div class="wrap-input100">
-                <label>
-                  <input class="input100 nowhatsapp" type="text" style="background-color: white; border-style: none;" value="<?php echo $data['no_telepon']; ?>" disabled>
-                </label>
-            </div>
-        </div>
-        <div>
-            <div class="wrap-input100">
-                    <label>
-                      <textarea class="input100 alamat" style="background-color: white; border-style: none;"><?php echo $data['alamat'];?></textarea>
-                    </label>
-            </div>            
-        </div>  
-        <div>
-            <a href="#" style="color: blue;">Ubah</a>
-        </div>
-        <div><div><label style="color: green;">Produk Dipesan</label></div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+    <br>
+    <div class="container">
+        <div class="grid-container">
+            <form class="contact100-form validate-form" id="whatsapp">
+                <div><label style="color: green; font-weight: bold; font-size: 19px;">Alamat Pengiriman</label></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <?php
 
-        <?php 
-            $brg=mysqli_query($koneksi,"SELECT * from detailorder d, barang p where orderid='$orderidd' and d.idbarang=p.idbarang order by d.idbarang ASC");
-            
-            $no=1;
-            while($b=mysqli_fetch_array($brg)){
-        ?>
-        <div>
-            <img src="foto_brg/<?=$b['foto_barang'] ?>" width="100px" height="100px" />
-            <input class="input100 namabarang" type="text" style="background-color: white; border-style: none;" value=" <?php echo $b['nama_barang'] ?>" disabled>
-        </div>
-        <div>
-            2
-        </div>
-        <div>
-            3
-        </div>
-        <div>
-            4
-        </div>
+                if ($_SESSION['username']) {
+                    $sesi = $_SESSION['username'];
+                }
 
-        <?php
-        }
-        ?>
-          <div class="container-contact100-form-btn">
-            <div class="wrap-contact100-form-btn">
-              <div class="contact100-form-bgbtn"></div>
-              <a class="contact100-form-btn submit">Kirim</a>
-            </div>
-          </div>
-        </form>
+                $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
+                $data = mysqli_fetch_array($sql_profil);
+                ?>
+                <div>
+                    <input class="tujuan" type="hidden" id="noAdmin">
+                    <div class="wrap-input100">
+                        <label>
+                            <input class="input100 nama" type="text" style="background-color: white; width: 150px; border-style: none;" value="<?php echo $data['nama']; ?>" disabled>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <div class="wrap-input100">
+                        <label>
+                            <input class="input100 nowhatsapp" type="text" style="background-color: white; border-style: none;" value="<?php echo $data['no_telepon']; ?>" disabled>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <div class="wrap-input100">
+                        <label>
+                            <textarea class="input100 alamat" style="background-color: white; border-style: none;"><?php echo $data['alamat']; ?></textarea>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <a href="#" style="color: blue;">Ubah</a>
+                </div>
+                <div>
+                    <div><label style="color: green; font-weight: bold; font-size: 19px;">Produk Dipesan</label></div>
+                </div>
+                <div>
+                    <label style="color: grey; position: center;">Satuan Harga</label>
+                </div>
+                <div>
+                    Jumlah
+                </div>
+                <div>
+                    <label style="color: grey;">Subtotal Produk</label>
+                </div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div><input type="hidden" id="nama_bibit" value=""></div>
+                <?php
+                $brg = mysqli_query($koneksi, "SELECT * from detailorder d, barang p where orderid='$orderidd' and d.idbarang=p.idbarang order by d.idbarang ASC");
+                $no = 1;
+                $subtotal = 0;
+                while ($b = mysqli_fetch_array($brg)) {
+                    $hrg = $b['harga'];
+                        $qtyy = $b['qty'];
+                        $totalharga = $hrg * $qtyy;
+                        $subtotal += $totalharga
+                ?>
+                    <div class="col col1">
+                        <img src="foto_brg/<?= $b['foto_barang'] ?>" width="100px" height="100px" />
+                        <input class="input100 namabarang" type="text" style="background-color: white; border-style: none; position: absolute; color: black;" value=" <?php echo $b['nama_barang'] ?>" disabled>
+                    </div>
+                    <div class="col col2">
+                        <input class="input100 qty" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo $b['harga'] ?>" disabled>
+                    </div>
+                    <div class="col col3">
+                        <input class="input100 qty" type="text" style="background-color: white; border-style: none; color: black;" value="<?php echo $b['qty'] ?>" disabled>
+                    </div>
+                    <div class="col col4">
+                        <input class="input100 subtotal" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo number_format($subtotal) ?>" disabled>
+                    </div>
+
+                <?php
+                }
+                ?>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div class="container-contact100-form-btn">
+                    <div class="wrap-contact100-form-btn">
+                        <div class="contact100-form-bgbtn"></div>
+                        <a class="contact100-form-btn submit btn btn-primary btn-lg btn-block" style="color: white;">Kirim</a>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-<br>
-  <!-- Start Footer  -->
+    <br>
+    <!-- Start Footer  -->
     <footer id="hubungi_kami">
         <div class="footer-main">
             <div class="container">
@@ -341,7 +340,7 @@ if(isset($_POST["update"])){
                             $sql_logo_bawah = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
                             $logo_bawah = mysqli_fetch_array($sql_logo_bawah);
                             ?>
-                            <img src="logo/<?php echo $logo_bawah['logo_bawah']?>" class="logo" alt="" style="width: 80%">
+                            <img src="logo/<?php echo $logo_bawah['logo_bawah'] ?>" class="logo" alt="" style="width: 80%">
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
@@ -350,7 +349,7 @@ if(isset($_POST["update"])){
                             <ul>
                                 <li style="color: white;"><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a> AlfanAnekaMacamBibit</li><br>
                                 <li style="color: white;">
-                                    <a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a> 
+                                    <a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
                                     <?php
 
                                     $sql_whatsapp = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
@@ -390,7 +389,7 @@ if(isset($_POST["update"])){
                                         $alamat = mysqli_fetch_array($sql_alamat);
                                         ?>
 
-                                        <p style="color: white;">Alamat : <?php echo $alamat['alamat']; ?></p>
+                                    <p style="color: white;">Alamat : <?php echo $alamat['alamat']; ?></p>
                                     </p>
                                 </li>
                                 <li>
@@ -401,7 +400,7 @@ if(isset($_POST["update"])){
                                         $no_telepon = mysqli_fetch_array($sql_no_telepon);
                                         ?>
 
-                                        <p style="color: white;">No Telepon : <?php echo $no_telepon['no_telepon']; ?></p>
+                                    <p style="color: white;">No Telepon : <?php echo $no_telepon['no_telepon']; ?></p>
                                     </p>
                                 </li>
                             </ul>
@@ -410,90 +409,98 @@ if(isset($_POST["update"])){
                 </div>
             </div>
         </div>
-
-        <p id="nama_bibit" style="color: black"></p>
     </footer>
     <!-- End Footer  -->
 
 
 
-  <script>
-    //no wa admin
-    $("#noAdmin").val("081230232820");
-    $('.whatsapp-btn').click(function () {
-      $('#whatsapp').toggleClass('toggle');
-    });
-    // Onclick Whatsapp Sent!
-    $('#whatsapp .submit').click(WhatsApp);
-    $("#whatsapp input, #whatsapp textarea").keypress(function () {
-      if (event.which == 13) WhatsApp();
-    });
+    <script>
+        //no wa admin
+        $("#noAdmin").val("081230232820");
+        $('.whatsapp-btn').click(function() {
+            $('#whatsapp').toggleClass('toggle');
+        });
+        // Onclick Whatsapp Sent!
+        $('#whatsapp .submit').click(WhatsApp);
+        $("#whatsapp input, #whatsapp textarea").keypress(function() {
+            if (event.which == 13) WhatsApp();
+        });
 
-    const dataBarang = async() =>{
-        const url = "http://localhost/Project_Web/AlfanAnekaMacamBibit/Website/databarang.php"
-        let response = await fetch(url)
-        .then(response => response.json())
-        .then(data => okoc(data))
-    }
+        //MENGIRIM DATA KE databarang.php
+        let formData = new FormData(); //membuat form data baru
+        formData.append('orderid', '<?= $orderidd; ?>'); //mengisi form data
 
-     function okoc(data){
-        data.forEach(e => document.getElementById('nama_bibit').innerHTML += ` ${e.nama_barang},`)
-     }
+        //mengirim form data ke url databarang.php dengan method POST
+        fetch('http://localhost/Project_Web/AlfanAnekaMacamBibit/Website/databarang.php', {
+                method: "POST",
+                body: formData
+            }).then(response => {
+                //data yang didapatkan dikembalikan dalam format json
+                return response.json();
+            })
+            .then(responseJson => {
+                //data json tadi di pecah menjadi bagian2 dan di kirim ke elemen HTML dengan id nama_bibit
+                responseJson.forEach(e => document.getElementById('nama_bibit').value += ` ${e.nama_barang} ${e.qty}x,`);
+            })
+            .catch(error => {
+                //menghandle jika terjadi eror dalam pengiriman data ke databarang.php
+                console.log(error);
+            });
 
+        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
-    dataBarang()
+        function WhatsApp() {
+            var ph = '';
+            if ($('#whatsapp .nama').val() == '') { // Cek Nama
+                ph = $('#whatsapp .nama').attr('placeholder');
+                alert('Silahkan tulis ' + ph);
+                $('#whatsapp .nama').focus();
+                return false;
+            } else if ($('#whatsapp .nowhatsapp').val() == '') { // Cek Whatsapp
+                ph = $('#whatsapp .nowhatsapp').attr('placeholder');
+                alert('Silahkan tulis ' + ph);
+                $('#whatsapp .nowhatsapp').focus();
+                return false;
+            } else if ($('#whatsapp .alamat').val() == '') { // Cek Alamat
+                ph = $('#whatsapp .alamat').attr('placeholder');
+                alert('Silahkan tulis ' + ph);
+                $('#whatsapp .alamat').focus();
+                return false;
+            } else if ($('#whatsapp .namabarang').val() == '') { // Cek Alamat
+                ph = $('#whatsapp .namabarang').attr('placeholder');
+                alert('Silahkan tulis ' + ph);
+                $('#whatsapp .namabarang').focus();
+                return false;
+            } else {
+                // Check Device (Mobile/Desktop)
+                var url_wa = 'https://web.whatsapp.com/send';
+                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                    url_wa = 'whatsapp://send/';
+                }
+                // Get Value
+                var tujuan = $('#whatsapp .tujuan').val(),
+                    via_url = location.href,
+                    nama = $('#whatsapp .nama').val(),
+                    nowhatsapp = $('#whatsapp .nowhatsapp').val(),
+                    alamat = $('#whatsapp .alamat').val(),
+                    namabarang = $('#whatsapp .namabarang').val();
 
-    var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-    function WhatsApp(data) {
-      var ph = '';
-      if ($('#whatsapp .nama').val() == '') { // Cek Nama
-        ph = $('#whatsapp .nama').attr('placeholder');
-        alert('Silahkan tulis ' + ph);
-        $('#whatsapp .nama').focus();
-        return false;
-      } else if ($('#whatsapp .nowhatsapp').val() == '') { // Cek Whatsapp
-        ph = $('#whatsapp .nowhatsapp').attr('placeholder');
-        alert('Silahkan tulis ' + ph);
-        $('#whatsapp .nowhatsapp').focus();
-        return false;
-      } else if ($('#whatsapp .alamat').val() == '') { // Cek Alamat
-        ph = $('#whatsapp .alamat').attr('placeholder');
-        alert('Silahkan tulis ' + ph);
-        $('#whatsapp .alamat').focus();
-        return false;
-      } else if ($('#whatsapp .namabarang').val() == '') { // Cek Alamat
-        ph = $('#whatsapp .namabarang').attr('placeholder');
-        alert('Silahkan tulis ' + ph);
-        $('#whatsapp .namabarang').focus();
-        return false;
-      } else {
-        // Check Device (Mobile/Desktop)
-        var url_wa = 'https://web.whatsapp.com/send';
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-          url_wa = 'whatsapp://send/';
+                //mengambil value dari elemen HTML dengan id nama_bibit
+                let namaBrg = document.getElementById('nama_bibit').value
+
+                $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Whatsapp: ' + nowhatsapp + '%0AAlamat: ' + alamat + '%0A======================' + '%0ANama Barang: ' + namaBrg + ' %0A%0Avia ' + via_url);
+
+                var w = 960,
+                    h = 540,
+                    left = Number((screen.width / 2) - (w / 2)),
+                    tops = Number((screen.height / 2) - (h / 2)),
+                    popupWindow = window.open(this.href, '', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=1, copyhistory=no, width=' + w + ', height=' + h + ', top=' + tops + ', left=' + left);
+                popupWindow.focus();
+                return false;
+            }
         }
-        // Get Value
-        var tujuan = $('#whatsapp .tujuan').val(),
-          via_url = location.href,
-          nama = $('#whatsapp .nama').val(),
-          nowhatsapp = $('#whatsapp .nowhatsapp').val(),
-          alamat = $('#whatsapp .alamat').val(),
-          namabarang = $('#whatsapp .namabarang').val();
-          namaBrg = document.getElementById('nama_bibit').innerHTML
-
-        $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Whatsapp: ' + nowhatsapp + '%0AAlamat: ' + alamat + '%0A======================' + '%0ANama Barang: ' + namaBrg + ' %0A%0Avia ' + via_url);
-
-        var w = 960,
-          h = 540,
-          left = Number((screen.width / 2) - (w / 2)),
-          tops = Number((screen.height / 2) - (h / 2)),
-          popupWindow = window.open(this.href, '', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=1, copyhistory=no, width=' + w + ', height=' + h + ', top=' + tops + ', left=' + left);
-        popupWindow.focus();
-        return false;
-      }
-    }
-  </script>
-      <!-- ALL JS FILES -->
+    </script>
+    <!-- ALL JS FILES -->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -510,4 +517,5 @@ if(isset($_POST["update"])){
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
 </body>
+
 </html>
