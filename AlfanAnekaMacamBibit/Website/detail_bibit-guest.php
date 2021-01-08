@@ -1,6 +1,8 @@
 <?php 
 	session_start();
 	include"koneksi.php";	
+
+
  ?>
 <!DOCTYPE HTML>
 <html>
@@ -229,7 +231,7 @@
 						<span class="span_left"><a href="login.php">login to add in cart </a></span>
 						<div class="clear"></div>
 						<br>
-						<button style="width: 300px; color: white; height: 50px; font-size: 20px;" class="btn btn-success btn-sm fab fa-whatsapp"> Beli Sekarang</button>
+                        <a href="checkout-guest.php" class="btn btn-success btn-sm fab fa-whatsapp" style="width: 300px; color: white; height: 50px; font-size: 20px; padding-top: 12px;"> Beli Sekarang</a>
 					</div>
 			   	 </div>
 			   	</div>

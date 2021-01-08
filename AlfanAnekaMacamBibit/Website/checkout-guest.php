@@ -2,19 +2,6 @@
 session_start();
 include 'koneksi.php';
 
-if (!isset($_SESSION['username'])) {
-    header('location:login.php');
-} else {
-};
-
-$uid = $_SESSION['username'];
-$caricart = mysqli_query($koneksi, "SELECT * from cart where username='$uid' and status='Cart'");
-$fetc = mysqli_fetch_array($caricart);
-$orderidd = $fetc['orderid'];
-$itungtrans = mysqli_query($koneksi, "SELECT count(detailid) as jumlahtrans from detailorder where orderid='$orderidd'");
-$itungtrans2 = mysqli_fetch_assoc($itungtrans);
-$itungtrans3 = $itungtrans2['jumlahtrans'];
-
 ?>
 
 <!DOCTYPE html>
@@ -65,9 +52,9 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" href="halaman_pengguna.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="list_bibit-pengguna.php">List Bibit</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#tentang_kami">Tentang Kami</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="list_bibit-guest.php">List Bibit</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
                         <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
                     </ul>
                 </div>
@@ -77,25 +64,7 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                 <div class="attr-nav">
                     <ul>
                         <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="keranjang-pengguna.php">
-                                <i class="fa fa-shopping-bag"></i>
-                            </a>
-                        </li>
-                        <!--<li class="side-menu">
-                            <a href="#">
-                                <i class="fa fa-shopping-bag"></i>
-                                <span class="badge"></span>
-                                <p style="color: black;">Keranjang</p>
-                            </a>
-                        </li>-->
-                        <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></a>
-                            <ul class="dropdown-menu" style="left:-35px;">
-                                <li><a href="view_profil_pengguna.php">View Profil</a></li>
-                                <li><a href="process/logout.php">Logout</a></li>
-                            </ul>
-                        </li>
+                        <li class="profil"><a href="login.php">Login</a></li>
                     </ul>
                 </div>
                 <!-- End Atribute Navigation -->
@@ -129,7 +98,7 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                         <div id="offer-box" class="carouselTicker">
                             <ul class="offer-box">
                                 <li>
-                                    <i class="fab fa-opencart"></i> Selamat Datang <b><?php echo $_SESSION['username']; ?></b> Anda telah login sebagai <b><?php echo $_SESSION['level']; ?></b>.
+                                    <i class="fab fa-opencart"></i> Selamat Datang, Selamat Berbelanja
                                 </li>
                                 <li>
                                     <i class="fab fa-opencart"></i>
@@ -226,40 +195,29 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                 <div></div>
                 <div></div>
                 <div></div>
-                <?php
-
-                if ($_SESSION['username']) {
-                    $sesi = $_SESSION['username'];
-                }
-
-                $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
-                $data = mysqli_fetch_array($sql_profil);
-                ?>
                 <div>
                     <input class="tujuan" type="hidden" id="noAdmin">
                     <div class="wrap-input100">
                         <label>
-                            <input class="input100 nama" type="text" style="background-color: white; width: 150px; border-style: none;" value="<?php echo $data['nama']; ?>" disabled>
+                            <input class="input100 nama" type="text" placeholder="Masukkan Nama Anda">
                         </label>
                     </div>
                 </div>
                 <div>
                     <div class="wrap-input100">
                         <label>
-                            <input class="input100 nowhatsapp" type="text" style="background-color: white; border-style: none;" value="<?php echo $data['no_telepon']; ?>" disabled>
+                            <input class="input100 nowhatsapp" type="text" placeholder="Masukkan No Whatsapp Anda">
                         </label>
                     </div>
                 </div>
                 <div>
                     <div class="wrap-input100">
                         <label>
-                            <textarea class="input100 alamat" style="background-color: white; border-style: none;"><?php echo $data['alamat']; ?></textarea>
+                            <textarea class="input100 alamat" placeholder="Masukkan Alamat Anda"></textarea>
                         </label>
                     </div>
                 </div>
-                <div>
-                    <a href="#" style="color: blue;">Ubah</a>
-                </div>
+                <div></div>
                 <div>
                     <div><label style="color: green; font-weight: bold; font-size: 19px;">Produk Dipesan</label></div>
                 </div>
@@ -276,38 +234,13 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                 <div></div>
                 <div></div>
                 <div><input type="hidden" id="nama_bibit" value=""></div>
-                <?php
-                $brg = mysqli_query($koneksi, "SELECT * from detailorder d, barang p where orderid='$orderidd' and d.idbarang=p.idbarang order by d.idbarang ASC");
-                $no = 1;
-                $subtotal = 0;
-                while ($b = mysqli_fetch_array($brg)) {
-                    $hrg = $b['harga'];
-                        $qtyy = $b['qty'];
-                        $totalharga = $hrg * $qtyy;
-                        $subtotal += $totalharga
-                ?>
-                    <div class="col col1">
-                        <img src="foto_brg/<?= $b['foto_barang'] ?>" width="100px" height="100px" />
-                        <input class="input100 namabarang" type="text" style="background-color: white; border-style: none; position: absolute; color: black;" value=" <?php echo $b['nama_barang'] ?>" disabled>
-                    </div>
-                    <div class="col col2">
-                        <input class="input100 qty" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo $b['harga'] ?>" disabled>
-                    </div>
-                    <div class="col col3">
-                        <input class="input100 qty" type="text" style="background-color: white; border-style: none; color: black;" value="<?php echo $b['qty'] ?>" disabled>
-                    </div>
-                    <div class="col col4">
-                        <input class="input100 subtotal" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo number_format($subtotal) ?>" disabled>
-                    </div>
-
-                <?php
-                }
-                ?>
 
                 <br>
                 <div></div>
                 <div></div>
-                <div><li style="color: #FF0000; font: sans-serif; font-size: 25px; font-weight: 600;">Total<i></i> <span>Rp<?php echo number_format($subtotal) ?></span></li></div>
+                <div>
+                    <li style="color: #FF0000; font: sans-serif; font-size: 25px; font-weight: 600;">Total<i></i> <span>Rp</span></li>
+                </div>
                 <br><br>
 
                 <div></div>
