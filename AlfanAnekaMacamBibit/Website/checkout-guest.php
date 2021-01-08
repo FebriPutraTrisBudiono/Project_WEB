@@ -188,6 +188,11 @@ include 'koneksi.php';
     </div>
     <!-- End All Title Box -->
     <br>
+    <?php 
+       $idbarang = $_GET['idbarang'];
+       $sql = $koneksi->query("SELECT*FROM barang WHERE idbarang='$idbarang'");    
+       $review = $sql->fetch_array();
+    ?>
     <div class="container">
         <div class="grid-container">
             <form class="contact100-form validate-form" id="whatsapp">
@@ -234,12 +239,25 @@ include 'koneksi.php';
                 <div></div>
                 <div></div>
                 <div><input type="hidden" id="nama_bibit" value=""></div>
+                <div>
+                    <img src="foto_brg/<?= $review['foto_barang'] ?>" width="100px" height="100px" />
+                    <input class="input100 namabarang" type="text" style="background-color: white; border-style: none; position: absolute; color: black;" value=" <?php echo $review['nama_barang'] ?>" disabled>
+                </div>
+                <div>
+                    <input class="input100 harga" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo $review['harga'] ?>" disabled>
+                </div>
+                <div>
+                    <input class="input100 qty" type="text" style="background-color: white; border-style: none; color: black;" value="1" disabled>
+                </div>
+                <div>
+                    <input class="input100 subtotal" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo $review['harga'] ?>" disabled>
+                </div>
 
                 <br>
                 <div></div>
                 <div></div>
                 <div>
-                    <li style="color: #FF0000; font: sans-serif; font-size: 25px; font-weight: 600;">Total<i></i> <span>Rp</span></li>
+                    <input class="input100 total" type="text" style="background-color: white; border-style: none; color: black; color: #FF0000; font: sans-serif; font-size: 25px; font-weight: 600; width: 120px;" value="Rp<?php echo $review['harga'] ?>" disabled>
                 </div>
                 <br><br>
 
@@ -354,92 +372,89 @@ include 'koneksi.php';
 
 
 
-    <script>
-        //no wa admin
-        $("#noAdmin").val("081230232820");
-        $('.whatsapp-btn').click(function() {
-            $('#whatsapp').toggleClass('toggle');
-        });
-        // Onclick Whatsapp Sent!
-        $('#whatsapp .submit').click(WhatsApp);
-        $("#whatsapp input, #whatsapp textarea").keypress(function() {
-            if (event.which == 13) WhatsApp();
-        });
-
-        //MENGIRIM DATA KE databarang.php
-        let formData = new FormData(); //membuat form data baru
-        formData.append('orderid', '<?= $orderidd; ?>'); //mengisi form data
-
-        //mengirim form data ke url databarang.php dengan method POST
-        fetch('http://localhost/Project_Web/AlfanAnekaMacamBibit/Website/databarang.php', {
-                method: "POST",
-                body: formData
-            }).then(response => {
-                //data yang didapatkan dikembalikan dalam format json
-                return response.json();
-            })
-            .then(responseJson => {
-                //data json tadi di pecah menjadi bagian2 dan di kirim ke elemen HTML dengan id nama_bibit
-                responseJson.forEach(e => document.getElementById('nama_bibit').value += ` ${e.nama_barang} ${e.qty}x,`);
-            })
-            .catch(error => {
-                //menghandle jika terjadi eror dalam pengiriman data ke databarang.php
-                console.log(error);
-            });
-
-        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-
-        function WhatsApp() {
-            var ph = '';
-            if ($('#whatsapp .nama').val() == '') { // Cek Nama
-                ph = $('#whatsapp .nama').attr('placeholder');
-                alert('Silahkan tulis ' + ph);
-                $('#whatsapp .nama').focus();
-                return false;
-            } else if ($('#whatsapp .nowhatsapp').val() == '') { // Cek Whatsapp
-                ph = $('#whatsapp .nowhatsapp').attr('placeholder');
-                alert('Silahkan tulis ' + ph);
-                $('#whatsapp .nowhatsapp').focus();
-                return false;
-            } else if ($('#whatsapp .alamat').val() == '') { // Cek Alamat
-                ph = $('#whatsapp .alamat').attr('placeholder');
-                alert('Silahkan tulis ' + ph);
-                $('#whatsapp .alamat').focus();
-                return false;
-            } else if ($('#whatsapp .namabarang').val() == '') { // Cek Alamat
-                ph = $('#whatsapp .namabarang').attr('placeholder');
-                alert('Silahkan tulis ' + ph);
-                $('#whatsapp .namabarang').focus();
-                return false;
-            } else {
-                // Check Device (Mobile/Desktop)
-                var url_wa = 'https://web.whatsapp.com/send';
-                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                    url_wa = 'whatsapp://send/';
-                }
-                // Get Value
-                var tujuan = $('#whatsapp .tujuan').val(),
-                    via_url = location.href,
-                    nama = $('#whatsapp .nama').val(),
-                    nowhatsapp = $('#whatsapp .nowhatsapp').val(),
-                    alamat = $('#whatsapp .alamat').val(),
-                    namabarang = $('#whatsapp .namabarang').val();
-
-                //mengambil value dari elemen HTML dengan id nama_bibit
-                let namaBrg = document.getElementById('nama_bibit').value
-
-                $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Whatsapp: ' + nowhatsapp + '%0AAlamat: ' + alamat + '%0A======================' + '%0ANama Barang: ' + namaBrg + ' %0A%0Avia ' + via_url);
-
-                var w = 960,
-                    h = 540,
-                    left = Number((screen.width / 2) - (w / 2)),
-                    tops = Number((screen.height / 2) - (h / 2)),
-                    popupWindow = window.open(this.href, '', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=1, copyhistory=no, width=' + w + ', height=' + h + ', top=' + tops + ', left=' + left);
-                popupWindow.focus();
-                return false;
-            }
+<script>
+    //no wa admin
+    $("#noAdmin").val("081230232820");
+    $('.whatsapp-btn').click(function () {
+      $('#whatsapp').toggleClass('toggle');
+    });
+    // Onclick Whatsapp Sent!
+    $('#whatsapp .submit').click(WhatsApp);
+    $("#whatsapp input, #whatsapp textarea").keypress(function () {
+      if (event.which == 13) WhatsApp();
+    });
+    var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    function WhatsApp() {
+      var ph = '';
+      if ($('#whatsapp .nama').val() == '') { // Cek Nama
+        ph = $('#whatsapp .nama').attr('placeholder');
+        alert('Silahkan tulis ' + ph);
+        $('#whatsapp .nama').focus();
+        return false;
+      } else if ($('#whatsapp .nowhatsapp').val() == '') { // Cek Whatsapp
+        ph = $('#whatsapp .nowhatsapp').attr('placeholder');
+        alert('Silahkan tulis ' + ph);
+        $('#whatsapp .nowhatsapp').focus();
+        return false;
+      } else if ($('#whatsapp .alamat').val() == '') { // Cek Alamat
+        ph = $('#whatsapp .alamat').attr('placeholder');
+        alert('Silahkan tulis ' + ph);
+        $('#whatsapp .alamat').focus();
+        return false;
+      } else if ($('#whatsapp .namabarang').val() == '') { // Cek Alamat
+        ph = $('#whatsapp .namabarang').attr('placeholder');
+        alert('Silahkan tulis ' + ph);
+        $('#whatsapp .namabarang').focus();
+        return false;
+      } else if ($('#whatsapp .harga').val() == '') { // Cek Alamat
+        ph = $('#whatsapp .harga').attr('placeholder');
+        alert('Silahkan tulis ' + ph);
+        $('#whatsapp .harga').focus();
+        return false;
+      } else if ($('#whatsapp .qty').val() == '') { // Cek Alamat
+        ph = $('#whatsapp .qty').attr('placeholder');
+        alert('Silahkan tulis ' + ph);
+        $('#whatsapp .qty').focus();
+        return false;
+      } else if ($('#whatsapp .subtotal').val() == '') { // Cek Alamat
+        ph = $('#whatsapp .subtotal').attr('placeholder');
+        alert('Silahkan tulis ' + ph);
+        $('#whatsapp .subtotal').focus();
+        return false;
+      } else if ($('#whatsapp .total').val() == '') { // Cek Alamat
+        ph = $('#whatsapp .total').attr('placeholder');
+        alert('Silahkan tulis ' + ph);
+        $('#whatsapp .total').focus();
+        return false;
+      } else {
+        // Check Device (Mobile/Desktop)
+        var url_wa = 'https://web.whatsapp.com/send';
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+          url_wa = 'whatsapp://send/';
         }
-    </script>
+        // Get Value
+        var tujuan = $('#whatsapp .tujuan').val(),
+          via_url = location.href,
+          nama = $('#whatsapp .nama').val(),
+          nowhatsapp = $('#whatsapp .nowhatsapp').val(),
+          alamat = $('#whatsapp .alamat').val(),
+          namabarang = $('#whatsapp .namabarang').val(),
+          harga = $('#whatsapp .harga').val(),
+          qty = $('#whatsapp .qty').val(),
+          subtotal = $('#whatsapp .subtotal').val(),
+          total = $('#whatsapp .total').val();
+
+        $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Whatsapp: ' + nowhatsapp + '%0AAlamat: ' + alamat + '%0A======================' + ' %0ANama Barang :  ' + namabarang + ' %0AHarga :  ' + harga + ' %0Aqty :  ' + qty + ' %0ASubTotal :  ' + subtotal + ' %0ATotal :  ' + total + '%0A======================' + ' %0A%0Avia ' + via_url);
+        var w = 960,
+          h = 540,
+          left = Number((screen.width / 2) - (w / 2)),
+          tops = Number((screen.height / 2) - (h / 2)),
+          popupWindow = window.open(this.href, '', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=1, copyhistory=no, width=' + w + ', height=' + h + ', top=' + tops + ', left=' + left);
+        popupWindow.focus();
+        return false;
+      }
+    }
+  </script>
     <!-- ALL JS FILES -->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>

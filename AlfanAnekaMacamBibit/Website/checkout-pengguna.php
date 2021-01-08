@@ -286,17 +286,17 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                         $totalharga = $hrg * $qtyy;
                         $subtotal += $totalharga
                 ?>
-                    <div class="col col1">
+                    <div>
                         <img src="foto_brg/<?= $b['foto_barang'] ?>" width="100px" height="100px" />
                         <input class="input100 namabarang" type="text" style="background-color: white; border-style: none; position: absolute; color: black;" value=" <?php echo $b['nama_barang'] ?>" disabled>
                     </div>
-                    <div class="col col2">
-                        <input class="input100 qty" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo $b['harga'] ?>" disabled>
+                    <div>
+                        <input class="input100 harga" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo $b['harga'] ?>" disabled>
                     </div>
-                    <div class="col col3">
+                    <div>
                         <input class="input100 qty" type="text" style="background-color: white; border-style: none; color: black;" value="<?php echo $b['qty'] ?>" disabled>
                     </div>
-                    <div class="col col4">
+                    <div>
                         <input class="input100 subtotal" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo number_format($subtotal) ?>" disabled>
                     </div>
 
