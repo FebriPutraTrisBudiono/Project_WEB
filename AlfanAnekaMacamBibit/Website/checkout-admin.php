@@ -65,8 +65,9 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" href="halaman_pengguna.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="list_bibit-pengguna.php">List Bibit</a></li>
+                        <li class="nav-item"><a class="nav-link" href="halaman_admin.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="list_bibit.php">List Bibit</a></li>
+                        <li class="nav-item"><a class="nav-link" href="admin/index.php">Menu Edit</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tentang_kami">Tentang Kami</a></li>
                         <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
                     </ul>
@@ -78,7 +79,7 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                     <ul>
                         <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="nav-item">
-                            <a class="nav-link" href="keranjang-pengguna.php">
+                            <a class="nav-link" href="keranjang.php">
                                 <i class="fa fa-shopping-bag"></i>
                             </a>
                         </li>
@@ -92,7 +93,7 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                         <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></a>
                             <ul class="dropdown-menu" style="left:-35px;">
-                                <li><a href="view_profil_pengguna.php">View Profil</a></li>
+                                <li><a href="view_profil_admin.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
                         </li>
@@ -210,8 +211,8 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                 <div class="col-lg-12">
                     <h2>Check-out</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="halaman_pengguna.php">Home</a></li>
-                        <li class="breadcrumb-item"><a href="keranjang-pengguna.php">Keranjang</a></li>
+                        <li class="breadcrumb-item"><a href="halaman_admin.php">Home</a></li>
+                        <li class="breadcrumb-item"><a href="keranjang.php">Keranjang</a></li>
                         <li class="breadcrumb-item active">Check-out</li>
 
                     </ul>

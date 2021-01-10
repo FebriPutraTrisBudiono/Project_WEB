@@ -356,7 +356,7 @@ if(isset($_POST["update"])){
                 </div>
                 <div class="checkout-right-basket">
                     <a href="list_bibit.php"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Continue Shopping</a>
-                    <a href="checkout.php"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>Checkout</a>
+                    <a href="checkout-admin.php"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>Checkout</a>
                 </div>
                 <div class="clearfix"> </div>
             </div>
