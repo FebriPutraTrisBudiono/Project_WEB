@@ -30,5 +30,5 @@ if($_POST['edit']){
 			$query = mysqli_query($koneksi, "UPDATE pengguna set username='$username', password='$password', nama='$nama', no_telepon='$no_telepon', foto='$foto', alamat='$alamat' where username='$username'");
 		}
 
-header("location:../edit_profil_admin.php");
+header("location:../view_profil_admin.php");
 ?>

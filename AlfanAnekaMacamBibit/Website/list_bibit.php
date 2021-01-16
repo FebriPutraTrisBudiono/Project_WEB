@@ -228,7 +228,6 @@ if (isset($_GET['cari'])) {
     if ($umur==1){
        $where = "WHERE umur > 6";
     }
-    var_dump($where);
     $query_mysqli = mysqli_query($koneksi, "SELECT * FROM barang $where");
 }
     ?>

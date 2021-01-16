@@ -187,7 +187,6 @@ include 'koneksi.php';
         </div>
     </div>
     <!-- End All Title Box -->
-    <br>
 
 <!-- Start Contact Us  -->
     <div class="contact-box-main">

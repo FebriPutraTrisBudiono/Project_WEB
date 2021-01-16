@@ -34,8 +34,6 @@ if (!isset($_SESSION['username'])) {
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
 
-    <link rel="stylesheet" type="text/css" href="css/form_edit.css">
-
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
@@ -196,7 +194,6 @@ if (!isset($_SESSION['username'])) {
     </div>
     <!-- End All Title Box -->
 
-<br>
     <?php
     
     if ($_SESSION['username']) {
@@ -206,44 +203,73 @@ if (!isset($_SESSION['username'])) {
     $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
     $data = mysqli_fetch_array($sql_profil);
     ?>
-<div class="regform"><h1 style="color: white;"> Edit Profil </h1></div>
-    <div class="main">
-        <form action="process/update_pengguna.php" method="POST" enctype="multipart/form-data">
-            <div class="container">
-              <div class="row">
-                <div class="col-6 offset-md-3 ">
-                    <div class="form-group text-center" style="position: relative;" >
-                      <span class="img-div">
-                        <div class="text-center img-placeholder"  onClick="triggerClick()">
-                          <h4>Update image</h4>
+
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-10 mt-5 pt-5">
+                <form action="process/update_pengguna.php" method="POST" enctype="multipart/form-data">
+                <div class="row z-depth-3"  style="box-shadow: 0 4px 10px 0 rgba(0,0,0,0.5)">
+                    <div class="col-sm-4 bg-info rounded-left">
+                        <div class="card-block text-center text-white">
+                            <span class="img-div">
+                                <div class="text-center img-placeholder"  onClick="triggerClick()">
+                                <h4>Update image</h4>
+                                </div>
+                                <img src="foto/<?php echo $data['foto']?>" onClick="triggerClick()" id="profileDisplay">
+                                <input type="file" name="foto" onChange="displayImage(this)" id="foto" class="form-control" style="display: none;">
+                            </span>
                         </div>
-                        <img src="foto/<?php echo $data['foto']?>" onClick="triggerClick()" id="profileDisplay">
-                        <input type="file" name="foto" onChange="displayImage(this)" id="foto" class="form-control" style="display: none;">
-                      </span>
+                    </div>
+                    <div class="col-sm-8 bg-white rounded-right">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="mt-3 text-center">Information</h3>
+                                <hr class="bg-primary mt-0 w-25">    
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col">
+                                <p class="font-weight-bold" style="color: black;">Username:</p>
+                                <input class="username" type="text" name="username" value="<?php echo $data['username']; ?>" required>
+                            </div>
+                            <div class="col">
+                                <p class="font-weight-bold" style="color: black;">Password:</p>
+                                <input class="password" type="password" name="password" value="<?php echo $data['password']; ?>" required>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col">
+                                <h4 class="mt-3">Data Diri</h4>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col">
+                                <p class="font-weight-bold" style="color: black;">Nama:</p>
+                                <input class="nama" type="text" name="nama" value="<?php echo $data['nama']; ?>" required>
+                            </div>
+                            <div class="col">
+                                <p class="font-weight-bold" style="color: black;">Nomor Telepon:</p>
+                                <input class="no_telepon" type="text" name="no_telepon" value="<?php echo $data['no_telepon']; ?>" required>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col">
+                                <p class="font-weight-bold" style="color: black;">Alamat:</p>
+                                <textarea cols="50" rows="2" class="alamat" name="alamat" required><?php echo $data['alamat']; ?></textarea>
+                            </div>
+                            <div class="w-100"></div><br><br>
+                            <div class="col">
+                                <center><td><input type="submit" name="edit" value="edit"> <a href="view_profil_pengguna.php"><input type="button" value="kembali"></a></td></center>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col">
+                                <br>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
-              </div>
+                </form>
             </div>
-
-            <h2 class="name">Nama</h2>
-            <input class="nama" type="text" name="nama" value="<?php echo $data['nama']; ?>" required>
-
-            <h2 class="name">Alamat</h2>
-            <textarea class="alamat" name="alamat" required><?php echo $data['alamat']; ?></textarea>
-
-            <h2 class="name">No Telepon</h2>
-            <input class="no_telepon" type="text" name="no_telepon" value="<?php echo $data['no_telepon']; ?>" required>
-
-            <h2 class="name">Username</h2>
-            <input class="username" type="text" name="username" value="<?php echo $data['username']; ?>" required>
-
-            <h2 class="name">Password</h2>
-            <input class="password" type="password" name="password" value="<?php echo $data['password']; ?>" required>
-
-            <center><td><input type="submit" name="edit" value="edit"> <a href="view_profil_pengguna.php"><input type="button" value="kembali"></a></td></center>
-        </form>
+        </div>
     </div>
-    <br>
+    <br><br>
 
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">

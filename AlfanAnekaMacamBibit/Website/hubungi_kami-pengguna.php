@@ -208,7 +208,6 @@ if (!isset($_SESSION['username'])) {
         </div>
     </div>
     <!-- End All Title Box -->
-    <br>
 
 <!-- Start Contact Us  -->
     <div class="contact-box-main">

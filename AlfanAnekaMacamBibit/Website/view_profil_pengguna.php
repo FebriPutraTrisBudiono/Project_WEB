@@ -34,8 +34,6 @@ if (!isset($_SESSION['username'])) {
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
 
-    <link rel="stylesheet" type="text/css" href="css/form_edit.css">
-
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
@@ -194,8 +192,6 @@ if (!isset($_SESSION['username'])) {
         </div>
     </div>
     <!-- End All Title Box -->
-
-<br>
     <?php
     
     if ($_SESSION['username']) {
@@ -205,41 +201,62 @@ if (!isset($_SESSION['username'])) {
     $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
     $data = mysqli_fetch_array($sql_profil);
     ?>
-<div class="regform"><h1 style="color: white;"> Profil </h1></div>
-    <div class="main">
-        <form action="process/update_pengguna.php" method="POST">
-            <div class="container">
-              <div class="row">
-                <div class="col-6 offset-md-3 ">
-                    <div class="form-group text-center" style="position: relative;" >
-                      <span class="img-div">
-                        <img src="foto/<?php echo $data['foto']?>" id="profileDisplay">
-                      </span>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-10 mt-5 pt-5">
+                <div class="row z-depth-3"  style="box-shadow: 0 4px 10px 0 rgba(0,0,0,0.5)">
+                    <div class="col-sm-4 bg-info rounded-left">
+                        <div class="card-block text-center text-white">
+                            <img src="foto/<?php echo $data['foto']?>" id="profileDisplay">
+                            <h1 class="mt-4">Profil : <?php echo $data['level']; ?></h1>
+                            <h2 class="font-weight-bold"><?php echo $data['nama']; ?></h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 bg-white rounded-right">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="mt-3 text-center">Information</h3>
+                                <hr class="bg-primary mt-0 w-25">    
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col">
+                                <p class="font-weight-bold" style="color: black;">Username:</p>
+                                <h6 class=" text-muted"><?php echo $data['username']; ?></h6>
+                            </div>
+                            <div class="col">
+                                <p class="font-weight-bold" style="color: black;">Password:</p>
+                                <h6 class="text-muted">***********</h6>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col">
+                                <h4 class="mt-3">Data Diri</h4>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col">
+                                <p class="font-weight-bold" style="color: black;">Nomor Telepon:</p>
+                                <h6 class="text-muted"><?php echo $data['no_telepon']; ?></h6>
+                            </div>
+                            <div class="col">
+                                <p class="font-weight-bold" style="color: black;">Alamat:</p>
+                                <h6 class="text-muted"><?php echo $data['alamat']; ?></h6>
+                            </div>
+                            <div class="w-100"></div><br><br>
+                            <div class="col">
+                                <a href="edit_profil_pengguna.php" class="contact100-form-btn submit btn btn-primary btn-lg btn-block" style="color: white;">Edit</a>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col">
+                                <br>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
-              </div>
             </div>
-
-            <h2 class="name">Nama</h2>
-            <input style="color: white;" class="nama" type="text" name="nama" value="<?php echo $data['nama']; ?>" disabled>
-
-            <h2 class="name">Alamat</h2>
-            <textarea style="color: white;" class="alamat" name="alamat" required disabled=""><?php echo $data['alamat']; ?></textarea>
-
-            <h2 class="name">No Telepon</h2>
-            <input style="color: white;" class="no_telepon" type="text" name="no_telepon" value="<?php echo $data['no_telepon']; ?>" disabled required>
-
-            <h2 class="name">Username</h2>
-            <input style="color: white;" class="username" type="text" name="username" value="<?php echo $data['username']; ?>" disabled required>
-
-            <h2 class="name">Password</h2>
-            <input style="color: white;" class="password" type="password" name="password" value="<?php echo $data['password']; ?>" disabled required>
-
-            <center><td><input type="submit" name="edit" value="edit" a></center>
-        </form>
+        </div>
     </div>
     <br>
-
+    <br>
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">
         <div class="main-instagram owl-carousel owl-theme">

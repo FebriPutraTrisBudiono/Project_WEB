@@ -205,7 +205,6 @@ if (isset($_GET['cari'])) {
     if ($umur==1){
        $where = "WHERE umur > 6";
     }
-    var_dump($where);
     $query_mysqli = mysqli_query($koneksi, "SELECT * FROM barang $where");
 }
     ?>
@@ -251,7 +250,6 @@ if (isset($_GET['cari'])) {
                                                     </div>
                                                     <img src="foto_brg/<?php echo $result['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 250px; height: 220px;">
                                                     <div class="mask-icon">
-                                                        <a class="cart" href="#">Add to Cart</a>
                                                     </div>
                                                 </div>
                                                 <div class="why-text">

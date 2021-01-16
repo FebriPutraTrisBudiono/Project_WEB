@@ -216,7 +216,6 @@ if ($_SESSION['level'] != "admin") {
         </div>
     </div>
     <!-- End All Title Box -->
-    <br>
 
 <!-- Start Contact Us  -->
     <div class="contact-box-main">
