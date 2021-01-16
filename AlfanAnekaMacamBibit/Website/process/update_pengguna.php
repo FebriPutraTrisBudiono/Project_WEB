@@ -10,7 +10,7 @@ if($_POST['edit']){
 
 			
 			$ekstensi_diperbolehkan	= array('png','jpg');
-			//logo atas
+			//foto
 			$foto = $_FILES['foto']['name'];
 			$x = explode('.', $foto);
 			$ekstensi = strtolower(end($x));

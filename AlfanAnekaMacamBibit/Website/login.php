@@ -57,8 +57,10 @@ include 'koneksi.php';
 <!--------------------------------------------------------------------------------------------------->
 </head>
 <body>
+  <div class="container">
   <div id="header">
-    <a href="index.php"><img src="images/logobaru.png" style="margin: 0px 140px"></a>
+    <a href="index.php"><img src="images/logobaru.png"></a>
+  </div>
   </div>
 
   <div class="limiter">

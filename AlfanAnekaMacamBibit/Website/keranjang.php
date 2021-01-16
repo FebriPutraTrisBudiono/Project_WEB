@@ -2,11 +2,16 @@
 session_start();
 include 'koneksi.php';
 
-if(!isset($_SESSION['username'])){
-    header('location:login.php');
-} else {
+if (!isset($_SESSION['username'])) {
+  echo '<script language="javascript">alert("Anda harus Login"); document.location="login.php";</script>';
+}
+
+else {
+if ($_SESSION['level'] != "admin") {
+    echo "<script>alert('Anda Tidak Memiliki Akses Admin');window.location='halaman_pengguna.php'</script>";
+    }
+}
     
-};
     
     $uid = $_SESSION['username'];
     $caricart = mysqli_query($koneksi,"SELECT * from cart where username='$uid' and status='Cart'");
@@ -40,7 +45,7 @@ if(isset($_POST["update"])){
 <!DOCTYPE html>
 <html>
 <head>
-<title>Tokopekita - Keranjang Saya</title>
+<title>AlfanAnekaMacamBibit</title>
 <!-- for-mobile-apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -55,6 +60,8 @@ if(isset($_POST["update"])){
     <link rel="stylesheet" href="css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
+
+<link rel="shortcut icon" href="images/logobaru2.png" type="image/x-icon">
 
 <link href="css/keranjang.css" rel="stylesheet" type="text/css" media="all" />
 <!-- font-awesome icons -->
@@ -84,7 +91,7 @@ if(isset($_POST["update"])){
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
             <div class="container">
                     <!-- Start Header Navigation -->
-                    <div class="navbar-header" style="margin: auto;">
+                    <div class="navbar-header">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
                         <a class="navbar-brand" href="index.php"><img src="images/logobaru.png" class="logo" alt=""></a>
                     </div>
@@ -99,7 +106,7 @@ if(isset($_POST["update"])){
                         </li>
 
                             <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
+                            <li class="nav-item"><a class="nav-link" href="hubungi_kami.php">Hubungi Kami</a></li>
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->
@@ -107,10 +114,9 @@ if(isset($_POST["update"])){
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="nav-item">
                             <a class="nav-link" href="keranjang.php">
-                                <i class="fa fa-shopping-bag"></i>
+                                <i class="fas fa-shopping-cart"></i>
                             </a>
                         </li>
                         <!--<li class="side-menu">
@@ -121,8 +127,8 @@ if(isset($_POST["update"])){
                             </a>
                         </li>-->
                         <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></a>
-                            <ul class="dropdown-menu" style="left:-35px;">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i><i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu" style="left: -65px; width: 10px;">
                                 <li><a href="view_profil_admin.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
@@ -136,19 +142,22 @@ if(isset($_POST["update"])){
         <!-- End Navigation -->
     </header>
     <!-- End Main Top -->
+
     <!-- Start Top Search -->
-    <div class="top-search">
         <div class="container">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <form method="get" action="list_bibit.php">
-                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
-                </form>
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+            <form method="get" action="list_bibit.php">
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 195%;">
+                </div>
+                <div class="col">
+                    <button style="background-color: black; color: white; float: right;">cari</button>
+                </div>
             </div>
+            </form>
         </div>
-    </div>
     <!-- End Top Search -->
+
     <!-- Start Main Top -->
     <div class="main-top" >
         <div class="container-fluid">
@@ -363,6 +372,26 @@ if(isset($_POST["update"])){
         </div>
     </div>
 <!-- //checkout -->
+
+    <!-- Start Instagram Feed  -->
+    <div class="instagram-box">
+        <div class="main-instagram owl-carousel owl-theme">
+            <?php 
+            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang");
+            while ($result2 = mysqli_fetch_array($query_mysqli2)) { ?>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img src="foto_brg/<?php echo $result2['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 400px; height: 350px;">
+                    <div class="hov-in">
+                        <a href="detail_bibit.php?idbarang=<?=$result2['idbarang']?>"><i class="fas fa-info-circle"></i></a>
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
+        </div>
+    </div>
+    <!-- End Instagram Feed  -->
+
     <!-- Start Footer  -->
     <footer id="hubungi_kami">
         <div class="footer-main">

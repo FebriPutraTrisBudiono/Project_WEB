@@ -2,11 +2,14 @@
 session_start();
 
 include 'koneksi.php';
+if (!isset($_SESSION['username'])) {
+  echo '<script language="javascript">alert("Anda harus Login!"); document.location="login.php";</script>';
+}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
- <title>Halaman admin</title>
+ <title>AlfanAnekaMacamBibit</title>
  <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -20,8 +23,7 @@ include 'koneksi.php';
     <meta name="author" content="">
 
     <!-- Site Icons -->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="images/logobaru2.png" type="image/x-icon">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -56,8 +58,8 @@ include 'koneksi.php';
                             <li class="nav-item"><a class="nav-link" href="list_bibit-pengguna.php">List Bibit</a></li>
                         </li>
 
-                            <li class="nav-item"><a class="nav-link" href="about.html">Tentang Kami</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact-us.html">Hubungi Kami</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
+                            <li class="nav-item"><a class="nav-link" href="hubungi_kami-pengguna.php">Hubungi Kami</a></li>
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->
@@ -65,10 +67,9 @@ include 'koneksi.php';
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="nav-item">
                             <a class="nav-link" href="keranjang-pengguna.php">
-                                <i class="fa fa-shopping-bag"></i>
+                                <i class="fas fa-shopping-cart"></i>
                             </a>
                         </li>
                         <!--<li class="side-menu">
@@ -79,7 +80,7 @@ include 'koneksi.php';
                             </a>
                         </li>-->
                         <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></a>
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i><i class="fas fa-angle-down"></i></a>
                             <ul class="dropdown-menu" style="left:-35px;">
                                 <li><a href="view_profil_pengguna.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
@@ -94,20 +95,6 @@ include 'koneksi.php';
         <!-- End Navigation -->
     </header>
     <!-- End Main Top -->
-
-    <!-- Start Top Search -->
-    <div class="top-search">
-        <div class="container">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <form method="get" action="list_bibit-pengguna.php">
-                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
-                </form>
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
-            </div>
-        </div>
-    </div>
-    <!-- End Top Search -->
 
     <!-- Start Main Top -->
     <div class="main-top" >
@@ -261,86 +248,18 @@ include 'koneksi.php';
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">
         <div class="main-instagram owl-carousel owl-theme">
+            <?php 
+            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang");
+            while ($result2 = mysqli_fetch_array($query_mysqli2)) { ?>
             <div class="item">
                 <div class="ins-inner-box">
-                    <img src="images/instagram-img-01.jpg" alt="" />
+                    <img src="foto_brg/<?php echo $result2['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 400px; height: 350px;">
                     <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="detail_bibit-pengguna.php?idbarang=<?=$result2['idbarang']?>"><i class="fas fa-info-circle"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-02.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-03.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-04.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-06.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-07.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-08.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-09.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
         </div>
     </div>
     <!-- End Instagram Feed  -->

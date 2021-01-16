@@ -2,12 +2,15 @@
     session_start();
     include "koneksi.php";
 
+if (!isset($_SESSION['username'])) {
+  echo '<script language="javascript">alert("Anda harus Login!"); document.location="login.php";</script>';
+}
+
 $idbarang = $_GET['idbarang'];
 
     if(isset($_POST['addprod'])){
-    if(!isset($_SESSION['username']))
-        {   
-            header('location:login.php');
+    if (!isset($_SESSION['username'])) {
+        echo '<script language="javascript">alert("Anda harus Login!"); document.location="login.php";</script>';
         } else {
                 $ui = $_SESSION['username'];
                 $cek = mysqli_query($koneksi,"SELECT * from cart where username='$ui' and status='Cart'");
@@ -32,10 +35,8 @@ $idbarang = $_GET['idbarang'];
                                 $updateaja = mysqli_query($koneksi,"update detailorder set qty='$baru' where orderid='$orid' and idbarang='$idbarang'");
                                 
                                 if($updateaja){
-                                    echo " <div class='alert alert-success'>
-                                Barang sudah pernah dimasukkan ke keranjang, jumlah akan ditambahkan
-                              </div>
-                              <meta http-equiv='refresh' content='1; url= detail_bibit-pengguna.php?idbarang=".$idbarang."'/>";
+                              echo " '<script language='javascript'>alert('Barang sudah pernah dimasukkan ke keranjang, jumlah akan ditambahkan')</script>';
+                              <meta http-equiv='refresh' content='1; url= detail_bibit-pengguna.php?idbarang=".$idbarang."'>";
                                 } else {
                                     echo "<div class='alert alert-warning'>
                                 Gagal menambahkan ke keranjang
@@ -47,9 +48,7 @@ $idbarang = $_GET['idbarang'];
                             
                             $tambahdata = mysqli_query($koneksi,"INSERT into detailorder (orderid,idbarang,qty) values('$orid','$idbarang','1')");
                             if ($tambahdata){
-                            echo " <div class='alert alert-success'>
-                                Berhasil menambahkan ke keranjang
-                              </div>
+                            echo " '<script language='javascript'>alert('Berhasil menambahkan ke keranjang'); </script>';
                             <meta http-equiv='refresh' content='1; url= detail_bibit-pengguna.php?idbarang=".$idbarang."'/>  ";
                             } else { echo "<div class='alert alert-warning'>
                                 Gagal menambahkan ke keranjang
@@ -67,9 +66,7 @@ $idbarang = $_GET['idbarang'];
                         if($bikincart){
                             $tambahuser = mysqli_query($koneksi,"INSERT into detailorder (orderid,idbarang,qty) values('$oi','$idbarang','1')");
                             if ($tambahuser){
-                            echo " <div class='alert alert-success'>
-                                Berhasil menambahkan ke keranjang
-                              </div>
+                            echo " '<script language='javascript'>alert('Berhasil menambahkan ke keranjang')</script>';
                             <meta http-equiv='refresh' content='1; url= detail_bibit-pengguna.php?idbarang=".$idbarang."'/>  ";
                             } else { echo "<div class='alert alert-warning'>
                                 Gagal menambahkan ke keranjang
@@ -111,9 +108,7 @@ if(isset($_POST['beli_sekarang'])){
                                 $updateaja = mysqli_query($koneksi,"UPDATE detailorder set qty='$baru' where orderid='$orid' and idbarang='$idbarang'");
                                 
                                 if($updateaja){
-                                    echo " <div class='alert alert-success'>
-                                Barang sudah pernah dimasukkan ke keranjang, jumlah akan ditambahkan
-                              </div>
+                                    echo " 
                               <meta http-equiv='refresh' content='1; url= keranjang-pengguna.php?idbarang=".$idbarang."'/>";
                                 } else {
                                     echo "<div class='alert alert-warning'>
@@ -126,9 +121,7 @@ if(isset($_POST['beli_sekarang'])){
                             
                             $tambahdata = mysqli_query($koneksi,"INSERT into detailorder (orderid,idbarang,qty) values('$orid','$idbarang','1')");
                             if ($tambahdata){
-                            echo " <div class='alert alert-success'>
-                                Berhasil menambahkan ke keranjang
-                              </div>
+                            echo "
                             <meta http-equiv='refresh' content='1; url= keranjang-pengguna.php?idbarang=".$idbarang."'/>  ";
                             } else { echo "<div class='alert alert-warning'>
                                 Gagal menambahkan ke keranjang
@@ -146,10 +139,8 @@ if(isset($_POST['beli_sekarang'])){
                         if($bikincart){
                             $tambahuser = mysqli_query($koneksi,"INSERT into detailorder (orderid,idbarang,qty) values('$oi','$idbarang','1')");
                             if ($tambahuser){
-                            echo " <div class='alert alert-success'>
-                                Berhasil menambahkan ke keranjang
-                              </div>
-                            <meta http-equiv='refresh' content='1; url= detail_bibit-pengguna.php?idbarang=".$idbarang."'/>  ";
+                            echo "
+                            <url= keranjang-pengguna.php?idbarang=".$idbarang."'/>  ";
                             } else { echo "<div class='alert alert-warning'>
                                 Gagal menambahkan ke keranjang
                               </div>
@@ -184,8 +175,8 @@ if(isset($_POST['beli_sekarang'])){
             </script>
 
 <!-- Site Icons -->
-<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="shortcut icon" href="images/logobaru2.png" type="image/x-icon">
+<link rel="apple-touch-icon" href="images/logobaru2.png">
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -204,7 +195,7 @@ if(isset($_POST['beli_sekarang'])){
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
             <div class="container">
                     <!-- Start Header Navigation -->
-                    <div class="navbar-header" style="margin: auto;">
+                    <div class="navbar-header">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
                         <a class="navbar-brand" href="halaman_pengguna.php"><img src="images/logobaru.png" class="logo" alt=""></a>
                     </div>
@@ -214,9 +205,9 @@ if(isset($_POST['beli_sekarang'])){
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                             <li class="nav-item"><a class="nav-link" href="halaman_pengguna.php">Home</a></li>
-                            <li class="nav-item active"><a class="nav-link" href="list_bibit-pengguna.php">List Bibit</a></li>
+                            <li class="nav-item"><a class="nav-link" href="list_bibit-pengguna.php">List Bibit</a></li>
                             <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
+                            <li class="nav-item"><a class="nav-link" href="hubungi_kami-pengguna.php">Hubungi Kami</a></li>
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->
@@ -224,10 +215,9 @@ if(isset($_POST['beli_sekarang'])){
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="nav-item">
                             <a class="nav-link" href="keranjang-pengguna.php">
-                                <i class="fa fa-shopping-bag"></i>
+                                <i class="fas fa-shopping-cart"></i>
                             </a>
                         </li>
                         <!--<li class="side-menu">
@@ -238,8 +228,8 @@ if(isset($_POST['beli_sekarang'])){
                             </a>
                         </li>-->
                         <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></a>
-                            <ul class="dropdown-menu" style="left:-35px;">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i><i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu" style="left: -65px; width: 10px;">
                                 <li><a href="view_profil_pengguna.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
@@ -255,17 +245,18 @@ if(isset($_POST['beli_sekarang'])){
     <!-- End Main Top -->
 
     <!-- Start Top Search -->
-    <div class="top-search">
         <div class="container">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <form method="get" action="list_bibit-pengguna.php">
-                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
-                </form>
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+            <form method="get" action="list_bibit-pengguna.php">
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 195%;">
+                </div>
+                <div class="col">
+                    <button style="background-color: black; color: white; float: right;">cari</button>
+                </div>
             </div>
+            </form>
         </div>
-    </div>
     <!-- End Top Search -->
 
     <!-- Start Main Top -->
@@ -402,11 +393,9 @@ if(isset($_POST['beli_sekarang'])){
                 <div class="desc1">
                     <h3 style="color: black; font-weight: bold;"><?=$review['nama_barang']?></h3>                   
                     <h5 style="color: red;">Rp. <?=number_format($review['harga'])?></h5>
+                    <h4 style="color: black;">Umur : <?=$review['umur']?></h4>
                     <div class="available">
                         <h4>Available Options :</h4>
-                        <ul>
-                            <input type="text" name="quantity" value="1" size="2">
-                        </ul>
                         <div class="btn_form">
                             <form method="POST" action="">
                                 <input type="submit" value="add to cart" name="addprod" title="">
@@ -462,89 +451,21 @@ if(isset($_POST['beli_sekarang'])){
     </div>
 </div>
 
-<!-- Start Instagram Feed  -->
+    <!-- Start Instagram Feed  -->
     <div class="instagram-box">
         <div class="main-instagram owl-carousel owl-theme">
+            <?php 
+            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang");
+            while ($result2 = mysqli_fetch_array($query_mysqli2)) { ?>
             <div class="item">
                 <div class="ins-inner-box">
-                    <img src="images/instagram-img-01.jpg" alt="" />
+                    <img src="foto_brg/<?php echo $result2['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 400px; height: 350px;">
                     <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="detail_bibit-pengguna.php?idbarang=<?=$result2['idbarang']?>"><i class="fas fa-info-circle"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-02.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-03.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-04.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-06.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-07.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-08.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-09.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
         </div>
     </div>
     <!-- End Instagram Feed  -->

@@ -3,7 +3,7 @@ session_start();
 include 'koneksi.php';
 
 if (!isset($_SESSION['username'])) {
-    header('location:login.php');
+  echo '<script language="javascript">alert("Anda harus Login!"); document.location="login.php";</script>';
 } else {
 };
 
@@ -34,8 +34,8 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
     <meta name="author" content="">
 
     <!-- Site Icons -->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="images/logobaru2.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/logobaru2.png">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -65,10 +65,10 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" href="halaman_pengguna.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="halaman_pengguna.php">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="list_bibit-pengguna.php">List Bibit</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#tentang_kami">Tentang Kami</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
+                        <li class="nav-item"><a class="nav-link" href="hubungi_kami-pengguna.php">Hubungi Kami</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -76,10 +76,9 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                 <!-- Start Atribute Navigation -->
                 <div class="attr-nav">
                     <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="nav-item">
                             <a class="nav-link" href="keranjang-pengguna.php">
-                                <i class="fa fa-shopping-bag"></i>
+                                <i class="fas fa-shopping-cart"></i>
                             </a>
                         </li>
                         <!--<li class="side-menu">
@@ -90,8 +89,8 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                             </a>
                         </li>-->
                         <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></a>
-                            <ul class="dropdown-menu" style="left:-35px;">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i><i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu" style="left: -65px; width: 10px;">
                                 <li><a href="view_profil_pengguna.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
@@ -105,20 +104,6 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
         <!-- End Navigation -->
     </header>
     <!-- End Main Top -->
-
-    <!-- Start Top Search -->
-    <div class="top-search">
-        <div class="container">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <form method="get" action="list_bibit-pengguna.php">
-                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
-                </form>
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
-            </div>
-        </div>
-    </div>
-    <!-- End Top Search -->
 
     <!-- Start Main Top -->
     <div class="main-top">
@@ -221,109 +206,103 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
     </div>
     <!-- End All Title Box -->
     <br>
-    <div class="container">
-        <div class="grid-container">
-            <form class="contact100-form validate-form" id="whatsapp">
-                <div><label style="color: green; font-weight: bold; font-size: 19px;">Alamat Pengiriman</label></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <?php
 
-                if ($_SESSION['username']) {
-                    $sesi = $_SESSION['username'];
-                }
+<div class="container" style="background-color: white;">
+    <form class="contact100-form validate-form" id="whatsapp">
+    <div class="row">
+        <div class="col">
+          <label style="color: green; font-weight: bold; font-size: 19px;">Alamat Pengiriman</label>
+        </div>
+        <?php
 
-                $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
-                $data = mysqli_fetch_array($sql_profil);
-                ?>
-                <div>
-                    <input class="tujuan" type="hidden" id="noAdmin">
-                    <div class="wrap-input100">
-                        <label>
-                            <input class="input100 nama" type="text" style="background-color: white; width: 150px; border-style: none;" value="<?php echo $data['nama']; ?>" disabled>
-                        </label>
-                    </div>
-                </div>
-                <div>
-                    <div class="wrap-input100">
-                        <label>
-                            <input class="input100 nowhatsapp" type="text" style="background-color: white; border-style: none;" value="<?php echo $data['no_telepon']; ?>" disabled>
-                        </label>
-                    </div>
-                </div>
-                <div>
-                    <div class="wrap-input100">
-                        <label>
-                            <textarea class="input100 alamat" style="background-color: white; border-style: none;"><?php echo $data['alamat']; ?></textarea>
-                        </label>
-                    </div>
-                </div>
-                <div>
-                    <a href="#" style="color: blue;">Ubah</a>
-                </div>
-                <div>
-                    <div><label style="color: green; font-weight: bold; font-size: 19px;">Produk Dipesan</label></div>
-                </div>
-                <div>
-                    <label style="color: grey; position: center;">Satuan Harga</label>
-                </div>
-                <div>
-                    Jumlah
-                </div>
-                <div>
-                    <label style="color: grey;">Subtotal Produk</label>
-                </div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div><input type="hidden" id="nama_bibit" value=""></div>
-                <?php
-                $brg = mysqli_query($koneksi, "SELECT * from detailorder d, barang p where orderid='$orderidd' and d.idbarang=p.idbarang order by d.idbarang ASC");
-                $no = 1;
-                $subtotal = 0;
-                while ($b = mysqli_fetch_array($brg)) {
-                    $hrg = $b['harga'];
-                        $qtyy = $b['qty'];
-                        $totalharga = $hrg * $qtyy;
-                        $subtotal += $totalharga
-                ?>
-                    <div>
-                        <img src="foto_brg/<?= $b['foto_barang'] ?>" width="100px" height="100px" />
-                        <input class="input100 namabarang" type="text" style="background-color: white; border-style: none; position: absolute; color: black;" value=" <?php echo $b['nama_barang'] ?>" disabled>
-                    </div>
-                    <div>
-                        <input class="input100 harga" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo $b['harga'] ?>" disabled>
-                    </div>
-                    <div>
-                        <input class="input100 qty" type="text" style="background-color: white; border-style: none; color: black;" value="<?php echo $b['qty'] ?>" disabled>
-                    </div>
-                    <div>
-                        <input class="input100 subtotal" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo number_format($subtotal) ?>" disabled>
-                    </div>
+            if ($_SESSION['username']) {
+                $sesi = $_SESSION['username'];
+            }
 
-                <?php
-                }
-                ?>
-
-                <br>
-                <div></div>
-                <div></div>
-                <div><li style="color: #FF0000; font: sans-serif; font-size: 25px; font-weight: 600;">Total<i></i> <span>Rp<?php echo number_format($subtotal) ?></span></li></div>
-                <br><br>
-
-                <div></div>
-                <div></div>
-                <div></div>
-                <div class="container-contact100-form-btn">
-                    <div class="wrap-contact100-form-btn">
-                        <div class="contact100-form-bgbtn"></div>
-                        <a class="contact100-form-btn submit btn btn-primary btn-lg btn-block" style="color: white;">Kirim</a>
-                    </div>
+            $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
+            $data = mysqli_fetch_array($sql_profil);
+        ?>  
+    </div>
+    <div class="row">
+        <div class="col">
+            <input class="tujuan" type="hidden" id="noAdmin">
+                <div class="wrap-input100">
+                    <label>
+                        <input class="input100 nama" type="text" style="background-color: white; width: 150px; border-style: none;" value="<?php echo $data['nama']; ?>" disabled>
+                    </label>
                 </div>
-            </form>
+        </div>
+        <div class="col">
+            <div class="wrap-input100">
+                <label>
+                    <input class="input100 nowhatsapp" type="text" style="background-color: white; border-style: none;" value="<?php echo $data['no_telepon']; ?>" disabled>
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="wrap-input100">
+                <label>
+                    <textarea class="input100 alamat" style="background-color: white; border-style: none;"><?php echo $data['alamat']; ?></textarea>
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <a href="#" style="color: blue;">Ubah</a>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <label style="color: green; font-weight: bold; font-size: 19px;">Produk Dipesan</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <input type="hidden" id="nama_bibit" value="">
+        </div>
+    </div>
+    <?php
+    $brg = mysqli_query($koneksi, "SELECT * from detailorder d, barang p where orderid='$orderidd' and d.idbarang=p.idbarang order by d.idbarang ASC");
+    $no = 1;
+    $subtotal = 0;
+    while ($b = mysqli_fetch_array($brg)) {
+        $hrg = $b['harga'];
+            $qtyy = $b['qty'];
+            $totalharga = $hrg * $qtyy;
+            $subtotal += $totalharga
+    ?>
+    <div class="row">
+        <div class="col">
+            <img src="foto_brg/<?= $b['foto_barang'] ?>" width="100px" height="100px" />
+            <input class="input100 namabarang" type="text" style="background-color: white; border-style: none; position: absolute; color: black;" value=" <?php echo $b['nama_barang'] ?>" disabled>
+        </div>
+        <div class="col">
+            <input class="input100 harga" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo $b['harga'] ?>/bibit" disabled>
+        </div>
+        <div class="col">
+            <input class="input100 qty" type="text" style="background-color: white; border-style: none; color: black;" value="<?php echo $b['qty'] ?>x" disabled>
+        </div>
+        <div class="col">
+            <input class="input100 subtotal" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo number_format($subtotal) ?>" disabled>
+        </div>
+    </div>
+    <?php
+    }
+    ?>
+    <div class="row">
+        <div class="col">
+            <li style="color: #FF0000; font: sans-serif; font-size: 25px; font-weight: 600; text-align: right; padding-right: 15%;">Total<i></i> <span>Rp<?php echo number_format($subtotal) ?></span></li>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col">
+            <a id="kosongkan-keranjang" class="contact100-form-btn submit btn btn-primary btn-lg btn-block" style="color: white;">Kirim</a><br>
+        </div>
+    </div>
+    </form> 
+</div>
+
+
     <br>
     <!-- Start Footer  -->
     <footer id="hubungi_kami">
@@ -440,7 +419,7 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
         formData.append('orderid', '<?= $orderidd; ?>'); //mengisi form data
 
         //mengirim form data ke url databarang.php dengan method POST
-        fetch('http://localhost/Project_Web/AlfanAnekaMacamBibit/Website/databarang.php', {
+        fetch('databarang.php', {
                 method: "POST",
                 body: formData
             }).then(response => {
@@ -448,13 +427,25 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                 return response.json();
             })
             .then(responseJson => {
-                //data json tadi di pecah menjadi bagian2 dan di kirim ke elemen HTML dengan id nama_bibit
-                responseJson.forEach(e => document.getElementById('nama_bibit').value += ` ${e.nama_barang} ${e.qty}x,`);
+                //data json tadi diubah kedalam bentuk string dan di kirim ke elemen HTML dengan id nama_bibit
+                document.getElementById('nama_bibit').value = JSON.stringify(responseJson);
             })
             .catch(error => {
                 //menghandle jika terjadi eror dalam pengiriman data ke databarang.php
                 console.log(error);
             });
+
+        //mengambil element html dengan id kosongkan-keranjang
+        let kirim = document.getElementById('kosongkan-keranjang');
+        //merequest ke file kosongkan-keranjang.php untuk menjalankan query dengan mengirim orderid
+        kirim.addEventListener('click', () => {
+            fetch('kosongkan-keranjang.php', {
+                method: "POST",
+                body: formData
+            }).then(() => {
+                window.location.replace("keranjang-pengguna.php");
+            })
+        })
 
         var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
@@ -495,9 +486,13 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                     namabarang = $('#whatsapp .namabarang').val();
 
                 //mengambil value dari elemen HTML dengan id nama_bibit
-                let namaBrg = document.getElementById('nama_bibit').value
+                let dete = document.getElementById('nama_bibit').value;
+                //ubah ke format json
+                let dataBrg = JSON.parse(dete);
+                let deteBrg = [...dataBrg];
+                let subTotal = 0;
 
-                $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Whatsapp: ' + nowhatsapp + '%0AAlamat: ' + alamat + '%0A======================' + '%0ANama Barang: ' + namaBrg + ' %0A%0Avia ' + via_url);
+                $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Whatsapp: ' + nowhatsapp + '%0AAlamat: ' + alamat + '%0A======================' + Array.from(deteBrg, item => `%0ANama Barang: ${item.nama_barang} %0AHarga: Rp. ${parseInt(item.harga).toLocaleString("id-ID")} %0Aqty: ${item.qty} %0ASubTotal: Rp. ${parseInt(subTotal+=parseInt(item.harga*item.qty)).toLocaleString("id-ID")} %0A`) + `%0ATotal: Rp. ${parseInt(subTotal).toLocaleString("id-ID")}` + '%0A%0Avia ' + via_url);
 
                 var w = 960,
                     h = 540,
@@ -506,7 +501,7 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                     popupWindow = window.open(this.href, '', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=1, copyhistory=no, width=' + w + ', height=' + h + ', top=' + tops + ', left=' + left);
                 popupWindow.focus();
                 return false;
-            }
+            };
         }
     </script>
     <!-- ALL JS FILES -->

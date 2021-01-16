@@ -1,7 +1,13 @@
 <?php
 session_start();
 if (!isset($_SESSION['username'])) {
-  header("location: login.php");
+  echo '<script language="javascript">alert("Anda harus Login"); document.location="login.php";</script>';
+}
+
+else {
+if ($_SESSION['level'] != "admin") {
+    echo "<script>alert('Anda Tidak Memiliki Akses Admin');window.location='halaman_pengguna.php'</script>";
+    }
 }
 
 include 'koneksi.php';
@@ -10,7 +16,6 @@ include 'koneksi.php';
 <html>
 
 <head>
-    <title>Halaman admin</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -24,8 +29,7 @@ include 'koneksi.php';
     <meta name="author" content="">
 
     <!-- Site Icons -->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="images/logobaru2.png" type="image/x-icon">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -44,7 +48,7 @@ include 'koneksi.php';
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
             <div class="container">
                 <!-- Start Header Navigation -->
-                <div class="navbar-header" style="margin: auto;">
+                <div class="navbar-header">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
                     <a class="navbar-brand" href="halaman_admin.php"><img src="images/logobaru.png" class="logo" alt=""></a>
                 </div>
@@ -56,8 +60,8 @@ include 'koneksi.php';
                         <li class="nav-item active"><a class="nav-link" href="halaman_admin.php">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="list_bibit.php">List Bibit</a></li>
                         <li class="nav-item"><a class="nav-link" href="admin/index.php">Menu Edit</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#tentang_kami">Tentang Kami</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
+                        <li class="nav-item"><a class="nav-link" href="hubungi_kami.php">Hubungi Kami</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -65,10 +69,9 @@ include 'koneksi.php';
                 <!-- Start Atribute Navigation -->
                 <div class="attr-nav">
                     <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="nav-item">
                             <a class="nav-link" href="keranjang.php">
-                                <i class="fa fa-shopping-bag"></i>
+                                <i class="fas fa-shopping-cart"></i>
                             </a>
                         </li>
                         <!--<li class="side-menu">
@@ -79,8 +82,8 @@ include 'koneksi.php';
                             </a>
                         </li>-->
                         <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></a>
-                            <ul class="dropdown-menu" style="left:-35px;">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i><i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu" style="left: -65px; width: 10px;">
                                 <li><a href="view_profil_admin.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
@@ -96,17 +99,18 @@ include 'koneksi.php';
     <!-- End Main Top -->
 
     <!-- Start Top Search -->
-    <div class="top-search">
         <div class="container">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <form method="get" action="list_bibit.php">
-                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
-                </form>
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+            <form method="get" action="list_bibit.php">
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 195%;">
+                </div>
+                <div class="col">
+                    <button style="background-color: black; color: white; float: right;">cari</button>
+                </div>
             </div>
+            </form>
         </div>
-    </div>
     <!-- End Top Search -->
 
     <!-- Start Main Top -->
@@ -204,7 +208,7 @@ include 'koneksi.php';
                             <h1 class="m-b-40" style="font-size: 350%"><strong>AlfanAneka</strong></h1>
                             <h1 class="m-b-40" style="font-size: 300%"><strong>MacamBibit</strong></h1>
                             <p class="m-b-40">Penjualan Bibit Tanaman Terpercaya, Murah dan Berkualitas<br> Menerima Pengiriman secara diantar langsung maupun melalui jasa</p>
-                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                            <p><a class="btn hvr-hover" href="list_bibit.php">Belanja Sekarang</a></p>
                         </div>
                     </div>
                 </div>
@@ -218,7 +222,7 @@ include 'koneksi.php';
                             <h1 class="m-b-40" style="font-size: 350%"><strong>AlfanAneka</strong></h1>
                             <h1 class="m-b-40" style="font-size: 300%"><strong>MacamBibit</strong></h1>
                             <p class="m-b-40">Penjualan Bibit Tanaman Terpercaya, Murah dan Berkualitas<br> Menerima Pengiriman secara diantar langsung maupun melalui jasa</p>
-                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                            <p><a class="btn hvr-hover" href="list_bibit.php">Belanja Sekarang</a></p>
                         </div>
                     </div>
                 </div>
@@ -232,15 +236,15 @@ include 'koneksi.php';
                             <h1 class="m-b-40" style="font-size: 350%"><strong>AlfanAneka</strong></h1>
                             <h1 class="m-b-40" style="font-size: 300%"><strong>MacamBibit</strong></h1>
                             <p class="m-b-40">Penjualan Bibit Tanaman Terpercaya, Murah dan Berkualitas<br> Menerima Pengiriman secara diantar langsung maupun melalui jasa</p>
-                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                            <p><a class="btn hvr-hover" href="list_bibit.php">Belanja Sekarang</a></p>
                         </div>
                     </div>
                 </div>
             </li>
         </ul>
         <div class="slides-navigation" id="tentang_kami">
-            <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-            <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+            <a href="#" class="next" style="background-color: transparent;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            <a href="#" class="prev" style="background-color: transparent;"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
         </div>
     </div>
     <!-- End Slider -->
@@ -402,86 +406,18 @@ include 'koneksi.php';
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">
         <div class="main-instagram owl-carousel owl-theme">
+            <?php 
+            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang");
+            while ($result2 = mysqli_fetch_array($query_mysqli2)) { ?>
             <div class="item">
                 <div class="ins-inner-box">
-                    <img src="images/instagram-img-01.jpg" alt="" />
+                    <img src="foto_brg/<?php echo $result2['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 400px; height: 350px;">
                     <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="detail_bibit.php?idbarang=<?=$result2['idbarang']?>"><i class="fas fa-info-circle"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-02.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-03.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-04.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-06.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-07.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-08.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-09.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
         </div>
     </div>
     <!-- End Instagram Feed  -->

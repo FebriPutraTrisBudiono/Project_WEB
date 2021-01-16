@@ -1,13 +1,15 @@
-<?php 
-	include "koneksi.php";
+<?php
+include "koneksi.php";
 
-	$query = $koneksi->query("SELECT * from detailorder d, barang p where orderid='16ff3tWDAkotU' and d.idbarang=p.idbarang order by d.idbarang ASC");
+$orderid = $_POST['orderid'];
 
-	$result = array();
+$query = $koneksi->query("SELECT * from detailorder d, barang p where orderid='$orderid' and d.idbarang=p.idbarang order by d.idbarang ASC");
 
-	while($rowData = $query->fetch_assoc()){
-		$result[] = $rowData;
-	}
+$result = array();
 
-	echo json_encode($result);
+while ($rowData = $query->fetch_assoc()) {
+	$result[] = $rowData;
+}
+
+echo json_encode($result);
  ?>

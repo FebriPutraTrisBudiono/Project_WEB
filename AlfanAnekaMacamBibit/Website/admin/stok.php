@@ -190,7 +190,6 @@
         <!-- footer area start-->
         <footer>
             <div class="footer-area">
-                <p>By Richard's Lab</p>
             </div>
         </footer>
         <!-- footer area end-->

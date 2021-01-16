@@ -1,43 +1,44 @@
-<?php 
-    session_start();
-    include"koneksi.php";   
+<?php
+session_start();
+include 'koneksi.php';
 
+if (!isset($_SESSION['username'])) {
+  echo '<script language="javascript">alert("Anda harus Login"); document.location="login.php";</script>';
+}
 
- ?>
-<!DOCTYPE HTML>
-<html>
+?>
+
+<!DOCTYPE html>
+
 <head>
-<title>Free Aditii Website Template | Home :: w3layouts</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
-<link href="css/detail_bibit.css" rel="stylesheet" type="text/css" media="all" />
-<link rel="stylesheet" type="text/css" href="css/detail_bibit2.css" media="all" />
-<script type="text/javascript" src="asset/js/jquery.min.js"></script>
-<!-- start slider -->       
-    <script type="text/javascript" src="asset/js/cloud-zoom.1.0.3.min.js"></script>
-    <!--<script type="text/javascript" src="asset/js/productviewgallery.js"></script>-->
-    <link href="css/detail_bibit3.css" rel="stylesheet" type="text/css" media="all" />
-    <script type="text/javascript" src="asset/js/modernizr.custom.28468.js"></script>
-    <script type="text/javascript" src="asset/js/jquery.cslider.js"></script>
-    <script type="text/javascript">
-        
-    </script>
-            </script>
+    <title>AlfanAnekaMacamBibit</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<!-- Site Icons -->
-<link rel="shortcut icon" href="images/logobaru2.png" type="image/x-icon">
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<!-- Site CSS -->
-<link rel="stylesheet" href="css/style.css">
-<!-- Responsive CSS -->
-<link rel="stylesheet" href="css/responsive.css">
-<!-- Custom CSS -->
-<link rel="stylesheet" href="css/custom.css">
+    <!-- Site Metas -->
+    <title>AlfanAnekaMacamBibit</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="images/logobaru2.png" type="image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/checkout.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
+
 <body>
 <!-- Start Main Top -->
     <header class="main-header">
@@ -47,25 +48,43 @@
                     <!-- Start Header Navigation -->
                     <div class="navbar-header">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                        <a class="navbar-brand" href="index.php"><img src="images/logobaru.png" class="logo" alt=""></a>
+                        <a class="navbar-brand" href="halaman_pengguna.php"><img src="images/logobaru.png" class="logo" alt=""></a>
                     </div>
                     <!-- End Header Navigation -->
     
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                            <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="list_bibit-guest.php">List Bibit</a></li>
+                            <li class="nav-item"><a class="nav-link" href="halaman_pengguna.php">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="list_bibit-pengguna.php">List Bibit</a></li>
                             <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
-                            <li class="nav-item"><a class="nav-link" href="hubungi_kami-guest.php">Hubungi Kami</a></li>
+                            <li class="nav-item active"><a class="nav-link" href="hubungi_kami-pengguna.php">Hubungi Kami</a></li>
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->
     
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
-                    <ul>
-                        <li class="profil"><a href="login.php">Login</a></li>
+                        <ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="keranjang-pengguna.php">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                        </li>
+                        <!--<li class="side-menu">
+                            <a href="#">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="badge"></span>
+                                <p style="color: black;">Keranjang</p>
+                            </a>
+                        </li>-->
+                        <li class="dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i><i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu" style="left: -65px; width: 10px;">
+                                <li><a href="view_profil_pengguna.php">View Profil</a></li>
+                                <li><a href="process/logout.php">Logout</a></li>
+                            </ul>
+                        </li>
                     </ul>
                     </div>
                     <!-- End Atribute Navigation -->
@@ -78,7 +97,7 @@
 
     <!-- Start Top Search -->
         <div class="container">
-            <form method="get" action="list_bibit-guest.php">
+            <form method="get" action="list_bibit-pengguna.php">
             <div class="row">
                 <div class="col">
                     <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 195%;">
@@ -92,7 +111,7 @@
     <!-- End Top Search -->
 
     <!-- Start Main Top -->
-    <div class="main-top">
+    <div class="main-top" >
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -100,7 +119,7 @@
                         <div id="offer-box" class="carouselTicker">
                             <ul class="offer-box">
                                 <li>
-                                    <i class="fab fa-opencart"></i> Selamat Datang, Selamat Berbelanja
+                                    <i class="fab fa-opencart"></i> Selamat Datang <b><?php echo $_SESSION['username']; ?></b> Anda telah login sebagai <b><?php echo $_SESSION['level']; ?></b>.
                                 </li>
                                 <li>
                                     <i class="fab fa-opencart"></i> 
@@ -179,11 +198,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Detail Bibit</h2>
+                    <h2>Hubungi Kami</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                        <li class="breadcrumb-item"><a href="list_bibit-guest.php">List Bibit</a></li>
-                        <li class="breadcrumb-item active">Detail Bibit</li>
+                        <li class="breadcrumb-item"><a href="halaman_pengguna.php">Home</a></li>
+                        <li class="breadcrumb-item active">Hubungi Kami</li>
                     </ul>
                 </div>
             </div>
@@ -192,90 +210,86 @@
     <!-- End All Title Box -->
     <br>
 
-<!----start-cursual---->
-<?php 
-    $idbarang = $_GET['idbarang'];
-    $sql = $koneksi->query("SELECT*FROM barang WHERE idbarang='$idbarang'");    
-    $review = $sql->fetch_array();
- ?>
-<div class="wrap">  
-    <div class="main">
-        <!-- start content -->
-        <div class="single">
-            <!-- start span1_of_1 -->
-            <div class="left_content">
-                <div class="span1_of_1">
-                    <!-- start product_slider -->
-                    <div class="product-view">
-                        <div class="product-essential">
-                            <div class="product-img-box">
-                                <div class="product-image"> 
-                                    <a class="cs-fancybox-thumbs cloud-zoom" rel="adjustX:30,adjustY:0,position:'right',tint:'#202020',tintOpacity:0.5,smoothMove:2,showTitle:true,titleOpacity:0.5" data-fancybox-group="thumb" href="foto_brg/<?=$review['foto_barang']?>" title="<?=$review['nama_barang']?>" alt="<?=$review['nama_barang']?>">
-                                    <img src="foto_brg/<?=$review['foto_barang']?>" style="width: 350px; height: 350px;" alt="<?=$review['nama_barang']?>" title="<?=$review['nama_barang']?>" />
-                                    </a>
+<!-- Start Contact Us  -->
+    <div class="contact-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-sm-12">
+                    <div class="contact-form-right">
+                        <h2>GET IN TOUCH</h2>
+                        <p style="color: black;">Silahkan tuliskan Saran, Masukan atau Pertanyaan anda pada kolom dibawah ini.</p>
+                        <form class="contact100-form validate-form" id="whatsapp">
+                            <input class="tujuan" type="hidden" id="noAdmin">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="input100 nama form-control" id="name" name="name" placeholder="Nama" required>
+                                    </div>
                                 </div>
-                    
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="Number" placeholder="No Telepon" id="email" class="input100 no_telepon form-control" name="name" required >
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="input100 alamat form-control" id="subject" name="name" placeholder="Alamat" required >
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea class="input100 pesan form-control" id="message" placeholder="Tuliskan Pesan Anda.." rows="4" required></textarea>
+                                    </div>
+                                    <div class="submit-button text-center">
+                                        <a class="contact100-form-btn submit btn btn-primary btn-lg btn-block" style="color: white;">Kirim</a>
+                                        <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                    <!-- end product_slider -->
                 </div>
-            <!-- start span1_of_1 -->
-            <div class="span1_of_1_des">
-                <div class="desc1">
-                    <h3 style="color: black; font-weight: bold;"><?=$review['nama_barang']?></h3>                   
-                    <h5 style="color: red;">Rp. <?=number_format($review['harga'])?></h5>
-                    <label style="color: black; font-size: 18px;">Umur : <?=$review['umur']?></label>
-                    <div class="available">
-                        <span class="span_left"><a href="login.php">login to add in cart </a></span>
-                        <div class="clear"></div>
-                        <br>
-                        <a href="checkout-guest.php?idbarang=<?=$review['idbarang']?>" class="btn btn-success btn-sm fab fa-whatsapp" style="width: 300px; color: white; height: 50px; font-size: 20px; padding-top: 12px;"> Beli Sekarang</a>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="contact-info-left">
+                        <h2>CONTACT INFO</h2>
+                            <?php
+
+                            $sql_aboutus = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                            $about_us = mysqli_fetch_array($sql_aboutus);
+                            ?>
+
+                            <p style="color: black;"><?php echo $about_us['about_us']; ?></p>
+                        <ul>
+                            <li>
+                                <p><i class="fas fa-map-marker-alt"></i>
+                                    <?php
+
+                                        $sql_alamat = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $alamat = mysqli_fetch_array($sql_alamat);
+                                        ?>
+
+                                    <p style="color: black;">Alamat : <?php echo $alamat['alamat']; ?></p>
+                                 </p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-phone-square"></i>
+                                    <?php
+
+                                        $sql_no_telepon = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $no_telepon = mysqli_fetch_array($sql_no_telepon);
+                                        ?>
+
+                                    <p style="color: black;">No Telepon : <?php echo $no_telepon['no_telepon']; ?></p>
+                                </p>
+                            </li>
+                        </ul>
                     </div>
-                 </div>
                 </div>
-                <div class="clear"></div>
-                <!-- start tabs -->
-                    <section class="tabs">
-                    <input id="tab-1" type="radio" name="radio-set" class="tab-selector-1" checked="checked">
-                    <label for="tab-1" class="tab-label-1">Deskripsi Barang</label>
-              
-                    <div class="clear-shadow"></div>
-                    
-                    <div class="content">
-                        <div class="content-1">
-                            <?=$review['deskripsi']?>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="content-2">
-                            <p class="para"><span>WELCOME </span> Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections </p>
-                            <ul class="qua_nav">
-                                <li>Multimedia Systems</li>
-                                <li>Digital media adapters</li>
-                                <li>Set top boxes for HDTV and IPTV Player applications on various Operating Systems and Hardware Platforms</li>
-                            </ul>
-                        </div>
-                        <div class="content-3">
-                            <p class="para top"><span>LOREM IPSUM</span> There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined </p>
-                            <ul>
-                                <li>Research</li>
-                                <li>Design and Development</li>
-                                <li>Porting and Optimization</li>
-                                <li>System integration</li>
-                                <li>Verification, Validation and Testing</li>
-                                <li>Maintenance and Support</li>
-                            </ul>
-                            <div class="clear"></div>
-                        </div>
-                    </div>
-                    </section>
-                    <!-- end tabs -->
-                </div>
-                <div class="clear"></div>
-           </div>   
-    <!-- end content -->
+            </div>
+        </div>
     </div>
-</div>
+    <!-- End Cart -->
 
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">
@@ -287,7 +301,7 @@
                 <div class="ins-inner-box">
                     <img src="foto_brg/<?php echo $result2['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 400px; height: 350px;">
                     <div class="hov-in">
-                        <a href="detail_bibit-guest.php?idbarang=<?=$result2['idbarang']?>"><i class="fas fa-info-circle"></i></a>
+                        <a href="detail_bibit-pengguna.php?idbarang=<?=$result2['idbarang']?>"><i class="fas fa-info-circle"></i></a>
                     </div>
                 </div>
             </div>
@@ -320,7 +334,7 @@
                             $sql_logo_bawah = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
                             $logo_bawah = mysqli_fetch_array($sql_logo_bawah);
                             ?>
-                            <img src="logo/<?php echo $logo_bawah['logo_bawah']?>" class="logo" alt="" style="width: 80%">
+                            <img src="logo/<?php echo $logo_bawah['logo_bawah'] ?>" class="logo" alt="" style="width: 80%">
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
@@ -329,7 +343,7 @@
                             <ul>
                                 <li style="color: white;"><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a> AlfanAnekaMacamBibit</li><br>
                                 <li style="color: white;">
-                                    <a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a> 
+                                    <a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
                                     <?php
 
                                     $sql_whatsapp = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
@@ -369,7 +383,7 @@
                                         $alamat = mysqli_fetch_array($sql_alamat);
                                         ?>
 
-                                        <p style="color: white;">Alamat : <?php echo $alamat['alamat']; ?></p>
+                                    <p style="color: white;">Alamat : <?php echo $alamat['alamat']; ?></p>
                                     </p>
                                 </li>
                                 <li>
@@ -380,7 +394,7 @@
                                         $no_telepon = mysqli_fetch_array($sql_no_telepon);
                                         ?>
 
-                                        <p style="color: white;">No Telepon : <?php echo $no_telepon['no_telepon']; ?></p>
+                                    <p style="color: white;">No Telepon : <?php echo $no_telepon['no_telepon']; ?></p>
                                     </p>
                                 </li>
                             </ul>
@@ -392,8 +406,67 @@
     </footer>
     <!-- End Footer  -->
 
-    <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
-    
+
+
+<script>
+    //no wa admin
+    $("#noAdmin").val("081230232820");
+    $('.whatsapp-btn').click(function () {
+      $('#whatsapp').toggleClass('toggle');
+    });
+    // Onclick Whatsapp Sent!
+    $('#whatsapp .submit').click(WhatsApp);
+    $("#whatsapp input, #whatsapp textarea").keypress(function () {
+      if (event.which == 13) WhatsApp();
+    });
+    var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    function WhatsApp() {
+      var ph = '';
+      if ($('#whatsapp .nama').val() == '') { // Cek Nama
+        ph = $('#whatsapp .nama').attr('placeholder');
+        alert('Silahkan tulis ' + ph +' Anda');
+        $('#whatsapp .nama').focus();
+        return false;
+      } else if ($('#whatsapp .no_telepon').val() == '') { // Cek Whatsapp
+        ph = $('#whatsapp .no_telepon').attr('placeholder');
+        alert('Silahkan tulis ' + ph + ' Anda');
+        $('#whatsapp .no_telepon').focus();
+        return false;
+      } else if ($('#whatsapp .alamat').val() == '') { // Cek Alamat
+        ph = $('#whatsapp .alamat').attr('placeholder');
+        alert('Silahkan tulis ' + ph + ' Anda');
+        $('#whatsapp .alamat').focus();
+        return false;
+      } else if ($('#whatsapp .pesan').val() == '') { // Cek Alamat
+        ph = $('#whatsapp .pesan').attr('placeholder');
+        alert('Silahkan tulis ' + ph + ' Anda');
+        $('#whatsapp .pesan').focus();
+        return false;
+      } else {
+        // Check Device (Mobile/Desktop)
+        var url_wa = 'https://web.whatsapp.com/send';
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+          url_wa = 'whatsapp://send/';
+        }
+        // Get Value
+        var tujuan = $('#whatsapp .tujuan').val(),
+          via_url = location.href,
+          nama = $('#whatsapp .nama').val(),
+          no_telepon = $('#whatsapp .no_telepon').val(),
+          alamat = $('#whatsapp .alamat').val(),
+          pesan = $('#whatsapp .pesan').val();
+
+        $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Telepon: ' + no_telepon + '%0AAlamat: ' + alamat + ' %0APesan :  ' + pesan + '%0A======================' + ' %0A%0Avia ' + via_url);
+        var w = 960,
+          h = 540,
+          left = Number((screen.width / 2) - (w / 2)),
+          tops = Number((screen.height / 2) - (h / 2)),
+          popupWindow = window.open(this.href, '', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=1, copyhistory=no, width=' + w + ', height=' + h + ', top=' + tops + ', left=' + left);
+        popupWindow.focus();
+        return false;
+      }
+    }
+  </script>
     <!-- ALL JS FILES -->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -410,6 +483,6 @@
     <script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
-
 </body>
+
 </html>

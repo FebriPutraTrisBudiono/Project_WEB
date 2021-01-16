@@ -2416,7 +2416,6 @@ ul.paging {
 	.navbar-nav > li {
 	float: none;
     margin-left: 0px;
-    text-align: center;
 }
 .navbar-nav {
     margin: 0;
@@ -2436,11 +2435,6 @@ ul.faq {
 }
 .navbar-nav .open .dropdown-menu {
     background: #fff;
-}
-.navbar-default {
-    background: none;
-    border: none;
-    text-align: center;
 }
 }
 @media (max-width: 736px){

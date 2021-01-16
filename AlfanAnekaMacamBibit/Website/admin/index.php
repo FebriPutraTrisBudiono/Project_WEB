@@ -182,29 +182,6 @@
                                 </div>
                             </div>
                         </div>
-						<div class="col-md-4">
-                            <div class="single-report mb-xs-30">
-                                <div class="s-report-inner pr--20 pt--30 mb-3">
-                                    <div class="icon"><i class="fa fa-link"></i></div>
-                                    <div class="s-report-title d-flex justify-content-between">
-                                        <h4 class="header-title mb-0">Konfirmasi Pembayaran</h4>
-                                    </div>
-                                    <div class="d-flex justify-content-between pb-2">
-                                        <h1><?php echo $itungtrans3 ?></h1>
-                                    </div>
-									<!--
-									<button type="button" class="<?php 
-									if($itungtrans3==0){
-										echo 'btn btn-secondary btn-block';
-									} else {
-										echo 'btn btn-primary btn-block';
-									}
-									?>
-									">Lihat Transaksi</button>
-									-->
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 
@@ -221,8 +198,8 @@
                                 <div class="market-status-table mt-4">
                                     Anda masuk sebagai <strong><?php echo $_SESSION['username'] ?></strong>
 									<br>
-									<p>Pada halaman admin, Anda dapat menambah kategori produk, mengelola produk, 
-									mengelola user dan admin, melihat konfirmasi pembayaran</p>
+									<p>Pada halaman admin, Anda dapat menambah produk, mengelola produk, 
+									mengelola user dan admin, dan mengelola toko</p>
                                 </div>
                             </div>
                         </div>
@@ -240,7 +217,6 @@
         <!-- footer area start-->
         <footer>
             <div class="footer-area">
-                <p>by Richard's Lab</p>
             </div>
         </footer>
         <!-- footer area end-->

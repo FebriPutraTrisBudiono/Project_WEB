@@ -139,20 +139,20 @@
 												<th>Nama Pelanggan</th>
 												<th>No. Telepon</th>
 												<th>Alamat</th>
-												<th>Email</th>
+												<th>Foto</th>
 											</tr></thead><tbody>
 											<?php 
-											$brgs=mysqli_query($conn,"SELECT * from login where role='Member' order by userid ASC");
+											$brgs=mysqli_query($koneksi,"SELECT * from pengguna where level='pengguna' order by username ASC");
 											$no=1;
 											while($p=mysqli_fetch_array($brgs)){
 												?>
 												
 												<tr>
 													<td><?php echo $no++ ?></td>
-													<td><?php echo $p['namalengkap'] ?></td>
-													<td><?php echo $p['notelp'] ?></td>
+													<td><?php echo $p['nama'] ?></td>
+													<td><?php echo $p['no_telepon'] ?></td>
 													<td><?php echo $p['alamat'] ?></td>
-													<td><?php echo $p['email'] ?></td>
+                                                    <td><img src="../foto/<?php echo $p['foto'] ?>" width="100px"\></td>
 													
 												</tr>	
 												
@@ -178,7 +178,6 @@
         <!-- footer area start-->
         <footer>
             <div class="footer-area">
-                <p>By Richard's Lab</p>
             </div>
         </footer>
         <!-- footer area end-->

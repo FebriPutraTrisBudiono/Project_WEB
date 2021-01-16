@@ -2,8 +2,8 @@
 session_start();
 include 'koneksi.php';
 
-if(!isset($_SESSION['username'])){
-    header('location:login.php');
+if (!isset($_SESSION['username'])) {
+  echo '<script language="javascript">alert("Anda harus Login!"); document.location="login.php";</script>';
 } else {
     
 };
@@ -21,8 +21,7 @@ if(isset($_POST["update"])){
     $jumlah = $_POST['jumlah'];
     $q1 = mysqli_query($koneksi, "UPDATE detailorder set qty='$jumlah' where idbarang='$kode' and orderid='$orderidd'");
     if($q1){
-        echo "Berhasil Update Cart
-        <meta http-equiv='refresh' content='1; url= keranjang-pengguna.php'/>";
+        echo '<script language="javascript">alert("Berhasil Update Keranjang"); document.location="keranjang-pengguna.php";</script>';
     } else {
         echo "Gagal update cart
         <meta http-equiv='refresh' content='1; url= keranjang-pengguna.php'/>";
@@ -31,7 +30,7 @@ if(isset($_POST["update"])){
     $kode = $_POST['idbarangnya'];
     $q2 = mysqli_query($koneksi, "DELETE from detailorder where idbarang='$kode' and orderid='$orderidd'");
     if($q2){
-        echo "Berhasil Hapus";
+        echo '<script language="javascript">alert("Berhasil di hapus");</script>';
     } else {
         echo "Gagal Hapus";
     }
@@ -55,6 +54,10 @@ if(isset($_POST["update"])){
     <link rel="stylesheet" href="css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
+
+<!-- Site Icons -->
+<link rel="shortcut icon" href="images/logobaru2.png" type="image/x-icon">
+<link rel="apple-touch-icon" href="images/logobaru2.png">
 
 <link href="css/keranjang.css" rel="stylesheet" type="text/css" media="all" />
 <!-- font-awesome icons -->
@@ -84,7 +87,7 @@ if(isset($_POST["update"])){
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
             <div class="container">
                     <!-- Start Header Navigation -->
-                    <div class="navbar-header" style="margin: auto;">
+                    <div class="navbar-header">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
                         <a class="navbar-brand" href="halaman_pengguna.php"><img src="images/logobaru.png" class="logo" alt=""></a>
                     </div>
@@ -96,7 +99,7 @@ if(isset($_POST["update"])){
                             <li class="nav-item"><a class="nav-link" href="halaman_pengguna.php">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="list_bibit-pengguna.php">List Bibit</a></li>
                             <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
+                            <li class="nav-item"><a class="nav-link" href="hubungi_kami-pengguna.php">Hubungi Kami</a></li>
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->
@@ -104,10 +107,9 @@ if(isset($_POST["update"])){
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="nav-item">
                             <a class="nav-link" href="keranjang-pengguna.php">
-                                <i class="fa fa-shopping-bag"></i>
+                                <i class="fas fa-shopping-cart"></i>
                             </a>
                         </li>
                         <!--<li class="side-menu">
@@ -118,8 +120,8 @@ if(isset($_POST["update"])){
                             </a>
                         </li>-->
                         <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></a>
-                            <ul class="dropdown-menu" style="left:-35px;">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i><i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu" style="left: -65px; width: 10px;">
                                 <li><a href="view_profil_pengguna.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
@@ -133,19 +135,22 @@ if(isset($_POST["update"])){
         <!-- End Navigation -->
     </header>
     <!-- End Main Top -->
+
     <!-- Start Top Search -->
-    <div class="top-search">
         <div class="container">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <form method="get" action="list_bibit-pengguna.php">
-                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
-                </form>
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+            <form method="get" action="list_bibit-pengguna.php">
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 195%;">
+                </div>
+                <div class="col">
+                    <button style="background-color: black; color: white; float: right;">cari</button>
+                </div>
             </div>
+            </form>
         </div>
-    </div>
     <!-- End Top Search -->
+
     <!-- Start Main Top -->
     <div class="main-top" >
         <div class="container-fluid">
@@ -360,6 +365,26 @@ if(isset($_POST["update"])){
         </div>
     </div>
 <!-- //checkout -->
+
+    <!-- Start Instagram Feed  -->
+    <div class="instagram-box">
+        <div class="main-instagram owl-carousel owl-theme">
+            <?php 
+            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang");
+            while ($result2 = mysqli_fetch_array($query_mysqli2)) { ?>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img src="foto_brg/<?php echo $result2['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 400px; height: 350px;">
+                    <div class="hov-in">
+                        <a href="detail_bibit-penngguna.php?idbarang=<?=$result2['idbarang']?>"><i class="fas fa-info-circle"></i></a>
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
+        </div>
+    </div>
+    <!-- End Instagram Feed  -->
+
     <!-- Start Footer  -->
     <footer id="hubungi_kami">
         <div class="footer-main">

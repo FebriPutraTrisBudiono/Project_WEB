@@ -3,6 +3,16 @@ session_start();
 
 include "koneksi.php";
 
+if (!isset($_SESSION['username'])) {
+  echo '<script language="javascript">alert("Anda harus Login"); document.location="login.php";</script>';
+}
+
+else {
+if ($_SESSION['level'] != "admin") {
+    echo "<script>alert('Anda Tidak Memiliki Akses Admin');window.location='halaman_pengguna.php'</script>";
+    }
+}
+
 if ($_SESSION['username']) {
         $sesi = $_SESSION['username'];
     }
@@ -26,8 +36,7 @@ if ($_SESSION['username']) {
     <meta name="author" content="">
 
     <!-- Site Icons -->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="images/logobaru2.png" type="image/x-icon">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -47,7 +56,7 @@ if ($_SESSION['username']) {
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
             <div class="container">
                     <!-- Start Header Navigation -->
-                    <div class="navbar-header" style="margin: auto;">
+                    <div class="navbar-header">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
                         <a class="navbar-brand" href="index.php"><img src="images/logobaru.png" class="logo" alt=""></a>
                     </div>
@@ -60,7 +69,7 @@ if ($_SESSION['username']) {
                             <li class="nav-item active"><a class="nav-link" href="list_bibit.php">List Bibit</a></li>
                             <li class="nav-item"><a class="nav-link" href="admin/index.php">Menu Edit</a></li>
                             <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Hubungi Kami</a></li>
+                            <li class="nav-item"><a class="nav-link" href="hubungi_kami.php">Hubungi Kami</a></li>
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->
@@ -68,10 +77,9 @@ if ($_SESSION['username']) {
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="nav-item">
                             <a class="nav-link" href="keranjang.php">
-                                <i class="fa fa-shopping-bag"></i>
+                                <i class="fas fa-shopping-cart"></i>
                             </a>
                         </li>
                         <!--<li class="side-menu">
@@ -82,8 +90,8 @@ if ($_SESSION['username']) {
                             </a>
                         </li>-->
                         <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></a>
-                            <ul class="dropdown-menu" style="left:-35px;">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i><i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu" style="left: -65px; width: 10px;">
                                 <li><a href="view_profil_admin.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>
@@ -97,20 +105,6 @@ if ($_SESSION['username']) {
         <!-- End Navigation -->
     </header>
     <!-- End Main Top -->
-
-    <!-- Start Top Search -->
-    <div class="top-search">
-        <div class="container">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <form method="get" action="">
-                    <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 1000px;">
-                </form>
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
-            </div>
-        </div>
-    </div>
-    <!-- End Top Search -->
 
     <!-- Start Main Top -->
     <div class="main-top" >
@@ -212,8 +206,10 @@ if ($_SESSION['username']) {
     <!-- End All Title Box -->
 
 <br>
+<br>
 <?php 
 $query_mysqli = mysqli_query($koneksi,"SELECT * from barang");
+
 $nomor = 1;
 
 if (isset($_GET['cari'])) {
@@ -237,36 +233,93 @@ if (isset($_GET['cari'])) {
 }
     ?>
 
-<div class="filter_umur">
-    <form method="get" action="">
-      <p>Filter Bibit:</p>
-      <input type="radio"  name="umur" value="-1">
-      <label > kurang dari 6 Bulan</label><br>
-      <input type="radio"  name="umur" value="0">
-      <label >6 Bulan</label><br>
-      <input type="radio"  name="umur" value="1">
-      <label >lebih dari 6 Bulan</label><br>
-      <input type="submit" name="button" value="Submit">
-    </form>
-</div>
+<!-- Start Shop Page  -->
+    <div class="shop-box-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
+                    <div class="right-product-box">
+                        <div class="product-item-filter row">
+                            <div class="col-12 col-sm-8 text-center text-sm-left">
+                                <div class="toolbar-sorter-right">
+                                    <span>Produk By</span>
+                                    <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
+                                    <option data-display="">AlfanAnekaMacamBibit</option>
+                                </select>
+                                </div>
+                                <p style="color: black;">List Bibit</p>
+                            </div>
+                            <div class="col-12 col-sm-4 text-center text-sm-right">
+                                <ul class="nav nav-tabs ml-auto">
+                                    <li>
+                                        <a class="nav-link active" href="#grid-view" data-toggle="tab"> <i class="fa fa-th"></i> </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="#list-view" data-toggle="tab"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
-<div class="container-fluid" style="width: 1600px;">
-    <div class="row mx-auto">
-        <?php while ($data = mysqli_fetch_array($query_mysqli)){ ?>
-        <div class="card ml-2 mr-4 mt-5" style="width: 16rem;">
-            <center><img src="foto_brg/<?php echo $data['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 150px; height: 150px;"></center>
-            <div class="card-body">
-                <h3><?php echo $data['nama_barang']; ?></h3>
-                <h4>Rp<?php echo $data['harga']; ?></h4>
-                <p><?php echo $data['umur']; ?></p><br>
-                <a href="detail_bibit.php?username=<?=$data_sesi['username']?>&&idbarang=<?=$data['idbarang']?>" class="btn btn-primary" style="width: 213px;">Detail</a>
-                <a href="keranjang.php" class="btn btn-primary" style="background-color: red; border-width: 0px;">Tambahkan ke Keranjang</a>
-                
+                        <div class="product-categorie-box">
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
+                                    <div class="row">
+                                        <?php while ($result = mysqli_fetch_array($query_mysqli)) { ?>
+                                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="products-single fix">
+                                                <div class="box-img-hover">
+                                                    <div class="type-lb">
+                                                        <p class="sale">Dijual</p>
+                                                    </div>
+                                                    <img src="foto_brg/<?php echo $result['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 250px; height: 220px;">
+                                                    <div class="mask-icon">
+                                                        <a class="cart" href="#">Add to Cart</a>
+                                                    </div>
+                                                </div>
+                                                <div class="why-text">
+                                                    <h4><?php echo $result['nama_barang']; ?></h4>
+                                                    <label><?php echo $result['umur']; ?></label>
+                                                    <h5>Rp<?php echo $result['harga']; ?></h5>
+                                                    <a href="detail_bibit.php?idbarang=<?=$result['idbarang']?>" class="btn btn-primary" style="width: 213px;">Detail</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php } ?> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
+                    <div class="product-categori">
+                        <div class="search-product">
+                            <form method="get" action="list_bibit.php">
+                                <input class="form-control" placeholder="Search here..." type="text" name="cari">
+                                <button type="submit"> <i class="fa fa-search"></i> </button>
+                            </form>
+                        </div>
+                        <div class="filter-sidebar-left">
+                            <div class="title-left">
+                                <h3>Filter Bibit</h3>
+                            </div>
+                                        <form method="get" action="">
+                                          <input type="radio"  name="umur" value="-1">
+                                          <label > kurang dari 6 Bulan</label><br>
+                                          <input type="radio"  name="umur" value="0">
+                                          <label >6 Bulan</label><br>
+                                          <input type="radio"  name="umur" value="1">
+                                          <label >lebih dari 6 Bulan</label><br>
+                                          <input type="submit" name="button" value="Submit">
+                                        </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <?php } ?> 
     </div>
-</div>
+    <!-- End Shop Page -->
 
 <!--<select name="umur" id="s_jurusan" style="width: 200px;">
     <option value="">Filter Bibit</option>
@@ -283,86 +336,18 @@ if (isset($_GET['cari'])) {
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">
         <div class="main-instagram owl-carousel owl-theme">
+            <?php 
+            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang");
+            while ($result2 = mysqli_fetch_array($query_mysqli2)) { ?>
             <div class="item">
                 <div class="ins-inner-box">
-                    <img src="images/instagram-img-01.jpg" alt="" />
+                    <img src="foto_brg/<?php echo $result2['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 400px; height: 350px;">
                     <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="detail_bibit.php?idbarang=<?=$result2['idbarang']?>"><i class="fas fa-info-circle"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-02.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-03.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-04.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-06.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-07.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-08.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-09.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
         </div>
     </div>
     <!-- End Instagram Feed  -->

@@ -2,6 +2,16 @@
 session_start();
 include 'koneksi.php';
 
+if (!isset($_SESSION['username'])) {
+  echo '<script language="javascript">alert("Anda harus Login"); document.location="login.php";</script>';
+}
+
+else {
+if ($_SESSION['level'] != "admin") {
+    echo "<script>alert('Anda Tidak Memiliki Akses Admin');window.location='halaman_pengguna.php'</script>";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +45,7 @@ include 'koneksi.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
-<body style="background-color: #cccccc;">
+<body>
     <!-- Start Main Top -->
     <header class="main-header">
         <!-- Start Navigation -->
@@ -44,17 +54,18 @@ include 'koneksi.php';
                 <!-- Start Header Navigation -->
                 <div class="navbar-header">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                    <a class="navbar-brand" href="index.php"><img src="images/logobaru.png" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="halaman_admin.php"><img src="images/logobaru.png" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="list_bibit-guest.php">List Bibit</a></li>
+                        <li class="nav-item"><a class="nav-link" href="halaman_admin.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="list_bibit.php">List Bibit</a></li>
+                        <li class="nav-item"><a class="nav-link" href="admin/index.php">Menu Edit</a></li>
                         <li class="nav-item"><a class="nav-link" href="#hubungi_kami">Tentang Kami</a></li>
-                        <li class="nav-item"><a class="nav-link" href="hubungi_kami-guest.php">Hubungi Kami</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="hubungi_kami.php">Hubungi Kami</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -62,7 +73,25 @@ include 'koneksi.php';
                 <!-- Start Atribute Navigation -->
                 <div class="attr-nav">
                     <ul>
-                        <li class="profil"><a href="login.php">Login</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="keranjang.php">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                        </li>
+                        <!--<li class="side-menu">
+                            <a href="#">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="badge"></span>
+                                <p style="color: black;">Keranjang</p>
+                            </a>
+                        </li>-->
+                        <li class="dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i></i><i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu" style="left: -65px; width: 10px;">
+                                <li><a href="view_profil_admin.php">View Profil</a></li>
+                                <li><a href="process/logout.php">Logout</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
                 <!-- End Atribute Navigation -->
@@ -75,7 +104,7 @@ include 'koneksi.php';
 
     <!-- Start Top Search -->
         <div class="container">
-            <form method="get" action="list_bibit-guest.php">
+            <form method="get" action="list_bibit.php">
             <div class="row">
                 <div class="col">
                     <input type="text" class="form-control" placeholder="Search" name="cari" style="width: 195%;">
@@ -97,7 +126,7 @@ include 'koneksi.php';
                         <div id="offer-box" class="carouselTicker">
                             <ul class="offer-box">
                                 <li>
-                                    <i class="fab fa-opencart"></i> Selamat Datang, Selamat Berbelanja
+                                    <i class="fab fa-opencart"></i> Selamat Datang <b><?php echo $_SESSION['username']; ?></b> Anda telah login sebagai <b><?php echo $_SESSION['level']; ?></b>.
                                 </li>
                                 <li>
                                     <i class="fab fa-opencart"></i>
@@ -176,10 +205,11 @@ include 'koneksi.php';
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Checkout</h2>
+                    <h2>Hubungi Kami</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                        <li class="breadcrumb-item active">Checkout</li>
+                        <li class="breadcrumb-item"><a href="halaman_admin.php">Home</a></li>
+                        <li class="breadcrumb-item active">Hubungi Kami</a></li>
+
                     </ul>
                 </div>
             </div>
@@ -187,81 +217,106 @@ include 'koneksi.php';
     </div>
     <!-- End All Title Box -->
     <br>
-    <?php 
-       $idbarang = $_GET['idbarang'];
-       $sql = $koneksi->query("SELECT*FROM barang WHERE idbarang='$idbarang'");    
-       $review = $sql->fetch_array();
-    ?>
 
-
-<div class="container" style="background-color: white;">
-    <form class="contact100-form validate-form" id="whatsapp">
-    <div class="row">
-        <div class="col">
-          <label style="color: green; font-weight: bold; font-size: 19px;">Alamat Pengiriman</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <input class="tujuan" type="hidden" id="noAdmin">
-                <div class="wrap-input100">
-                    <label>
-                        <input class="input100 nama" type="text" placeholder="Masukkan Nama Anda">
-                    </label>
+<!-- Start Contact Us  -->
+    <div class="contact-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-sm-12">
+                    <div class="contact-form-right">
+                        <h2>GET IN TOUCH</h2>
+                        <p style="color: black;">Silahkan tuliskan Saran, Masukan atau Pertanyaan anda pada kolom dibawah ini.</p>
+                        <form class="contact100-form validate-form" id="whatsapp">
+                            <input class="tujuan" type="hidden" id="noAdmin">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="input100 nama form-control" id="name" name="name" placeholder="Nama" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="Number" placeholder="No Telepon" id="email" class="input100 no_telepon form-control" name="name" required >
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="input100 alamat form-control" id="subject" name="name" placeholder="Alamat" required >
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea class="input100 pesan form-control" id="message" placeholder="Tuliskan Pesan Anda.." rows="4" required></textarea>
+                                    </div>
+                                    <div class="submit-button text-center">
+                                        <a class="contact100-form-btn submit btn btn-primary btn-lg btn-block" style="color: white;">Kirim</a>
+                                        <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-        </div>
-        <div class="col">
-            <div class="wrap-input100">
-                <label>
-                    <input class="input100 nowhatsapp" type="text" placeholder="Masukkan No Whatsapp Anda">
-                </label>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="contact-info-left">
+                        <h2>CONTACT INFO</h2>
+                            <?php
+
+                            $sql_aboutus = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                            $about_us = mysqli_fetch_array($sql_aboutus);
+                            ?>
+
+                            <p style="color: black;"><?php echo $about_us['about_us']; ?></p>
+                        <ul>
+                            <li>
+                                <p><i class="fas fa-map-marker-alt"></i>
+                                    <?php
+
+                                        $sql_alamat = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $alamat = mysqli_fetch_array($sql_alamat);
+                                        ?>
+
+                                    <p style="color: black;">Alamat : <?php echo $alamat['alamat']; ?></p>
+                                 </p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-phone-square"></i>
+                                    <?php
+
+                                        $sql_no_telepon = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $no_telepon = mysqli_fetch_array($sql_no_telepon);
+                                        ?>
+
+                                    <p style="color: black;">No Telepon : <?php echo $no_telepon['no_telepon']; ?></p>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col">
-            <div class="wrap-input100">
-                <label>
-                    <textarea class="input100 alamat" placeholder="Masukkan Alamat Anda"></textarea>
-                </label>
+    </div>
+    <!-- End Cart -->
+
+    <!-- Start Instagram Feed  -->
+    <div class="instagram-box">
+        <div class="main-instagram owl-carousel owl-theme">
+            <?php 
+            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang");
+            while ($result2 = mysqli_fetch_array($query_mysqli2)) { ?>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img src="foto_brg/<?php echo $result2['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 400px; height: 350px;">
+                    <div class="hov-in">
+                        <a href="detail_bibit.php?idbarang=<?=$result2['idbarang']?>"><i class="fas fa-info-circle"></i></a>
+                    </div>
+                </div>
             </div>
+            <?php } ?>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col">
-            <label style="color: green; font-weight: bold; font-size: 19px;">Produk Dipesan</label>
-        </div>
-    </div>
-    <input type="hidden" id="nama_bibit" value="">
-    <div class="row">
-        <div class="col">
-            <img src="foto_brg/<?= $review['foto_barang'] ?>" width="100px" height="100px" />
-            <input class="input100 namabarang" type="text" style="background-color: white; border-style: none; position: absolute; color: black;" value=" <?php echo $review['nama_barang'] ?>" disabled>
-        </div>
-        <div class="col">
-            <input class="input100 harga" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo $review['harga'] ?>/bibit" disabled>
-        </div>
-        <div class="col">
-            <input class="input100 qty" type="text" style="background-color: white; border-style: none; color: black;" value="1x" disabled>
-        </div>
-        <div class="col">
-            <input class="input100 subtotal" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo $review['harga'] ?>" disabled>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <input class="input100 total" type="text" style="background-color: white; border-style: none; color: black; color: #FF0000; font: sans-serif; font-size: 25px; font-weight: 600; width: 300px; float: right;" value="Total : Rp<?php echo $review['harga'] ?>" disabled>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col">
-            <a class="contact100-form-btn submit btn btn-primary btn-lg btn-block" style="color: white;">Kirim</a>
-        </div>
-    </div>
-    <br>
-    </form> 
-</div>
+    <!-- End Instagram Feed  -->
 
     <!-- Start Footer  -->
     <footer id="hubungi_kami">
@@ -377,43 +432,23 @@ include 'koneksi.php';
       var ph = '';
       if ($('#whatsapp .nama').val() == '') { // Cek Nama
         ph = $('#whatsapp .nama').attr('placeholder');
-        alert('Silahkan tulis ' + ph);
+        alert('Silahkan tulis ' + ph +' Anda');
         $('#whatsapp .nama').focus();
         return false;
-      } else if ($('#whatsapp .nowhatsapp').val() == '') { // Cek Whatsapp
-        ph = $('#whatsapp .nowhatsapp').attr('placeholder');
-        alert('Silahkan tulis ' + ph);
-        $('#whatsapp .nowhatsapp').focus();
+      } else if ($('#whatsapp .no_telepon').val() == '') { // Cek Whatsapp
+        ph = $('#whatsapp .no_telepon').attr('placeholder');
+        alert('Silahkan tulis ' + ph + ' Anda');
+        $('#whatsapp .no_telepon').focus();
         return false;
       } else if ($('#whatsapp .alamat').val() == '') { // Cek Alamat
         ph = $('#whatsapp .alamat').attr('placeholder');
-        alert('Silahkan tulis ' + ph);
+        alert('Silahkan tulis ' + ph + ' Anda');
         $('#whatsapp .alamat').focus();
         return false;
-      } else if ($('#whatsapp .namabarang').val() == '') { // Cek Alamat
-        ph = $('#whatsapp .namabarang').attr('placeholder');
-        alert('Silahkan tulis ' + ph);
-        $('#whatsapp .namabarang').focus();
-        return false;
-      } else if ($('#whatsapp .harga').val() == '') { // Cek Alamat
-        ph = $('#whatsapp .harga').attr('placeholder');
-        alert('Silahkan tulis ' + ph);
-        $('#whatsapp .harga').focus();
-        return false;
-      } else if ($('#whatsapp .qty').val() == '') { // Cek Alamat
-        ph = $('#whatsapp .qty').attr('placeholder');
-        alert('Silahkan tulis ' + ph);
-        $('#whatsapp .qty').focus();
-        return false;
-      } else if ($('#whatsapp .subtotal').val() == '') { // Cek Alamat
-        ph = $('#whatsapp .subtotal').attr('placeholder');
-        alert('Silahkan tulis ' + ph);
-        $('#whatsapp .subtotal').focus();
-        return false;
-      } else if ($('#whatsapp .total').val() == '') { // Cek Alamat
-        ph = $('#whatsapp .total').attr('placeholder');
-        alert('Silahkan tulis ' + ph);
-        $('#whatsapp .total').focus();
+      } else if ($('#whatsapp .pesan').val() == '') { // Cek Alamat
+        ph = $('#whatsapp .pesan').attr('placeholder');
+        alert('Silahkan tulis ' + ph + ' Anda');
+        $('#whatsapp .pesan').focus();
         return false;
       } else {
         // Check Device (Mobile/Desktop)
@@ -425,15 +460,11 @@ include 'koneksi.php';
         var tujuan = $('#whatsapp .tujuan').val(),
           via_url = location.href,
           nama = $('#whatsapp .nama').val(),
-          nowhatsapp = $('#whatsapp .nowhatsapp').val(),
+          no_telepon = $('#whatsapp .no_telepon').val(),
           alamat = $('#whatsapp .alamat').val(),
-          namabarang = $('#whatsapp .namabarang').val(),
-          harga = $('#whatsapp .harga').val(),
-          qty = $('#whatsapp .qty').val(),
-          subtotal = $('#whatsapp .subtotal').val(),
-          total = $('#whatsapp .total').val();
+          pesan = $('#whatsapp .pesan').val();
 
-        $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Whatsapp: ' + nowhatsapp + '%0AAlamat: ' + alamat + '%0A======================' + ' %0ANama Barang :  ' + namabarang + ' %0AHarga :  ' + harga + ' %0Aqty :  ' + qty + ' %0ASubTotal :  ' + subtotal + ' %0A' + total + '%0A======================' + ' %0A%0Avia ' + via_url);
+        $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Telepon: ' + no_telepon + '%0AAlamat: ' + alamat + ' %0APesan :  ' + pesan + '%0A======================' + ' %0A%0Avia ' + via_url);
         var w = 960,
           h = 540,
           left = Number((screen.width / 2) - (w / 2)),

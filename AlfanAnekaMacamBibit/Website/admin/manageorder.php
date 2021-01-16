@@ -156,11 +156,11 @@
 												<tr>
 													<td><?php echo $no++ ?></td>
 													<td><strong><a href="order.php?orderid=<?php echo $p['orderid'] ?>">#<?php echo $p['orderid'] ?></a></strong></td>
-													<td><?php echo $p['namalengkap'] ?></td>
+													<td><?php echo $p['nama'] ?></td>
 													<td><?php echo $p['tglorder'] ?></td>
 													<td>Rp<?php 
 												
-												$result1 = mysqli_query($koneksi,"SELECT SUM(d.qty*p.hargaafter) AS count FROM detailorder d, produk p where orderid='$orderids' and p.idproduk=d.idproduk order by d.idproduk ASC");
+												$result1 = mysqli_query($koneksi,"SELECT SUM(d.qty*p.harga) AS count FROM detailorder d, barang p where orderid='$orderids' and p.idbarang=d.idbarang order by d.idbarang ASC");
 												$cekrow = mysqli_num_rows($result1);
 												$row1 = mysqli_fetch_assoc($result1);
 												$count = $row1['count'];
@@ -180,7 +180,7 @@
 														echo 'Confirmed';
 													} else {
 														if($p['status']!='Pengiriman'){
-															echo "Menunggu Konfirmasi";
+															echo "Sudah di Order";
 														} else {
 															echo "Pengiriman";
 														};
@@ -209,7 +209,6 @@
         <!-- footer area start-->
         <footer>
             <div class="footer-area">
-                <p>By Richard's Lab</p>
             </div>
         </footer>
         <!-- footer area end-->
