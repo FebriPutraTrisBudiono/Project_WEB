@@ -206,7 +206,7 @@ $query = "INSERT into barang (nama_barang, jenis_barang, stok_barang, umur, foto
 													<td><?php echo $p['harga'] ?></td>
 													<td><?php echo $p['deskripsi'] ?></td>
 													<td><?php echo $p['tgldibuat'] ?></td>
-													<?php echo "<td><a class='edit'href='produk-edit.php?id=" .$p['idbarang']. "'>Ubah</a></td>"; ?>
+													<?php echo "<td><a class='edit'href='produk-edit.php?status=edit&&id=" .$p['idbarang']. "'>Ubah</a></td>"; ?>
 													<?php echo "<td><a class='edit'onclick='return confirmDelete(this);'href='produk-delete.php?id=" .$p['idbarang']. "'>Hapus</a></td>"; ?>
 
 														 

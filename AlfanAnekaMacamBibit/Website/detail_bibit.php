@@ -39,13 +39,11 @@ $idbarang = $_GET['idbarang'];
                                 $i=1;
                                 $baru = $jmlh + $i;
                                 
-                                $updateaja = mysqli_query($koneksi,"update detailorder set qty='$baru' where orderid='$orid' and idbarang='$idbarang'");
+                                $updateaja = mysqli_query($koneksi,"UPDATE detailorder set qty='$baru' where orderid='$orid' and idbarang='$idbarang'");
                                 
                                 if($updateaja){
-                                    echo " <div class='alert alert-success'>
-                                Barang sudah pernah dimasukkan ke keranjang, jumlah akan ditambahkan
-                              </div>
-                              <meta http-equiv='refresh' content='1; url= detail_bibit.php?idbarang=".$idbarang."'/>";
+                              echo " '<script language='javascript'>alert('Barang sudah pernah dimasukkan ke keranjang, jumlah akan ditambahkan')</script>';
+                              <meta http-equiv='refresh' content='1; url= detail_bibit.php?idbarang=".$idbarang."'>";
                                 } else {
                                     echo "<div class='alert alert-warning'>
                                 Gagal menambahkan ke keranjang
@@ -57,9 +55,7 @@ $idbarang = $_GET['idbarang'];
                             
                             $tambahdata = mysqli_query($koneksi,"INSERT into detailorder (orderid,idbarang,qty) values('$orid','$idbarang','1')");
                             if ($tambahdata){
-                            echo " <div class='alert alert-success'>
-                                Berhasil menambahkan ke keranjang
-                              </div>
+                            echo " '<script language='javascript'>alert('Berhasil menambahkan ke keranjang'); </script>';
                             <meta http-equiv='refresh' content='1; url= detail_bibit.php?idbarang=".$idbarang."'/>  ";
                             } else { echo "<div class='alert alert-warning'>
                                 Gagal menambahkan ke keranjang
@@ -77,9 +73,7 @@ $idbarang = $_GET['idbarang'];
                         if($bikincart){
                             $tambahuser = mysqli_query($koneksi,"INSERT into detailorder (orderid,idbarang,qty) values('$oi','$idbarang','1')");
                             if ($tambahuser){
-                            echo " <div class='alert alert-success'>
-                                Berhasil menambahkan ke keranjang
-                              </div>
+                            echo " '<script language='javascript'>alert('Berhasil menambahkan ke keranjang')</script>';
                             <meta http-equiv='refresh' content='1; url= detail_bibit.php?idbarang=".$idbarang."'/>  ";
                             } else { echo "<div class='alert alert-warning'>
                                 Gagal menambahkan ke keranjang
@@ -121,9 +115,7 @@ if(isset($_POST['beli_sekarang'])){
                                 $updateaja = mysqli_query($koneksi,"UPDATE detailorder set qty='$baru' where orderid='$orid' and idbarang='$idbarang'");
                                 
                                 if($updateaja){
-                                    echo " <div class='alert alert-success'>
-                                Barang sudah pernah dimasukkan ke keranjang, jumlah akan ditambahkan
-                              </div>
+                                    echo " 
                               <meta http-equiv='refresh' content='1; url= keranjang.php?idbarang=".$idbarang."'/>";
                                 } else {
                                     echo "<div class='alert alert-warning'>
@@ -136,9 +128,7 @@ if(isset($_POST['beli_sekarang'])){
                             
                             $tambahdata = mysqli_query($koneksi,"INSERT into detailorder (orderid,idbarang,qty) values('$orid','$idbarang','1')");
                             if ($tambahdata){
-                            echo " <div class='alert alert-success'>
-                                Berhasil menambahkan ke keranjang
-                              </div>
+                            echo "
                             <meta http-equiv='refresh' content='1; url= keranjang.php?idbarang=".$idbarang."'/>  ";
                             } else { echo "<div class='alert alert-warning'>
                                 Gagal menambahkan ke keranjang
@@ -156,10 +146,8 @@ if(isset($_POST['beli_sekarang'])){
                         if($bikincart){
                             $tambahuser = mysqli_query($koneksi,"INSERT into detailorder (orderid,idbarang,qty) values('$oi','$idbarang','1')");
                             if ($tambahuser){
-                            echo " <div class='alert alert-success'>
-                                Berhasil menambahkan ke keranjang
-                              </div>
-                            <meta http-equiv='refresh' content='1; url= detail_bibit.php?idbarang=".$idbarang."'/>  ";
+                            echo "
+                            <url= keranjang-pengguna.php?idbarang=".$idbarang."'/>  ";
                             } else { echo "<div class='alert alert-warning'>
                                 Gagal menambahkan ke keranjang
                               </div>
@@ -215,7 +203,13 @@ if(isset($_POST['beli_sekarang'])){
                     <!-- Start Header Navigation -->
                     <div class="navbar-header">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                        <a class="navbar-brand" href="halaman_admin.php"><img src="images/logobaru.png" class="logo" alt=""></a>
+                        <a class="navbar-brand" href="halaman_admin.php">
+                            <?php
+                            $sql_logo_atas = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                            $logo_atas = mysqli_fetch_array($sql_logo_atas);
+                            ?>
+                            <img src="logo/<?php echo $logo_atas['logo_atas']?>" class="logo" alt="">
+                        </a>
                     </div>
                     <!-- End Header Navigation -->
     

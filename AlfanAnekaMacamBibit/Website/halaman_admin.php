@@ -50,7 +50,13 @@ include 'koneksi.php';
                 <!-- Start Header Navigation -->
                 <div class="navbar-header">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                    <a class="navbar-brand" href="halaman_admin.php"><img src="images/logobaru.png" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="halaman_admin.php">
+                        <?php
+                        $sql_logo_atas = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                        $logo_atas = mysqli_fetch_array($sql_logo_atas);
+                        ?>
+                        <img src="logo/<?php echo $logo_atas['logo_atas']?>" class="logo" alt="">
+                    </a>
                 </div>
                 <!-- End Header Navigation -->
 
@@ -196,11 +202,15 @@ include 'koneksi.php';
     </div>
     <!-- End Main Top -->
 
+<?php
+$sql_banner = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+$banner = mysqli_fetch_array($sql_banner);
+?>
     <!-- Start Slider -->
     <div id="slides-shop" class="cover-slides">
         <ul class="slides-container">
             <li class="text-center">
-                <img src="images/banner-02.jpg" alt="">
+                <img src="banner/<?php echo $banner['banner1']?>" class="logo" alt="">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -214,7 +224,7 @@ include 'koneksi.php';
                 </div>
             </li>
             <li class="text-center">
-                <img src="images/banner-02.jpg" alt="">
+                <img src="banner/<?php echo $banner['banner2']?>" class="logo" alt="">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -228,7 +238,7 @@ include 'koneksi.php';
                 </div>
             </li>
             <li class="text-center">
-                <img src="images/banner-03.jpg" alt="">
+                <img src="banner/<?php echo $banner['banner3']?>" class="logo" alt="">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -283,13 +293,19 @@ include 'koneksi.php';
         </div>
     </div>
 
+<?php
+
+$query_mysqli = mysqli_query($koneksi,"SELECT * FROM `barang` ORDER BY idbarang DESC LIMIT 4");
+
+?>
+
     <!-- Start Products  -->
     <div class="products-box">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="title-all text-center">
-                        <h1>Fruits & Vegetables</h1>
+                        <h1>Produk Baru Ditambahkan</h1>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>
                     </div>
                 </div>
@@ -298,104 +314,48 @@ include 'koneksi.php';
                 <div class="col-lg-12">
                     <div class="special-menu text-center">
                         <div class="button-group filter-button-group">
-                            <button class="active" data-filter="*">All</button>
-                            <button data-filter=".top-featured">Top featured</button>
-                            <button data-filter=".best-seller">Best seller</button>
+                            <button class="active" data-filter="*">New Product</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="row special-list">
-                <div class="col-lg-3 col-md-6 special-grid best-seller">
-                    <div class="products-single fix">
-                        <div class="box-img-hover">
-                            <div class="type-lb">
-                                <p class="sale">Sale</p>
+                <div class="col-lg-12 col-md-6 special-grid best-seller">
+                    <div class="row">
+                        <?php while ($result = mysqli_fetch_array($query_mysqli)) { ?>
+                        <div class="products-single fix" style="margin: 7px; margin-right: auto; margin-left: auto;">
+                            <div class="box-img-hover">
+                                <div class="type-lb">
+                                    <p class="sale" style="background-color: black;">New</p>
+                                </div>
+                                <img src="foto_brg/<?php echo $result['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 250px; height: 220px;">
+                                <div class="mask-icon">
+                                    <?php if ($result['stok_barang'] == 0): { 
+                                        echo "<a class='cart' href='#' style='background-color: black;'>Belum Tersedia</a>";
+                                    } elseif ($result['stok_barang'] > 0): {
+                                        echo "<a class='cart' href='#'>Tersedia</a>";
+                                    }
+                                    ?>
+                                        
+                                    <?php endif ?>
+                                </div>
                             </div>
-                            <img src="images/img-pro-01.jpg" class="img-fluid" alt="Image">
-                            <div class="mask-icon">
-                                <ul>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                                <a class="cart" href="#">Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="why-text">
-                            <h4>Lorem ipsum dolor sit amet</h4>
-                            <h5> $7.79</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 special-grid top-featured">
-                    <div class="products-single fix">
-                        <div class="box-img-hover">
-                            <div class="type-lb">
-                                <p class="new">New</p>
-                            </div>
-                            <img src="images/img-pro-02.jpg" class="img-fluid" alt="Image">
-                            <div class="mask-icon">
-                                <ul>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                                <a class="cart" href="#">Add to Cart</a>
+                            <div class="why-text">
+                                <h4><?php echo $result['nama_barang']; ?></h4>
+                                <label><?php echo $result['umur']; ?></label>
+                                <h5>Rp<?php echo $result['harga']; ?></h5><br>
+                                <?php if ($result['stok_barang'] == 0): { ?>
+                                    <p class="btn btn-primary" style="width: 213px; background-color: black;">Detail</a>
+                                <?php } ?> 
+                                <?php elseif ($result['stok_barang'] > 0): { ?>
+                                    <a href="detail_bibit.php?idbarang=<?=$result['idbarang']?>" class="btn btn-primary" style="width: 213px;">Detail</a>
+                                <?php } ?>
+                                
+                                <?php endif ?>
                             </div>
                         </div>
-                        <div class="why-text">
-                            <h4>Lorem ipsum dolor sit amet</h4>
-                            <h5> $9.79</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 special-grid top-featured">
-                    <div class="products-single fix">
-                        <div class="box-img-hover">
-                            <div class="type-lb">
-                                <p class="sale">Sale</p>
-                            </div>
-                            <img src="images/img-pro-03.jpg" class="img-fluid" alt="Image">
-                            <div class="mask-icon">
-                                <ul>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                                <a class="cart" href="#">Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="why-text">
-                            <h4>Lorem ipsum dolor sit amet</h4>
-                            <h5> $10.79</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 special-grid best-seller">
-                    <div class="products-single fix">
-                        <div class="box-img-hover">
-                            <div class="type-lb">
-                                <p class="sale">Sale</p>
-                            </div>
-                            <img src="images/img-pro-04.jpg" class="img-fluid" alt="Image">
-                            <div class="mask-icon">
-                                <ul>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                                <a class="cart" href="#">Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="why-text">
-                            <h4>Lorem ipsum dolor sit amet</h4>
-                            <h5> $15.79</h5>
-                        </div>
+                        <?php } ?> 
                     </div>
                 </div>
             </div>

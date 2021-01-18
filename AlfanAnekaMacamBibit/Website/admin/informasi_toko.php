@@ -197,6 +197,18 @@
                                         <h6>Highlight 7</h6>
                                         <label><?php echo $data['highlight7']; ?></label>
                                       </div>
+                                      <div class="mb-3">
+                                        <h6>Banner1</h6>
+                                        <img src="../banner/<?php echo $data['banner1']?>" class="logo" alt="" style="width: 200px; height: 108px;">
+                                      </div>
+                                      <div class="mb-3">
+                                        <h6>Banner2</h6>
+                                        <img src="../banner/<?php echo $data['banner2']?>" class="logo" alt="" style="width: 200px; height: 108px;">
+                                      </div>
+                                      <div class="mb-3">
+                                        <h6>Banner3</h6>
+                                        <img src="../banner/<?php echo $data['banner3']?>" class="logo" alt="" style="width: 200px; height: 108px;">
+                                      </div>
                                       <br>
                                       <button type="submit" name="ubah" class="btn btn-primary" style="background-color: #008000;">Ubah</button>
                                     </form>  

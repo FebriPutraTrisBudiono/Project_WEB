@@ -2,6 +2,109 @@
     session_start();
     include '../koneksi.php';
 
+    if(isset($_POST['edit'])){
+            $about_us = $_POST['about_us'];
+            $business_time = $_POST['business_time'];
+            $nama_facebook = $_POST['nama_facebook'];
+            $whatsapp = $_POST['whatsapp'];
+            $highlight1 = $_POST['highlight1'];
+            $highlight2 = $_POST['highlight2'];
+            $highlight3 = $_POST['highlight3'];
+            $highlight4 = $_POST['highlight4'];
+            $highlight5 = $_POST['highlight5'];
+            $highlight6 = $_POST['highlight6'];
+            $highlight7 = $_POST['highlight7'];
+
+            
+            $ekstensi_diperbolehkan = array('png','jpg');
+            //logo atas
+            $logo_atas = $_FILES['logo_atas']['name'];
+            $x = explode('.', $logo_atas);
+            $ekstensi = strtolower(end($x));
+            $ukuran = $_FILES['logo_atas']['size'];
+            $file_tmp = $_FILES['logo_atas']['tmp_name'];
+
+            if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
+                if($ukuran < 1044070){          
+                    move_uploaded_file($file_tmp, '../logo/'.$logo_atas);
+                }else{
+                    echo 'UKURAN FILE TERLALU BESAR';
+                }
+            }else{
+                echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
+            }
+
+            //logo bawah
+            $logo_bawah = $_FILES['logo_bawah']['name'];
+            $y = explode('.', $logo_bawah);
+            $ekstensi2 = strtolower(end($y));
+            $ukuran = $_FILES['logo_bawah']['size'];
+            $file_tmp = $_FILES['logo_bawah']['tmp_name'];
+
+            if(in_array($ekstensi2, $ekstensi_diperbolehkan) === true){
+                if($ukuran < 1044070){          
+                    move_uploaded_file($file_tmp, '../logo/'.$logo_bawah);
+                }else{
+                    echo 'UKURAN FILE TERLALU BESAR';
+                }
+            }else{
+                echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
+            }
+            
+            //banner1
+            $banner1 = $_FILES['banner1']['name'];
+            $a = explode('.', $banner1);
+            $ekstensi3 = strtolower(end($a));
+            $ukuran = $_FILES['banner1']['size'];
+            $file_tmp = $_FILES['banner1']['tmp_name'];
+
+            if(in_array($ekstensi3, $ekstensi_diperbolehkan) === true){
+                if($ukuran < 1044070){          
+                    move_uploaded_file($file_tmp, '../banner/'.$banner1);
+                }else{
+                    echo 'UKURAN FILE TERLALU BESAR';
+                }
+            }else{
+                echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
+            }
+
+            //banner2
+            $banner2 = $_FILES['banner2']['name'];
+            $b = explode('.', $banner2);
+            $ekstensi4 = strtolower(end($b));
+            $ukuran = $_FILES['banner2']['size'];
+            $file_tmp = $_FILES['banner2']['tmp_name'];
+
+            if(in_array($ekstensi4, $ekstensi_diperbolehkan) === true){
+                if($ukuran < 1044070){          
+                    move_uploaded_file($file_tmp, '../banner/'.$banner2);
+                }else{
+                    echo 'UKURAN FILE TERLALU BESAR';
+                }
+            }else{
+                echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
+            }            
+
+            //banner3
+            $banner3 = $_FILES['banner3']['name'];
+            $c = explode('.', $banner3);
+            $ekstensi5 = strtolower(end($c));
+            $ukuran = $_FILES['banner3']['size'];
+            $file_tmp = $_FILES['banner3']['tmp_name'];
+
+            if(in_array($ekstensi5, $ekstensi_diperbolehkan) === true){
+                if($ukuran < 1044070){          
+                    move_uploaded_file($file_tmp, '../banner/'.$banner3);
+                }else{
+                    echo 'UKURAN FILE TERLALU BESAR';
+                }
+            }else{
+                echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
+            }
+            $query = mysqli_query($koneksi, "UPDATE tentang_kami set about_us='$about_us', business_time='$business_time', nama_facebook='$nama_facebook', whatsapp='$whatsapp', logo_atas='$logo_atas', logo_bawah='$logo_bawah', highlight1='$highlight1', highlight2='$highlight2', highlight3='$highlight3', highlight4='$highlight4', highlight5='$highlight5', highlight6='$highlight6', highlight7='$highlight7', banner1='$banner1', banner2='$banner2', banner3='$banner3'");
+            
+            header("location:informasi_toko.php");
+        }
     ?>
 
 <!doctype html>
@@ -138,11 +241,11 @@
                                 </div>
                                 <?php
 
-    $sql_about_us = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
-    $data = mysqli_fetch_array($sql_about_us);
-    ?>
+                                $sql_about_us = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                                $data = mysqli_fetch_array($sql_about_us);
+                                ?>
                                     <br>
-                                    <form method="post" enctype="multipart/form-data" action="informasi_toko-edit-process.php">
+                                    <form method="post" enctype="multipart/form-data">
                                       <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">About Us</label>
                                         <textarea name="about_us" class="form-control"><?php echo $data['about_us']; ?></textarea>
@@ -153,7 +256,11 @@
                                       </div>
                                       <div class="mb-3">
                                         <label for="exampleInputPassword1" class="form-label">Nomor Whatsapp</label>
-                                        <input type="text" name="whastapp" class="form-control" value="<?php echo $data['whatsapp']; ?>" placeholder="Umur" required>
+                                        <input type="text" name="whatsapp" class="form-control" value="<?php echo $data['whatsapp']; ?>" placeholder="Umur" required>
+                                      </div>
+                                      <div class="mb-3">
+                                        <label for="exampleInputPassword1" class="form-label">Jam Kerja</label>
+                                        <input type="text" name="business_time" class="form-control" value="<?php echo $data['business_time']; ?>" placeholder="Umur" required>
                                       </div>
                                       <div class="mb-3">
                                           <label class="name">Logo Atas</label><br>
@@ -190,6 +297,18 @@
                                       <div class="mb-3">
                                         <label for="exampleInputPassword1" class="form-label">Highlight 7</label>
                                         <input type="text" name="highlight7" class="form-control" value="<?php echo $data['highlight7']; ?>" placeholder="Umur" required>
+                                      </div>
+                                      <div class="mb-3">
+                                          <label class="name">Banner1</label><br>
+                                        <input class="nama" type="file" name="banner1" required>
+                                      </div>
+                                      <div class="mb-3">
+                                          <label class="name">Banner2</label><br>
+                                        <input class="nama" type="file" name="banner2" required>
+                                      </div>
+                                      <div class="mb-3">
+                                          <label class="name">Banner3</label><br>
+                                        <input class="nama" type="file" name="banner3" required>
                                       </div>
                                       <br>
                                       <button type="submit" name="edit" class="btn btn-primary" style="background-color: #008000;">Ubah</button>

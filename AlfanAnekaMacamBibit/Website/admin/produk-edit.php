@@ -3,8 +3,10 @@ session_start();
 include_once '../koneksi.php';
 
 $id = $_GET['id'];
-$userquery = $koneksi->query("SELECT * FROM barang WHERE idbarang = ".$id);
-$row = $userquery->fetch_object();
+$userquery = ("SELECT * FROM barang WHERE idbarang = ".$id);
+$row = mysqli_query($koneksi, $userquery);
+$data = mysqli_fetch_array($row);
+$gambar = $data["foto_barang"];
 
 if(isset($_POST["ubah"])){
 $nama_barang = $_POST["nama_barang"];
@@ -36,9 +38,9 @@ $sql = "UPDATE barang SET nama_barang = '".$nama_barang."', jenis_barang = '".$j
 if ($koneksi->query($sql) == TRUE) {
 	date_default_timezone_set('Asia/Jakarta');
 	$waktu = date("d/m/Y h:i:s");
-	$kegiatan = "Mengubah nama barang ".$row->nama_barang." menjadi ".$nama_barang." dan mengubah jenis barang ".$row->jenis_barang." menjadi ".$jenis_barang;
+	$kegiatan = "Mengubah nama barang ".$data->nama_barang." menjadi ".$nama_barang." dan mengubah jenis barang ".$data->jenis_barang." menjadi ".$jenis_barang;
 	$sqlhistory = "INSERT INTO history (waktu, jenis_barang, nama_barang, kegiatan) 
-	VALUES ('".$waktu."','".$row->nama_barang."','".$row->jenis_barang."','".$kegiatan."')";	
+	VALUES ('".$waktu."','".$data->nama_barang."','".$data->jenis_barang."','".$kegiatan."')";	
     if ($koneksi->query($sqlhistory) == TRUE) {
 	header("Location: produk.php");
 	} else {
@@ -189,28 +191,34 @@ $koneksi->close();
                                       </div>
                                       <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Nama Bibit</label>
-                                        <input type="text" name="nama_barang" class="form-control" value="<?php echo $row->nama_barang; ?>" placeholder="Nama Bibit" required=>
+                                        <input type="text" name="nama_barang" class="form-control" value="<?php echo $data['nama_barang']; ?>" placeholder="Nama Bibit" required=>
                                       </div>
                                       <div class="mb-3">
                                         <label for="exampleInputPassword1" class="form-label">Jenis Bibit</label>
-                                        <input type="text" name="jenis_barang" class="form-control" value="<?php echo $row->jenis_barang; ?>" placeholder="Jenis Bibit" required>
+                                        <input type="text" name="jenis_barang" class="form-control" value="<?php echo $data['jenis_barang']; ?>" placeholder="Jenis Bibit" required>
                                       </div>
                                       <div class="mb-3">
                                         <label for="exampleInputPassword1" class="form-label">Umur</label>
-                                        <input type="text" name="umur" class="form-control" value="<?php echo $row->umur; ?>" placeholder="Umur" required>
+                                        <input type="text" name="umur" class="form-control" value="<?php echo $data['umur']; ?>" placeholder="Umur" required>
                                       </div>
                                       <div class="mb-3">
                                         <label for="exampleInputPassword1" class="form-label">Harga</label>
-                                        <input type="text" name="harga" class="form-control" value="<?php echo $row->harga; ?>" placeholder="Harga" required>
+                                        <input type="text" name="harga" class="form-control" value="<?php echo $data['harga']; ?>" placeholder="Harga" required>
                                       </div>
                                       <div class="mb-3">
                                         <label for="exampleInputPassword1" class="form-label">Deskripsi Produk</label>
-                                        <textarea name="deskripsi" class="form-control" required><?php echo $row->deskripsi; ?></textarea>
+                                        <textarea name="deskripsi" class="form-control" required><?php echo $data['deskripsi']; ?></textarea>
                                       </div>
                                       <div class="mb-3">
                                           <h2 class="name">foto</h2>
-                                        <input class="nama" type="file" name="foto_barang" required>
-                                        </div>
+                                        <input class="nama" type="file" name="foto_barang">
+                                      </div>
+                                        <?php
+                                          if($_GET["status"] == "edit"){
+
+                                            echo "<img src='../foto_brg/$gambar' alt='' style='width: 230px; height: 345px;' class='mb-3'>";
+                                          }
+                                        ?>
                                       <br>
                                       <button type="submit" name="ubah" class="btn btn-primary" style="background-color: #008000;">Ubah</button>
                                     </form>  

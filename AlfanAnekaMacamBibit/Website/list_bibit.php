@@ -58,7 +58,13 @@ if ($_SESSION['username']) {
                     <!-- Start Header Navigation -->
                     <div class="navbar-header">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                        <a class="navbar-brand" href="index.php"><img src="images/logobaru.png" class="logo" alt=""></a>
+                        <a class="navbar-brand" href="halaman_admin.php">
+                            <?php
+                            $sql_logo_atas = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                            $logo_atas = mysqli_fetch_array($sql_logo_atas);
+                            ?>
+                            <img src="logo/<?php echo $logo_atas['logo_atas']?>" class="logo" alt="">
+                        </a>
                     </div>
                     <!-- End Header Navigation -->
     
@@ -208,7 +214,14 @@ if ($_SESSION['username']) {
 <br>
 <br>
 <?php 
-$query_mysqli = mysqli_query($koneksi,"SELECT * from barang");
+$jumlahdataperhalaman = 9;
+$hasil = mysqli_query($koneksi, "SELECT * FROM barang");
+$jumlahdata = mysqli_num_rows($hasil);
+$jumlahhalaman = ceil($jumlahdata / $jumlahdataperhalaman);
+$halamanaktif = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
+$awaldata = ($jumlahdataperhalaman * $halamanaktif) - $jumlahdataperhalaman;
+
+$query_mysqli = mysqli_query($koneksi,"SELECT * from barang LIMIT $awaldata, $jumlahdataperhalaman");
 
 $nomor = 1;
 
@@ -273,14 +286,28 @@ if (isset($_GET['cari'])) {
                                                     </div>
                                                     <img src="foto_brg/<?php echo $result['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 250px; height: 220px;">
                                                     <div class="mask-icon">
-                                                        <a class="cart" href="#">Add to Cart</a>
+                                                        <?php if ($result['stok_barang'] == 0): { 
+                                                            echo "<a class='cart' href='#' style='background-color: black;'>Belum Tersedia</a>";
+                                                        } elseif ($result['stok_barang'] > 0): {
+                                                            echo "<a class='cart' href='#'>Tersedia</a>";
+                                                        }
+                                                        ?>
+                                                            
+                                                        <?php endif ?>
                                                     </div>
                                                 </div>
                                                 <div class="why-text">
                                                     <h4><?php echo $result['nama_barang']; ?></h4>
                                                     <label><?php echo $result['umur']; ?></label>
                                                     <h5>Rp<?php echo $result['harga']; ?></h5>
-                                                    <a href="detail_bibit.php?idbarang=<?=$result['idbarang']?>" class="btn btn-primary" style="width: 213px;">Detail</a>
+                                                    <?php if ($result['stok_barang'] == 0): { ?>
+                                                        <p class="btn btn-primary" style="width: 213px; background-color: black;">Detail</a>
+                                                    <?php } ?> 
+                                                    <?php elseif ($result['stok_barang'] > 0): { ?>
+                                                        <a href="detail_bibit.php?idbarang=<?=$result['idbarang']?>" class="btn btn-primary" style="width: 213px;">Detail</a>
+                                                    <?php } ?>
+                                                    
+                                                    <?php endif ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -317,6 +344,30 @@ if (isset($_GET['cari'])) {
                 </div>
             </div>
         </div>
+        <nav aria-label="..." >
+          <ul class="pagination justify-content-center">
+            <li class="page-item">
+              <?php if($halamanaktif > 1) : ?>
+                    <a href="?halaman=<?php echo $halamanaktif - 1; ?>" class="page-link" tabindex="-1">&laquo;</a>
+                <?php endif; ?>
+            </li>
+            <?php for($i = 1; $i <= $jumlahhalaman; $i++) : ?>
+                        <?php if($i == $halamanaktif) : ?>
+            <li class="page-item">
+                            <a href="?halaman=<?php echo $i; ?>" class="page-link" style="font-weight: bold; color: red;"><?php echo $i; ?></a>
+
+            </li>
+                                    <?php else : ?>
+                            <a href="?halaman=<?php echo $i; ?>" class="page-link" style=""><?php echo $i; ?></a>
+                        <?php endif; ?>
+                <?php endfor; ?>
+            <li class="page-item">
+              <?php if($halamanaktif < $jumlahhalaman) : ?>
+                    <a href="?halaman=<?php echo $halamanaktif + 1; ?>" class="page-link">&raquo;</a>
+                <?php endif; ?>
+            </li>
+          </ul>
+        </nav>
     </div>
     <!-- End Shop Page -->
 

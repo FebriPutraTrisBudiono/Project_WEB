@@ -179,11 +179,15 @@ include 'koneksi.php';
     </div>
     <!-- End Main Top -->
 
+<?php
+$sql_banner = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+$banner = mysqli_fetch_array($sql_banner);
+?>
     <!-- Start Slider -->
     <div id="slides-shop" class="cover-slides">
         <ul class="slides-container">
             <li class="text-center">
-                <img src="images/banner-01.jpg" alt="">
+                <img src="banner/<?php echo $banner['banner1']?>" class="logo" alt="">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -191,13 +195,13 @@ include 'koneksi.php';
                             <h1 class="m-b-40" style="font-size: 350%"><strong>AlfanAneka</strong></h1>
                             <h1 class="m-b-40" style="font-size: 300%"><strong>MacamBibit</strong></h1>
                             <p class="m-b-40">Penjualan Bibit Tanaman Terpercaya, Murah dan Berkualitas<br> Menerima Pengiriman secara diantar langsung maupun melalui jasa</p>
-                            <p><a class="btn hvr-hover" href="list_bibit-guest.php">Belanja Sekarang</a></p>
+                            <p><a class="btn hvr-hover" href="list_bibit.php">Belanja Sekarang</a></p>
                         </div>
                     </div>
                 </div>
             </li>
             <li class="text-center">
-                <img src="images/banner-02.jpg" alt="">
+                <img src="banner/<?php echo $banner['banner2']?>" class="logo" alt="">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -205,13 +209,13 @@ include 'koneksi.php';
                             <h1 class="m-b-40" style="font-size: 350%"><strong>AlfanAneka</strong></h1>
                             <h1 class="m-b-40" style="font-size: 300%"><strong>MacamBibit</strong></h1>
                             <p class="m-b-40">Penjualan Bibit Tanaman Terpercaya, Murah dan Berkualitas<br> Menerima Pengiriman secara diantar langsung maupun melalui jasa</p>
-                            <p><a class="btn hvr-hover" href="list_bibit-guest.php">Belanja Sekarang</a></p>
+                            <p><a class="btn hvr-hover" href="list_bibit.php">Belanja Sekarang</a></p>
                         </div>
                     </div>
                 </div>
             </li>
             <li class="text-center">
-                <img src="images/banner-03.jpg" alt="">
+                <img src="banner/<?php echo $banner['banner3']?>" class="logo" alt="">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -219,13 +223,13 @@ include 'koneksi.php';
                             <h1 class="m-b-40" style="font-size: 350%"><strong>AlfanAneka</strong></h1>
                             <h1 class="m-b-40" style="font-size: 300%"><strong>MacamBibit</strong></h1>
                             <p class="m-b-40">Penjualan Bibit Tanaman Terpercaya, Murah dan Berkualitas<br> Menerima Pengiriman secara diantar langsung maupun melalui jasa</p>
-                            <p><a class="btn hvr-hover" href="list_bibit-guest.php">Belanja Sekarang</a></p>
+                            <p><a class="btn hvr-hover" href="list_bibit.php">Belanja Sekarang</a></p>
                         </div>
                     </div>
                 </div>
             </li>
         </ul>
-        <div class="slides-navigation" id="tentang_kami">   
+        <div class="slides-navigation" id="tentang_kami">
             <a href="#" class="next" style="background-color: transparent;"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
             <a href="#" class="prev" style="background-color: transparent;"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
         </div>
@@ -270,6 +274,76 @@ include 'koneksi.php';
             </div>
         </div>
     </div>
+
+<?php
+
+$query_mysqli = mysqli_query($koneksi,"SELECT * FROM `barang` ORDER BY idbarang DESC LIMIT 4");
+
+?>
+
+    <!-- Start Products  -->
+    <div class="products-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>Produk Baru Ditambahkan</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="special-menu text-center">
+                        <div class="button-group filter-button-group">
+                            <button class="active" data-filter="*">New Product</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row special-list">
+                <div class="col-lg-12 col-md-6 special-grid best-seller">
+                    <div class="row">
+                        <?php while ($result = mysqli_fetch_array($query_mysqli)) { ?>
+                        <div class="products-single fix" style="margin: 7px; margin-right: auto; margin-left: auto;">
+                            <div class="box-img-hover">
+                                <div class="type-lb">
+                                    <p class="sale" style="background-color: black;">New</p>
+                                </div>
+                                <img src="foto_brg/<?php echo $result['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 250px; height: 220px;">
+                                <div class="mask-icon">
+                                    <?php if ($result['stok_barang'] == 0): { 
+                                        echo "<a class='cart' href='#' style='background-color: black;'>Belum Tersedia</a>";
+                                    } elseif ($result['stok_barang'] > 0): {
+                                        echo "<a class='cart' href='#'>Tersedia</a>";
+                                    }
+                                    ?>
+                                        
+                                    <?php endif ?>
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <h4><?php echo $result['nama_barang']; ?></h4>
+                                <label><?php echo $result['umur']; ?></label>
+                                <h5>Rp<?php echo $result['harga']; ?></h5><br>
+                                <?php if ($result['stok_barang'] == 0): { ?>
+                                    <p class="btn btn-primary" style="width: 213px; background-color: black;">Detail</a>
+                                <?php } ?> 
+                                <?php elseif ($result['stok_barang'] > 0): { ?>
+                                    <a href="detail_bibit-guest.php?idbarang=<?=$result['idbarang']?>" class="btn btn-primary" style="width: 213px;">Detail</a>
+                                <?php } ?>
+                                
+                                <?php endif ?>
+                            </div>
+                        </div>
+                        <?php } ?> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Products  -->
 
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">

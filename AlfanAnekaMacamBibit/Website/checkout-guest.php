@@ -35,7 +35,7 @@ include 'koneksi.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
-<body style="background-color: #cccccc;">
+<body>
     <!-- Start Main Top -->
     <header class="main-header">
         <!-- Start Navigation -->
@@ -44,7 +44,13 @@ include 'koneksi.php';
                 <!-- Start Header Navigation -->
                 <div class="navbar-header">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                    <a class="navbar-brand" href="index.php"><img src="images/logobaru.png" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="index.php">
+                        <?php
+                        $sql_logo_atas = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                        $logo_atas = mysqli_fetch_array($sql_logo_atas);
+                        ?>
+                        <img src="logo/<?php echo $logo_atas['logo_atas']?>" class="logo" alt="">
+                    </a>
                 </div>
                 <!-- End Header Navigation -->
 
@@ -194,7 +200,7 @@ include 'koneksi.php';
     ?>
 
 
-<div class="container" style="background-color: white;">
+<div class="container" style="background-color: white; box-shadow: 0 4px 10px 0 rgba(0,0,0,0.5)">
     <form class="contact100-form validate-form" id="whatsapp">
     <div class="row">
         <div class="col">

@@ -49,7 +49,7 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
-<body style="background-color: #cccccc;">
+<body>
     <!-- Start Main Top -->
     <header class="main-header">
         <!-- Start Navigation -->
@@ -58,7 +58,13 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                 <!-- Start Header Navigation -->
                 <div class="navbar-header">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                    <a class="navbar-brand" href="halaman_pengguna.php"><img src="images/logobaru.png" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="halaman_pengguna.php">
+                        <?php
+                        $sql_logo_atas = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                        $logo_atas = mysqli_fetch_array($sql_logo_atas);
+                        ?>
+                        <img src="logo/<?php echo $logo_atas['logo_atas']?>" class="logo" alt="">
+                    </a>
                 </div>
                 <!-- End Header Navigation -->
 
@@ -207,7 +213,7 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
     <!-- End All Title Box -->
     <br>
 
-<div class="container" style="background-color: white;">
+<div class="container" style="background-color: white; box-shadow: 0 4px 10px 0 rgba(0,0,0,0.5)">
     <form class="contact100-form validate-form" id="whatsapp">
     <div class="row">
         <div class="col">
@@ -491,8 +497,9 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                 let dataBrg = JSON.parse(dete);
                 let deteBrg = [...dataBrg];
                 let subTotal = 0;
+                Array.from(deteBrg, item => parseInt(subTotal += parseInt(item.harga * item.qty)))
 
-                $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Whatsapp: ' + nowhatsapp + '%0AAlamat: ' + alamat + '%0A======================' + Array.from(deteBrg, item => `%0ANama Barang: ${item.nama_barang} %0AHarga: Rp. ${parseInt(item.harga).toLocaleString("id-ID")} %0Aqty: ${item.qty} %0ASubTotal: Rp. ${parseInt(subTotal+=parseInt(item.harga*item.qty)).toLocaleString("id-ID")} %0A`) + `%0ATotal: Rp. ${parseInt(subTotal).toLocaleString("id-ID")}` + '%0A%0Avia ' + via_url);
+                $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Whatsapp: ' + nowhatsapp + '%0AAlamat: ' + alamat + '%0A======================' + Array.from(deteBrg, item => `%0ANama Barang: ${item.nama_barang} %0AHarga: Rp. ${parseInt(item.harga).toLocaleString("id-ID")} %0Aqty: ${item.qty} %0ASubTotal: Rp. ${parseInt(item.harga*item.qty).toLocaleString("id-ID")} %0A`) + `%0ATotal: Rp. ${subTotal.toLocaleString("id-ID")}` + '%0A%0Avia ' + via_url);
 
                 var w = 960,
                     h = 540,
@@ -521,5 +528,3 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
 </body>
-
-</html>
