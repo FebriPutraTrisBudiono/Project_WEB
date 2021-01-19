@@ -43,7 +43,7 @@ if (!isset($_SESSION['username'])) {
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
             <div class="container">
                     <!-- Start Header Navigation -->
-                    <div class="navbar-header" style="margin: auto;">
+                    <div class="navbar-header">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="  navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
                         <a class="navbar-brand" href="halaman_pengguna.php">
                             <?php
@@ -85,7 +85,7 @@ if (!isset($_SESSION['username'])) {
                         </li>-->
                         <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"> <?php echo $_SESSION['username']; ?></i><i class="fas fa-angle-down"></i></a>
-                            <ul class="dropdown-menu" style="left:-35px;">
+                            <ul class="dropdown-menu" style="left: -65px; width: 10px;">
                                 <li><a href="view_profil_pengguna.php">View Profil</a></li>
                                 <li><a href="process/logout.php">Logout</a></li>
                             </ul>

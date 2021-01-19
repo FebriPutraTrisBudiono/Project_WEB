@@ -2,6 +2,9 @@
 session_start();
 
 include 'koneksi.php';
+if (!isset($_SESSION['username'])) {
+  echo '<script language="javascript">alert("Anda harus Login!"); document.location="login.php";</script>';
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,7 +32,7 @@ include 'koneksi.php';
   <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="css/util.css">
-  <link rel="stylesheet" type="text/css" href="css/login.css">
+  <link rel="stylesheet" type="text/css" href="css/main_style.css">
 <!--===============================================================================================-->
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -71,45 +74,44 @@ include 'koneksi.php';
   <div class="limiter">
     <div class="container-login100" style="background-color: #00FF00">
       <div class="wrap-login100 p-l-55 p-r-55 p-t-20 p-b-20">
-        <form class="login100-form validate-form" action="process/cek_login.php" method="POST">
+        <form class="login100-form validate-form" action="process/cek_reset_password.php" method="POST">
           <span class="login100-form-title p-b-49">
-            Login
+            Reset Password
           </span>
+          <?php
+    
+          if ($_SESSION['username']) {
+              $sesi = $_SESSION['username'];
+          }
 
-          <div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
+          $sql_profil = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE username ='$sesi'");
+          $data = mysqli_fetch_array($sql_profil);
+          ?>
+          <div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required">
             <span class="label-input100">Username</span>
-            <input class="input100" type="text" name="username" placeholder="Type your username">
+            <input class="input100" type="text" name="username" value="<?php echo $data['username']; ?>" style="background-color: grey;" readonly>
             <span class="focus-input100" data-symbol="&#xf206;"></span>
           </div>
-
           <div class="wrap-input100 validate-input" data-validate="Password is required">
-            <span class="label-input100">Password</span>
-            <input class="input100" type="password" name="password" placeholder="Type your password">
+            <span class="label-input100">Password Baru</span>
+            <input class="input100" type="password" name="password" value="<?php echo $data['password']; ?>">
             <span class="focus-input100" data-symbol="&#xf190;"></span>
           </div>
-          
-          <div class="text-right p-t-8 p-b-31">
-            <a href="lupa_password.php">
-              Lupa password?
-            </a>
-          </div>
-          
+          <br>
           <div class="container-login100-form-btn">
             <div class="wrap-login100-form-btn">
               <div class="login100-form-bgbtn"></div>
-              <button class="login100-form-btn" type="submit" name="login" value="login">
-                Login
-              </button>
+              <center><td><input type="submit" class="btn" name="edit" value="Simpan"></td></center>
             </div>
           </div>
 
           <div class="flex-col-c p-t-30">
             <span class="txt1 p-b-17">
-              Belum Punya Akun ?
+              Sudah punya akun ?
             </span>
 
-            <a href="signup.php" class="txt2">
-              Sign Up
+            <a href="login.php" class="txt2">
+              Login
             </a>
           </div>
         </form>

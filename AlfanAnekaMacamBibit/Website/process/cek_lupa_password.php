@@ -7,18 +7,18 @@ include '../koneksi.php';
  
 // menangkap data yang dikirim dari form login
 $username = $_POST['username'];
-$password = $_POST['password'];
+$no_telepon = $_POST['no_telepon'];
  
  
-// menyeleksi data user dengan username dan password yang sesuai
-$login = mysqli_query($koneksi,"SELECT * from pengguna where username='$username' and password=md5('$password')");
+// menyeleksi data user dengan username dan no_telepon yang sesuai
+$reset = mysqli_query($koneksi,"SELECT * from pengguna where username='$username' and no_telepon='$no_telepon'");
 // menghitung jumlah data yang ditemukan
-$cek = mysqli_num_rows($login);
+$cek = mysqli_num_rows($reset);
  
-// cek apakah username dan password di temukan pada database
+// cek apakah username dan no_telepon di temukan pada database
 if($cek > 0){
  
-  $data = mysqli_fetch_assoc($login);
+  $data = mysqli_fetch_assoc($reset);
  
   // cek jika user login sebagai admin
   if($data['level']=="admin"){
@@ -29,8 +29,8 @@ if($cek > 0){
     // alihkan ke halaman dashboard admin
     echo "
         <script type='text/javascript'>
-        alert('Anda Berhasil Login Sebagai Admin');
-        window.location='../halaman_admin.php'
+        alert('Silahkan Tulis Password Baru anda');
+        window.location='../reset_password.php'
         </script>";
  
   // cek jika user login sebagai pegawai
@@ -41,23 +41,23 @@ if($cek > 0){
     // alihkan ke halaman dashboard pegawai
     echo "
         <script type='text/javascript'>
-        alert('Anda Berhasil Login Sebagai Pengguna');
-        window.location='../halaman_pengguna.php'
+        alert('Silahkan Tulis Password Baru anda');
+        window.location='../reset_password.php'
         </script>";
  
   }else{
  
     echo "
         <script type='text/javascript'>
-        alert('Password Anda Salah!');
-        history.back(self);
+        alert('Username anda belum terdaftar!');
+        window.location='../signup.php'
         </script>";
   } 
 }else{
   echo "
         <script type='text/javascript'>
-        alert('Username & Password Anda salah!');
-        window.location='../login.php'
+        alert('Username anda belum terdaftar!');
+        window.location='../signup.php'
         </script>";
 }
  

@@ -6,7 +6,7 @@ include 'koneksi.php';
 <!DOCTYPE html>
 <html>
 <head>
- <title>LOGIN MULTIUSER PHP</title>
+ <title>AlfanAnekaMacamBibit</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->  
@@ -43,8 +43,7 @@ include 'koneksi.php';
     <meta name="author" content="">
 
     <!-- Site Icons -->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="images/logobaru2.png" type="image/x-icon">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -57,9 +56,16 @@ include 'koneksi.php';
 <!--------------------------------------------------------------------------------------------------->
 </head>
 <body>
-
+  <div class="container">
   <div id="header">
-    <a href="index.php"><img src="images/logobaru.png" style="margin: 0px 140px"></a>
+    <a class="navbar-brand" href="index.php">
+        <?php
+        $sql_logo_atas = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+        $logo_atas = mysqli_fetch_array($sql_logo_atas);
+        ?>
+        <img src="logo/<?php echo $logo_atas['logo_atas']?>" class="logo" alt="">
+    </a>
+  </div>
   </div>
 
   <div class="limiter">

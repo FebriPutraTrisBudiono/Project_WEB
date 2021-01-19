@@ -33,7 +33,7 @@
     SKELETON
 -------------------------------------------------------------------*/
  body {
-     color: #666666;
+     color: #666666; 
      font-size: 15px;
      font-family: 'Dosis', sans-serif;
      line-height: 1.80857;
@@ -1510,7 +1510,7 @@
 }
 /*------------------------------------------------------------------ All Pages -------------------------------------------------------------------*/
  .all-title-box{
-     background: url("../images/all-bg-title.jpg") no-repeat center center;
+     background: url("../banner/45491653_1154593844706375_6206764459013177344_o.jpg") no-repeat center center;
      -webkit-background-size: cover;
      -moz-background-size: cover;
      -ms-background-size: cover;

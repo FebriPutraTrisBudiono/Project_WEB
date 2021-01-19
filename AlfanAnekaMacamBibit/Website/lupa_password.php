@@ -6,7 +6,7 @@ include 'koneksi.php';
 <!DOCTYPE html>
 <html>
 <head>
- <title>LOGIN MULTIUSER PHP</title>
+ <title>AlfanAnekaMacamBibit</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->  
@@ -43,8 +43,7 @@ include 'koneksi.php';
     <meta name="author" content="">
 
     <!-- Site Icons -->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="images/logobaru2.png" type="image/x-icon">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -57,15 +56,23 @@ include 'koneksi.php';
 <!--------------------------------------------------------------------------------------------------->
 </head>
 <body>
+  <div class="container">
   <div id="header">
-    <a href="index.php"><img src="images/logobaru.png" style="margin: 0px 140px"></a>
+    <a class="navbar-brand" href="index.php">
+        <?php
+        $sql_logo_atas = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+        $logo_atas = mysqli_fetch_array($sql_logo_atas);
+        ?>
+        <img src="logo/<?php echo $logo_atas['logo_atas']?>" class="logo" alt="">
+    </a>
+  </div>
   </div>
 
   <div class="limiter">
     <div class="container-login100" style="background-color: #00FF00">
       <div class="wrap-login100 p-l-55 p-r-55 p-t-20 p-b-20">
-        <form class="login100-form validate-form" action="process/cek_login.php" method="POST">
-          <span class="login100-form-title p-b-49" style="font-size: 35px;">
+        <form class="login100-form validate-form" action="process/cek_lupa_password.php" method="POST">
+          <span class="login100-form-title p-b-49">
             Lupa Password
           </span>
 
@@ -75,34 +82,31 @@ include 'koneksi.php';
             <span class="focus-input100" data-symbol="&#xf206;"></span>
           </div>
 
-          <div class="wrap-input100 validate-input" data-validate="Password is required">
-            <span class="label-input100">Password</span>
-            <input class="input100" type="password" name="password" placeholder="Type your password">
-            <span class="focus-input100" data-symbol="&#xf190;"></span>
+          <div class="wrap-input100 validate-input" data-validate="Number Phone is required">
+            <span class="label-input100">Nomor Telepon</span>
+            <input class="input100" type="number" name="no_telepon" placeholder="082******">
+            <span class="focus-input100" data-symbol="&#xf206;"></span>
           </div>
           
           <div class="text-right p-t-8 p-b-31">
-            <a href="#">
-              Forgot password?
-            </a>
           </div>
           
           <div class="container-login100-form-btn">
             <div class="wrap-login100-form-btn">
               <div class="login100-form-bgbtn"></div>
               <button class="login100-form-btn" type="submit" name="login" value="login">
-                Login
+                Reset
               </button>
             </div>
           </div>
 
           <div class="flex-col-c p-t-30">
             <span class="txt1 p-b-17">
-              Belum Punya Akun ?
+              Sudah Punya Akun ?
             </span>
 
             <a href="signup.php" class="txt2">
-              Sign Up
+              masuk
             </a>
           </div>
         </form>

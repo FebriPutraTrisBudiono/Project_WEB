@@ -4,6 +4,8 @@ include '../koneksi.php';
 if($_POST['edit']){
 			$username = $_POST['username'];
 			$password = $_POST['password'];
+			$password_md5 = md5($password);
+
 			$nama = $_POST['nama'];
 			$no_telepon = $_POST['no_telepon'];
 			$alamat = $_POST['alamat'];
@@ -27,8 +29,12 @@ if($_POST['edit']){
 				echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
 			}
 			
-			$query = mysqli_query($koneksi, "UPDATE pengguna set username='$username', password='$password', nama='$nama', no_telepon='$no_telepon', foto='$foto', alamat='$alamat' where username='$username'");
+			$query = mysqli_query($koneksi, "UPDATE pengguna set username='$username', password='$password_md5', nama='$nama', no_telepon='$no_telepon', foto='$foto', alamat='$alamat' where username='$username'");
 		}
 
-header("location:../view_profil_pengguna.php");
+echo "
+        <script type='text/javascript'>
+        alert('Pengeditan Berhasil');
+        window.location='../view_profil_pengguna.php'
+        </script>";
 ?>
