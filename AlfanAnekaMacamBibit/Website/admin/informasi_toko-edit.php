@@ -3,109 +3,22 @@
     include '../koneksi.php';
 
     if(isset($_POST['edit'])){
-            $about_us = $_POST['about_us'];
-            $business_time = $_POST['business_time'];
-            $nama_facebook = $_POST['nama_facebook'];
-            $whatsapp = $_POST['whatsapp'];
-            $highlight1 = $_POST['highlight1'];
-            $highlight2 = $_POST['highlight2'];
-            $highlight3 = $_POST['highlight3'];
-            $highlight4 = $_POST['highlight4'];
-            $highlight5 = $_POST['highlight5'];
-            $highlight6 = $_POST['highlight6'];
-            $highlight7 = $_POST['highlight7'];
-
-            
-            $ekstensi_diperbolehkan = array('png','jpg');
-            //logo atas
-            $logo_atas = $_FILES['logo_atas']['name'];
-            $x = explode('.', $logo_atas);
-            $ekstensi = strtolower(end($x));
-            $ukuran = $_FILES['logo_atas']['size'];
-            $file_tmp = $_FILES['logo_atas']['tmp_name'];
-
-            if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
-                if($ukuran < 1044070){          
-                    move_uploaded_file($file_tmp, '../logo/'.$logo_atas);
-                }else{
-                    echo 'UKURAN FILE TERLALU BESAR';
-                }
-            }else{
-                echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
-            }
-
-            //logo bawah
-            $logo_bawah = $_FILES['logo_bawah']['name'];
-            $y = explode('.', $logo_bawah);
-            $ekstensi2 = strtolower(end($y));
-            $ukuran = $_FILES['logo_bawah']['size'];
-            $file_tmp = $_FILES['logo_bawah']['tmp_name'];
-
-            if(in_array($ekstensi2, $ekstensi_diperbolehkan) === true){
-                if($ukuran < 1044070){          
-                    move_uploaded_file($file_tmp, '../logo/'.$logo_bawah);
-                }else{
-                    echo 'UKURAN FILE TERLALU BESAR';
-                }
-            }else{
-                echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
-            }
-            
-            //banner1
-            $banner1 = $_FILES['banner1']['name'];
-            $a = explode('.', $banner1);
-            $ekstensi3 = strtolower(end($a));
-            $ukuran = $_FILES['banner1']['size'];
-            $file_tmp = $_FILES['banner1']['tmp_name'];
-
-            if(in_array($ekstensi3, $ekstensi_diperbolehkan) === true){
-                if($ukuran < 1044070){          
-                    move_uploaded_file($file_tmp, '../banner/'.$banner1);
-                }else{
-                    echo 'UKURAN FILE TERLALU BESAR';
-                }
-            }else{
-                echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
-            }
-
-            //banner2
-            $banner2 = $_FILES['banner2']['name'];
-            $b = explode('.', $banner2);
-            $ekstensi4 = strtolower(end($b));
-            $ukuran = $_FILES['banner2']['size'];
-            $file_tmp = $_FILES['banner2']['tmp_name'];
-
-            if(in_array($ekstensi4, $ekstensi_diperbolehkan) === true){
-                if($ukuran < 1044070){          
-                    move_uploaded_file($file_tmp, '../banner/'.$banner2);
-                }else{
-                    echo 'UKURAN FILE TERLALU BESAR';
-                }
-            }else{
-                echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
-            }            
-
-            //banner3
-            $banner3 = $_FILES['banner3']['name'];
-            $c = explode('.', $banner3);
-            $ekstensi5 = strtolower(end($c));
-            $ukuran = $_FILES['banner3']['size'];
-            $file_tmp = $_FILES['banner3']['tmp_name'];
-
-            if(in_array($ekstensi5, $ekstensi_diperbolehkan) === true){
-                if($ukuran < 1044070){          
-                    move_uploaded_file($file_tmp, '../banner/'.$banner3);
-                }else{
-                    echo 'UKURAN FILE TERLALU BESAR';
-                }
-            }else{
-                echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
-            }
-            $query = mysqli_query($koneksi, "UPDATE tentang_kami set about_us='$about_us', business_time='$business_time', nama_facebook='$nama_facebook', whatsapp='$whatsapp', logo_atas='$logo_atas', logo_bawah='$logo_bawah', highlight1='$highlight1', highlight2='$highlight2', highlight3='$highlight3', highlight4='$highlight4', highlight5='$highlight5', highlight6='$highlight6', highlight7='$highlight7', banner1='$banner1', banner2='$banner2', banner3='$banner3'");
-            
-            header("location:informasi_toko.php");
+        if (edit_info_toko($_POST) > 0 ) {
+            echo 
+                "<script>
+                    alert('data berhasil diubah!');
+                    document.location.href = 'informasi_toko.php';
+                </script>";
+        } else{
+            echo 
+                "<script>
+                    alert('data tidak berhasil diubah!');
+                    document.location.href = 'informasi_toko.php';
+                </script>";
         }
-    ?>
+
+    }
+?>
 
 <!doctype html>
 <html class="no-js" lang="en">
@@ -246,6 +159,11 @@
                                 ?>
                                     <br>
                                     <form method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="logo_atasLama" value="<?php echo $data['logo_atas']; ?>">
+                                        <input type="hidden" name="logo_bawahLama" value="<?php echo $data['logo_bawah']; ?>">
+                                        <input type="hidden" name="banner1Lama" value="<?php echo $data['banner1']; ?>">
+                                        <input type="hidden" name="banner2Lama" value="<?php echo $data['banner2']; ?>">
+                                        <input type="hidden" name="banner3Lama" value="<?php echo $data['banner3']; ?>">
                                       <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">About Us</label>
                                         <textarea name="about_us" class="form-control"><?php echo $data['about_us']; ?></textarea>
@@ -263,12 +181,15 @@
                                         <input type="text" name="business_time" class="form-control" value="<?php echo $data['business_time']; ?>" placeholder="Umur" required>
                                       </div>
                                       <div class="mb-3">
+
                                           <label class="name">Logo Atas</label><br>
-                                        <input class="nama" type="file" name="logo_atas" required>
+                                          <img src="../logo/<?php echo $data['logo_atas']; ?>"><br>
+                                        <input class="nama" type="file" name="logo_atas">
                                       </div>
                                       <div class="mb-3">
                                           <label class="name">Logo Bawah</label><br>
-                                        <input class="nama" type="file" name="logo_bawah" required>
+                                          <img src="../logo/<?php echo $data['logo_bawah']; ?>"><br>
+                                        <input class="nama" type="file" name="logo_bawah">
                                       </div>
                                       <div class="mb-3">
                                         <label for="exampleInputPassword1" class="form-label">Highlight 1</label>
@@ -300,15 +221,18 @@
                                       </div>
                                       <div class="mb-3">
                                           <label class="name">Banner1</label><br>
-                                        <input class="nama" type="file" name="banner1" required>
+                                          <img src="../banner/<?php echo $data['banner1']; ?>" width='300'><br>
+                                        <input class="nama" type="file" name="banner1">
                                       </div>
                                       <div class="mb-3">
                                           <label class="name">Banner2</label><br>
-                                        <input class="nama" type="file" name="banner2" required>
+                                          <img src="../banner/<?php echo $data['banner2']; ?>" width='300'><br>
+                                        <input class="nama" type="file" name="banner2">
                                       </div>
                                       <div class="mb-3">
                                           <label class="name">Banner3</label><br>
-                                        <input class="nama" type="file" name="banner3" required>
+                                          <img src="../banner/<?php echo $data['banner3']; ?>" width='300'><br>
+                                        <input class="nama" type="file" name="banner3">
                                       </div>
                                       <br>
                                       <button type="submit" name="edit" class="btn btn-primary" style="background-color: #008000;">Ubah</button>

@@ -152,8 +152,14 @@
 													<td><?php echo $p['nama'] ?></td>
 													<td><?php echo $p['no_telepon'] ?></td>
 													<td><?php echo $p['alamat'] ?></td>
-                                                    <td><img src="../foto/<?php echo $p['foto'] ?>" width="100px"\></td>
-													
+                                                    <?php if ($p['foto'] == 0): { ?>
+                                                            <td><img src="../foto/am-a-19-year-old-multimedia-artist-student-from-manila--21.png" width="100px"\></td>
+                                                        <?php } ?>
+                                                        <?php elseif ($p['foto'] > 0): { ?>
+                                                            <td><img src="../foto/<?php echo $p['foto'] ?>" width="100px"\></td>
+                                                        <?php } ?>
+                                                    <?php endif ?>
+                                                    
 												</tr>	
 												
 												<?php 

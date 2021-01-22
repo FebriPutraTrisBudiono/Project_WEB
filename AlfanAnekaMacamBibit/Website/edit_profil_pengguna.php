@@ -2,9 +2,28 @@
 session_start();
 
 include 'koneksi.php';
+
 if (!isset($_SESSION['username'])) {
   echo '<script language="javascript">alert("Anda harus Login!"); document.location="login.php";</script>';
 }
+
+if (isset($_POST['edit'])) {
+
+    if (ubah($_POST) > 0 ) {
+        echo 
+            "<script>
+                alert('data berhasil diubah!');
+                document.location.href = 'view_profil_pengguna.php';
+            </script>";
+    } else{
+        echo 
+            "<script>
+                alert('data berhasil diubah!');
+                document.location.href = 'view_profil_pengguna.php';
+            </script>";
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -213,7 +232,9 @@ if (!isset($_SESSION['username'])) {
     <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-md-10 mt-5 pt-5">
-                <form action="process/update_pengguna.php" method="POST" enctype="multipart/form-data">
+                <form action="" method="POST" enctype="multipart/form-data">  
+                <input type="hidden" name="gambarLama" value="<?php echo $data['foto']; ?>">
+                <input type="hidden" name="passwordLama" value="<?php echo $data['password']; ?>">
                 <div class="row z-depth-3"  style="box-shadow: 0 4px 10px 0 rgba(0,0,0,0.5)">
                     <div class="col-sm-4 bg-info rounded-left">
                         <div class="card-block text-center text-white">
@@ -221,7 +242,14 @@ if (!isset($_SESSION['username'])) {
                                 <div class="text-center img-placeholder"  onClick="triggerClick()">
                                 <h4>Update image</h4>
                                 </div>
-                                <img src="foto/<?php echo $data['foto']?>" onClick="triggerClick()" id="profileDisplay">
+                                <?php if ($data['foto'] == 0): { ?>
+                                        <img src="foto/am-a-19-year-old-multimedia-artist-student-from-manila--21.png" id="profileDisplay">
+                                        <p>Silahkan Upload Foto Profil anda</p>
+                                    <?php } ?>
+                                    <?php elseif ($data['foto'] > 0): { ?>
+                                        <img src="foto/<?php echo $data['foto']?>" id="profileDisplay">
+                                    <?php } ?>
+                                <?php endif ?>
                                 <input type="file" name="foto" onChange="displayImage(this)" id="foto" class="form-control" style="display: none;">
                             </span>
                         </div>
@@ -281,7 +309,7 @@ if (!isset($_SESSION['username'])) {
     <div class="instagram-box">
         <div class="main-instagram owl-carousel owl-theme">
             <?php 
-            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang");
+            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang WHERE stok_barang > 0");
             while ($result2 = mysqli_fetch_array($query_mysqli2)) { ?>
             <div class="item">
                 <div class="ins-inner-box">
@@ -365,7 +393,7 @@ if (!isset($_SESSION['username'])) {
                                     <p><i class="fas fa-map-marker-alt"></i>
                                         <?php
 
-                                        $sql_alamat = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $sql_alamat = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE level='admin'");
                                         $alamat = mysqli_fetch_array($sql_alamat);
                                         ?>
 
@@ -376,7 +404,7 @@ if (!isset($_SESSION['username'])) {
                                     <p><i class="fas fa-phone-square"></i>
                                         <?php
 
-                                        $sql_no_telepon = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $sql_no_telepon = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE level='admin'");
                                         $no_telepon = mysqli_fetch_array($sql_no_telepon);
                                         ?>
 

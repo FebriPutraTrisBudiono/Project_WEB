@@ -287,7 +287,7 @@
     <div class="instagram-box">
         <div class="main-instagram owl-carousel owl-theme">
             <?php 
-            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang");
+            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang WHERE stok_barang > 0");
             while ($result2 = mysqli_fetch_array($query_mysqli2)) { ?>
             <div class="item">
                 <div class="ins-inner-box">

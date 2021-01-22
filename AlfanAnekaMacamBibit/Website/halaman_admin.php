@@ -269,24 +269,79 @@ $banner = mysqli_fetch_array($sql_banner);
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-4 col-sm-12 col-xs-12">
-                    <p style="font-size: 180%; color: black;">Kami adalah pengusaha bibit yang menjunjung tinggi kejujuran dalam bertransaksi dan keaslian bibit yang dijual, dan juga Kami adalah pengusaha tanpa dinaungi oleh CV sehingga harga bibit yang kami jual jauh lebih murah dan bibit yang dihasilkan juga berkualitas.</p>
+                    <?php
+
+                    $sql_aboutus = mysqli_query($koneksi, "SELECT * FROM tentang_kami");
+                    $about_us = mysqli_fetch_array($sql_aboutus);
+                    ?>
+                    <p style="font-size: 180%; color: black;"><?php echo $about_us['about_us']; ?></p>
                 </div>
             </div>
         </div>
     </div>
     <!-- End Categories -->
 
+<?php
+
+$query_mysqli2 = mysqli_query($koneksi,"SELECT * FROM barang WHERE stok_barang > 200 ORDER BY stok_barang DESC");
+
+?>
     <div class="box-add-products">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="offer-box-products">
-                        <img class="img-fluid" src="images/add-img-01.jpg" alt="" />
+                <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>Produk siap partai</h1>
+                        <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>-->
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="offer-box-products">
-                        <img class="img-fluid" src="images/add-img-02.jpg" alt="" />
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="special-menu text-center">
+                        <div class="button-group filter-button-group">
+                            <button class="active" data-filter="*">New Product</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row special-list">
+                <div class="col-lg-12 col-md-6 special-grid best-seller">
+                    <div class="row">
+                        <?php while ($result2 = mysqli_fetch_array($query_mysqli2)) { ?>
+                        <div class="products-single fix" style="margin: 7px; margin-right: auto; margin-left: auto;">
+                            <div class="box-img-hover">
+                                <div class="type-lb">
+                                    <p class="sale" style="background-color: black;">New</p>
+                                </div>
+                                <img src="foto_brg/<?php echo $result2['foto_barang']; ?>" class="card-img-top" alt="..." style="width: 250px; height: 220px;">
+                                <div class="mask-icon">
+                                    <?php if ($result2['stok_barang'] == 0): { 
+                                        echo "<a class='cart' href='#' style='background-color: black;'>Belum Tersedia</a>";
+                                    } elseif ($result2['stok_barang'] > 0): {
+                                        echo "<a class='cart' href='#'>Tersedia</a>";
+                                    }
+                                    ?>
+                                        
+                                    <?php endif ?>
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <h4><?php echo $result2['nama_barang']; ?></h4>
+                                <label><?php echo $result2['umur']; ?></label>
+                                <h5>Rp<?php echo $result2['harga']; ?></h5><br>
+                                <?php if ($result2['stok_barang'] == 0): { ?>
+                                    <p class="btn btn-primary" style="width: 213px; background-color: black;">Detail</a>
+                                <?php } ?> 
+                                <?php elseif ($result2['stok_barang'] > 0): { ?>
+                                    <a href="detail_bibit.php?idbarang=<?=$result2['idbarang']?>" class="btn btn-primary" style="width: 213px;">Detail</a>
+                                <?php } ?>
+                                
+                                <?php endif ?>
+                            </div>
+                        </div>
+                        <?php } ?> 
                     </div>
                 </div>
             </div>
@@ -306,7 +361,7 @@ $query_mysqli = mysqli_query($koneksi,"SELECT * FROM `barang` ORDER BY idbarang 
                 <div class="col-lg-12">
                     <div class="title-all text-center">
                         <h1>Produk Baru Ditambahkan</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>
+                        <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>-->
                     </div>
                 </div>
             </div>
@@ -314,7 +369,7 @@ $query_mysqli = mysqli_query($koneksi,"SELECT * FROM `barang` ORDER BY idbarang 
                 <div class="col-lg-12">
                     <div class="special-menu text-center">
                         <div class="button-group filter-button-group">
-                            <button class="active" data-filter="*">New Product</button>
+                            <button class="active" data-filter="*">Product</button>
                         </div>
                     </div>
                 </div>
@@ -367,7 +422,7 @@ $query_mysqli = mysqli_query($koneksi,"SELECT * FROM `barang` ORDER BY idbarang 
     <div class="instagram-box">
         <div class="main-instagram owl-carousel owl-theme">
             <?php 
-            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang");
+            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang WHERE stok_barang > 0");
             while ($result2 = mysqli_fetch_array($query_mysqli2)) { ?>
             <div class="item">
                 <div class="ins-inner-box">
@@ -452,7 +507,7 @@ $query_mysqli = mysqli_query($koneksi,"SELECT * FROM `barang` ORDER BY idbarang 
                                     <p><i class="fas fa-map-marker-alt"></i>
                                         <?php
 
-                                        $sql_alamat = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $sql_alamat = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE level='admin'");
                                         $alamat = mysqli_fetch_array($sql_alamat);
                                         ?>
 
@@ -463,7 +518,7 @@ $query_mysqli = mysqli_query($koneksi,"SELECT * FROM `barang` ORDER BY idbarang 
                                     <p><i class="fas fa-phone-square"></i>
                                         <?php
 
-                                        $sql_no_telepon = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $sql_no_telepon = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE level='admin'");
                                         $no_telepon = mysqli_fetch_array($sql_no_telepon);
                                         ?>
 

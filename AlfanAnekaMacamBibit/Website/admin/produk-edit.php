@@ -8,49 +8,21 @@ $row = mysqli_query($koneksi, $userquery);
 $data = mysqli_fetch_array($row);
 $gambar = $data["foto_barang"];
 
-if(isset($_POST["ubah"])){
-$nama_barang = $_POST["nama_barang"];
-$jenis_barang = $_POST["jenis_barang"];
-$umur = $_POST["umur"];
-$harga = $_POST["harga"];
-$deskripsi = $_POST["deskripsi"];
+if(isset($_POST["edit"])){
 
-//upload gambar
-$ekstensi_diperbolehkan = array('png','jpg');
-$foto_barang = $_FILES['foto_barang']['name'];
-            $x = explode('.', $foto_barang);
-            $ekstensi = strtolower(end($x));
-            $ukuran = $_FILES['foto_barang']['size'];
-            $file_tmp = $_FILES['foto_barang']['tmp_name'];
-
-            if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
-                if($ukuran < 1044070){          
-                    move_uploaded_file($file_tmp, '../foto_brg/'.$foto_barang);
-                }else{
-                    echo 'UKURAN FILE TERLALU BESAR';
-                }
-            }else{
-                echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
-            }
-
-$sql = "UPDATE barang SET nama_barang = '".$nama_barang."', jenis_barang = '".$jenis_barang."', umur = '".$umur."', foto_barang = '".$foto_barang."', harga = '".$harga."', deskripsi = '".$deskripsi."' WHERE idbarang = ".$id;
-
-if ($koneksi->query($sql) == TRUE) {
-	date_default_timezone_set('Asia/Jakarta');
-	$waktu = date("d/m/Y h:i:s");
-	$kegiatan = "Mengubah nama barang ".$data->nama_barang." menjadi ".$nama_barang." dan mengubah jenis barang ".$data->jenis_barang." menjadi ".$jenis_barang;
-	$sqlhistory = "INSERT INTO history (waktu, jenis_barang, nama_barang, kegiatan) 
-	VALUES ('".$waktu."','".$data->nama_barang."','".$data->jenis_barang."','".$kegiatan."')";	
-    if ($koneksi->query($sqlhistory) == TRUE) {
-	header("Location: produk.php");
-	} else {
-    echo "Error dalam mengubah data: " . $koneksi->error;
-	}
-} else {
-    echo "Error dalam mengubah data: " . $koneksi->error;
-}
-
-$koneksi->close();
+    if (edit($_POST) > 0 ) {
+        echo 
+            "<script>
+                alert('data berhasil diubah!');
+                document.location.href = 'produk.php';
+            </script>";
+    } else{
+        echo 
+            "<script>
+                alert('data berhasil diubah!');
+                document.location.href = 'produk.php';
+            </script>";
+    }
 }
 ?>
 <!doctype html>
@@ -186,6 +158,8 @@ $koneksi->close();
 									<a href="produk.php" style="margin-bottom:20px" class="btn btn-info col-md-2">Kembali</a>
                                 </div>
                                     <form method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="id" value="<?php echo $data['idbarang']?>">
+                                        <input type="hidden" name="gambarLama" value="<?php echo $data['foto_barang']?>">
                                       <div class="mb-3">
                                         <p>ID : <?php echo $id; ?></p>
                                       </div>
@@ -220,7 +194,7 @@ $koneksi->close();
                                           }
                                         ?>
                                       <br>
-                                      <button type="submit" name="ubah" class="btn btn-primary" style="background-color: #008000;">Ubah</button>
+                                      <button type="submit" name="edit" class="btn btn-primary" style="background-color: #008000;">Ubah</button>
                                     </form>  
                             </div>
                         </div>

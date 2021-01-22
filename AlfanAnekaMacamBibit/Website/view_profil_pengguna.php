@@ -213,7 +213,13 @@ if (!isset($_SESSION['username'])) {
                 <div class="row z-depth-3"  style="box-shadow: 0 4px 10px 0 rgba(0,0,0,0.5)">
                     <div class="col-sm-4 bg-info rounded-left">
                         <div class="card-block text-center text-white">
-                            <img src="foto/<?php echo $data['foto']?>" id="profileDisplay">
+                            <?php if ($data['foto'] == 0): { ?>
+                                    <img src="foto/am-a-19-year-old-multimedia-artist-student-from-manila--21.png" id="profileDisplay">
+                                <?php } ?>
+                                <?php elseif ($data['foto'] > 0): { ?>
+                                    <img src="foto/<?php echo $data['foto']?>" id="profileDisplay">
+                                <?php } ?>
+                            <?php endif ?>
                             <h1 class="mt-4">Profil : <?php echo $data['level']; ?></h1>
                             <h2 class="font-weight-bold"><?php echo $data['nama']; ?></h2>
                         </div>
@@ -267,7 +273,7 @@ if (!isset($_SESSION['username'])) {
     <div class="instagram-box">
         <div class="main-instagram owl-carousel owl-theme">
             <?php 
-            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang");
+            $query_mysqli2 = mysqli_query($koneksi,"SELECT * from barang WHERE stok_barang > 0");
             while ($result2 = mysqli_fetch_array($query_mysqli2)) { ?>
             <div class="item">
                 <div class="ins-inner-box">
@@ -351,7 +357,7 @@ if (!isset($_SESSION['username'])) {
                                     <p><i class="fas fa-map-marker-alt"></i>
                                         <?php
 
-                                        $sql_alamat = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $sql_alamat = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE level='admin'");
                                         $alamat = mysqli_fetch_array($sql_alamat);
                                         ?>
 
@@ -362,7 +368,7 @@ if (!isset($_SESSION['username'])) {
                                     <p><i class="fas fa-phone-square"></i>
                                         <?php
 
-                                        $sql_no_telepon = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $sql_no_telepon = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE level='admin'");
                                         $no_telepon = mysqli_fetch_array($sql_no_telepon);
                                         ?>
 

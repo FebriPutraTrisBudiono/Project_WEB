@@ -338,7 +338,7 @@ include 'koneksi.php';
                                     <p><i class="fas fa-map-marker-alt"></i>
                                         <?php
 
-                                        $sql_alamat = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $sql_alamat = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE level='admin'");
                                         $alamat = mysqli_fetch_array($sql_alamat);
                                         ?>
 
@@ -349,7 +349,7 @@ include 'koneksi.php';
                                     <p><i class="fas fa-phone-square"></i>
                                         <?php
 
-                                        $sql_no_telepon = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                                        $sql_no_telepon = mysqli_query($koneksi, "SELECT * FROM pengguna WHERE level='admin'");
                                         $no_telepon = mysqli_fetch_array($sql_no_telepon);
                                         ?>
 
