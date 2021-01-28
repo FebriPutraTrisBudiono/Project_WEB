@@ -300,7 +300,7 @@ $query_mysqli2 = mysqli_query($koneksi,"SELECT * FROM barang WHERE stok_barang >
                 <div class="col-lg-12">
                     <div class="special-menu text-center">
                         <div class="button-group filter-button-group">
-                            <button class="active" data-filter="*">New Product</button>
+                            <button class="active" data-filter="*">Product</button>
                         </div>
                     </div>
                 </div>
@@ -369,7 +369,7 @@ $query_mysqli = mysqli_query($koneksi,"SELECT * FROM `barang` ORDER BY idbarang 
                 <div class="col-lg-12">
                     <div class="special-menu text-center">
                         <div class="button-group filter-button-group">
-                            <button class="active" data-filter="*">Product</button>
+                            <button class="active" data-filter="*">New Product</button>
                         </div>
                     </div>
                 </div>

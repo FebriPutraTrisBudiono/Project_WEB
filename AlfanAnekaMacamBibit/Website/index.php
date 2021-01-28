@@ -195,7 +195,7 @@ $banner = mysqli_fetch_array($sql_banner);
                             <h1 class="m-b-40" style="font-size: 350%"><strong>AlfanAneka</strong></h1>
                             <h1 class="m-b-40" style="font-size: 300%"><strong>MacamBibit</strong></h1>
                             <p class="m-b-40">Penjualan Bibit Tanaman Terpercaya, Murah dan Berkualitas<br> Menerima Pengiriman secara diantar langsung maupun melalui jasa</p>
-                            <p><a class="btn hvr-hover" href="list_bibit.php">Belanja Sekarang</a></p>
+                            <p><a class="btn hvr-hover" href="list_bibit-guest.php">Belanja Sekarang</a></p>
                         </div>
                     </div>
                 </div>

@@ -211,7 +211,7 @@ $banner = mysqli_fetch_array($sql_banner);
                             <h1 class="m-b-40" style="font-size: 350%"><strong>AlfanAneka</strong></h1>
                             <h1 class="m-b-40" style="font-size: 300%"><strong>MacamBibit</strong></h1>
                             <p class="m-b-40">Penjualan Bibit Tanaman Terpercaya, Murah dan Berkualitas<br> Menerima Pengiriman secara diantar langsung maupun melalui jasa</p>
-                            <p><a class="btn hvr-hover" href="list_bibit.php">Belanja Sekarang</a></p>
+                            <p><a class="btn hvr-hover" href="list_bibit-pengguna.php">Belanja Sekarang</a></p>
                         </div>
                     </div>
                 </div>
@@ -293,7 +293,7 @@ $query_mysqli2 = mysqli_query($koneksi,"SELECT * FROM barang WHERE stok_barang >
                 <div class="col-lg-12">
                     <div class="special-menu text-center">
                         <div class="button-group filter-button-group">
-                            <button class="active" data-filter="*">New Product</button>
+                            <button class="active" data-filter="*">Product</button>
                         </div>
                     </div>
                 </div>
@@ -362,7 +362,7 @@ $query_mysqli = mysqli_query($koneksi,"SELECT * FROM `barang` ORDER BY idbarang 
                 <div class="col-lg-12">
                     <div class="special-menu text-center">
                         <div class="button-group filter-button-group">
-                            <button class="active" data-filter="*">Product</button>
+                            <button class="active" data-filter="*">New Product</button>
                         </div>
                     </div>
                 </div>
