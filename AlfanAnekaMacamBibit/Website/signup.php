@@ -78,13 +78,13 @@ include 'koneksi.php';
 
           <div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required">
             <span class="label-input100">Username</span>
-            <input class="input100" type="text" name="username" placeholder="Type your username" id="username">
+            <input class="input100" type="text" name="username" placeholder="Tuliskan Username Anda....." id="username">
             <span class="focus-input100" data-symbol="&#xf206;"></span>
           </div>
 
           <div class="wrap-input100 validate-input m-b-23" data-validate = "Nama is required">
             <span class="label-input100">Nama</span>
-            <input class="input100" type="text" name="nama" placeholder="Type your name" id="name">
+            <input class="input100" type="text" name="nama" placeholder="Tuliskan Nama Anda......" id="name">
             <span class="focus-input100" data-symbol="&#xf206;"></span>
           </div>
 
@@ -94,15 +94,21 @@ include 'koneksi.php';
             <span class="focus-input100" data-symbol="&#xf206;"></span>
           </div>
 
+          <div class="wrap-input100 validate-input m-b-23" data-validate = "No Telepon is required">
+            <span class="label-input100">Alamat</span>
+            <input class="input100" type="text" name="alamat" placeholder="Tuliskan Alamat anda....." id="no_telepon">
+            <span class="focus-input100" data-symbol="&#xf206;"></span>
+          </div>
+
           <div class="wrap-input100 validate-input" data-validate="Password is required">
             <span class="label-input100">Password</span>
-            <input class="input100" type="password" name="password" placeholder="Type your password" id="password">
+            <input class="input100" type="password" name="password" placeholder="Tuliskan Password Anda....." id="password">
             <span class="focus-input100" data-symbol="&#xf190;"></span>
           </div>
 
           <div class="wrap-input100 validate-input" data-validate="Password Validate is required">
             <span class="label-input100">Ulangi Password</span>
-            <input class="input100" type="password" name="password2" placeholder="Type your password" id="password2">
+            <input class="input100" type="password" name="password2" placeholder="Tuliskan Password Anda....." id="password2">
             <span class="focus-input100" data-symbol="&#xf190;"></span>
           </div>
 
