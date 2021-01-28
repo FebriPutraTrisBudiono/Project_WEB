@@ -10,6 +10,10 @@
 	$itungorder2 = mysqli_fetch_assoc($itungorder);
 	$itungorder3 = $itungorder2['jumlahorder'];
 	
+	$itungtrans = mysqli_query($koneksi,"SELECT count(orderid) as jumlahtrans from konfirmasi");
+	$itungtrans2 = mysqli_fetch_assoc($itungtrans);
+	$itungtrans3 = $itungtrans2['jumlahtrans'];
+	
 	?>
 
 <!doctype html>

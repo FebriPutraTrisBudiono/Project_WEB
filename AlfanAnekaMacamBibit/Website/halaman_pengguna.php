@@ -276,7 +276,7 @@ $banner = mysqli_fetch_array($sql_banner);
 
 <?php
 
-$query_mysqli2 = mysqli_query($koneksi,"SELECT * FROM barang WHERE stok_barang > 200 ORDER BY stok_barang DESC");
+$query_mysqli2 = mysqli_query($koneksi,"SELECT * FROM barang WHERE stok_barang = 1000 ORDER BY stok_barang DESC");
 
 ?>
     <div class="box-add-products">
@@ -284,8 +284,8 @@ $query_mysqli2 = mysqli_query($koneksi,"SELECT * FROM barang WHERE stok_barang >
             <div class="row">
                 <div class="col-lg-12">
                     <div class="title-all text-center">
-                        <h1>Produk siap partai</h1>
-                        <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>-->
+                        <h1>Produk siap pesan partai</h1>
+                        <p>Siap Pesan lebih dari 1000 Bibit.</p>
                     </div>
                 </div>
             </div>

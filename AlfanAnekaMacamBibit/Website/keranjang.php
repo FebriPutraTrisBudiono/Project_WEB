@@ -299,7 +299,7 @@ if(isset($_POST["update"])){
                         <td class="invert">
                              <div class="quantity"> 
                                 <div class="quantity-SELECT">                     
-                                    <input type="number" name="jumlah" class="form-control" height="100px" value="<?php echo $b['qty'] ?>" \>
+                                    <input type="number" name="jumlah" class="form-control" height="100px" value="<?php echo $b['qty'] ?>" min="1" \>
                                 </div>
                             </div>
                         </td>

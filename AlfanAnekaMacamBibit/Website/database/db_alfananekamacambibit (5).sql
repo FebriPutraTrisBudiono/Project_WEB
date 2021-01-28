@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jan 28, 2021 at 10:22 AM
--- Server version: 10.3.27-MariaDB
--- PHP Version: 7.3.6
+-- Host: 127.0.0.1
+-- Generation Time: Jan 05, 2021 at 03:27 AM
+-- Server version: 10.1.29-MariaDB
+-- PHP Version: 7.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `u1011496_alfananekamacambibit`
+-- Database: `db_alfananekamacambibit`
 --
 
 -- --------------------------------------------------------
@@ -37,7 +37,7 @@ CREATE TABLE `barang` (
   `foto_barang` varchar(100) DEFAULT NULL,
   `harga` varchar(30) NOT NULL,
   `deskripsi` text NOT NULL,
-  `tgldibuat` timestamp NOT NULL DEFAULT current_timestamp()
+  `tgldibuat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -45,13 +45,10 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`idbarang`, `nama_barang`, `jenis_barang`, `stok_barang`, `umur`, `foto_barang`, `harga`, `deskripsi`, `tgldibuat`) VALUES
-(5, 'Bibit Nangka', 'Bibit', 200, '6 bulan', '600853b00a1d2.jpg', '6000', 'tes', '2021-01-03 04:59:12'),
-(7, 'Bibit salak', 'Bibit', 55, '3 bulan', 'salak.jpg', '5000', 'tes', '2021-01-03 04:59:12'),
-(9, 'Bibit Rambutan', 'Bibit', 0, '8 bulan', 'rambutan.jpg', '2000', 'tes', '2021-01-03 04:59:12'),
-(12, 'Bibit semangka', 'Bibit', 0, '10 bulan', 'semangka.jpg', '3000', 'tes', '2021-01-03 04:59:12'),
-(13, 'Bibit nanas', 'Bibit', 0, '10 bulan', '6008541b478dd.jpg', '8000', 'sada', '2021-01-10 05:04:10'),
-(14, 'Bibit sawo', 'Bibit', 600, '3 bulan', 'sawo.jpg', '4000', 'sada', '2021-01-10 05:09:25'),
-(15, 'bibit jambu', 'bibit', 0, '4 bulan', 'jambu.jpg', '5000', 'sas', '2021-01-10 05:14:05');
+(5, 'Bibit Nangka', 'Bibit', 500, '>6 bulan', 'Hukum-Positif-Dakwatuna.jpg', '5000', 'tes1', '2021-01-03 04:59:12'),
+(7, 'Bibit mangga', 'Bibit', 50, '<6 bulan', '34710059_76f24fd2-8723-4c9f-b734-bb4bd77b955d_684_684.jpg', '5000', 'tes', '2021-01-03 04:59:12'),
+(9, 'Bibit Rambutan', 'Bibit', 0, '<6 bulan', 'rambutan.jpg', '2000', 'tes', '2021-01-03 04:59:12'),
+(12, 'Bibit semangka', 'Bibit', 0, '<6 bulan', 'semangka.jpg', '3000', 'tes', '2021-01-03 04:59:12');
 
 -- --------------------------------------------------------
 
@@ -63,7 +60,7 @@ CREATE TABLE `cart` (
   `idcart` int(11) NOT NULL,
   `orderid` varchar(100) NOT NULL,
   `username` varchar(30) NOT NULL,
-  `tglorder` timestamp NOT NULL DEFAULT current_timestamp(),
+  `tglorder` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` varchar(10) NOT NULL DEFAULT 'Cart'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -73,22 +70,8 @@ CREATE TABLE `cart` (
 
 INSERT INTO `cart` (`idcart`, `orderid`, `username`, `tglorder`, `status`) VALUES
 (20, '16mjTQVqhD8Eo', 'admin', '2020-12-30 07:55:43', 'Cart'),
-(21, '16ff3tWDAkotU', 'febript', '2020-12-30 12:26:34', 'Payment'),
-(22, '16UpoZHn5meDw', 'dimas', '2020-12-30 12:33:06', 'Cart'),
-(23, '16F6BSjJCVl2Q', 'fahrel', '2021-01-08 12:45:53', 'Cart'),
-(24, '167FRCA6bXzVw', 'febript', '2021-01-11 12:41:09', 'Payment'),
-(25, '16fDpvle/mdm6', 'febript', '2021-01-11 12:41:56', 'Payment'),
-(26, '16jbI4c6KJScE', 'febript', '2021-01-11 12:42:55', 'Payment'),
-(27, '16DYK49IFIgdM', 'febript', '2021-01-11 12:43:04', 'Payment'),
-(28, '16s2Z4ddeVohs', 'febript', '2021-01-11 13:12:20', 'Payment'),
-(29, '16zQmkXFGc6AA', 'febript', '2021-01-11 13:17:05', 'Payment'),
-(30, '16Nj9PS13AAcM', 'febript', '2021-01-12 04:07:12', 'Payment'),
-(31, '16rYGdcTSrGLA', 'febript', '2021-01-12 04:31:47', 'Payment'),
-(32, '16VTfD7z9FmWw', 'febript', '2021-01-12 04:32:25', 'Payment'),
-(33, '16UXFGQlRSp6g', 'febript', '2021-01-12 04:43:50', 'Cart'),
-(34, '16f7leW4lLXPU', 'bagus', '2021-01-26 11:00:20', 'Cart'),
-(35, '16UdcS5RlZMQU', 'prima', '2021-01-27 06:43:19', 'Payment'),
-(36, '16bldTbdCcbR.', 'prima', '2021-01-27 06:45:56', 'Payment');
+(21, '16ff3tWDAkotU', 'febript', '2020-12-30 12:26:34', 'Cart'),
+(22, '16UpoZHn5meDw', 'dimas', '2020-12-30 12:33:06', 'Cart');
 
 -- --------------------------------------------------------
 
@@ -111,25 +94,7 @@ INSERT INTO `detailorder` (`detailid`, `orderid`, `idbarang`, `qty`) VALUES
 (33, '16ff3tWDAkotU', 9, 10),
 (34, '16UpoZHn5meDw', 5, 1),
 (35, '16ff3tWDAkotU', 7, 1),
-(38, '16ff3tWDAkotU', 12, 5),
-(39, '16ff3tWDAkotU', 5, 1),
-(40, '16F6BSjJCVl2Q', 5, 2),
-(41, '16mjTQVqhD8Eo', 12, 1),
-(42, '16mjTQVqhD8Eo', 9, 1),
-(43, '167FRCA6bXzVw', 7, 1),
-(44, '16fDpvle/mdm6', 7, 1),
-(45, '16jbI4c6KJScE', 9, 1),
-(46, '16DYK49IFIgdM', 7, 1),
-(47, '16s2Z4ddeVohs', 5, 1),
-(48, '16zQmkXFGc6AA', 5, 1),
-(49, '16Nj9PS13AAcM', 5, 1),
-(50, '16rYGdcTSrGLA', 5, 1),
-(51, '16VTfD7z9FmWw', 5, 1),
-(52, '16UXFGQlRSp6g', 5, -5),
-(55, '16UdcS5RlZMQU', 5, 5),
-(56, '16UdcS5RlZMQU', 7, 1),
-(57, '16bldTbdCcbR.', 5, 5),
-(58, '16bldTbdCcbR.', 7, 1);
+(38, '16ff3tWDAkotU', 12, 5);
 
 -- --------------------------------------------------------
 
@@ -142,7 +107,7 @@ CREATE TABLE `history` (
   `waktu` varchar(75) DEFAULT NULL,
   `jenis_barang` varchar(45) DEFAULT NULL,
   `nama_barang` varchar(45) DEFAULT NULL,
-  `kegiatan` longtext DEFAULT NULL
+  `kegiatan` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -261,18 +226,7 @@ INSERT INTO `history` (`idhistory`, `waktu`, `jenis_barang`, `nama_barang`, `keg
 (109, '03/01/2021 11:32:34', 'dsjbaj', 'abskdbsj', 'Meghapus nama barang dsjbaj dengan jenis barang abskdbsj'),
 (110, '03/01/2021 11:48:35', 'Bibit mangga', 'Bibit', 'Menambah stok barang Bibit mangga berjulmah 0 sebanyak 200 sehingga stok barang Bibit mangga menjadi 200'),
 (111, '03/01/2021 11:51:27', 'Bibit mangga', 'Bibit', 'Mengurangi stok barang Bibit mangga berjulmah 200 sebanyak 100 sehingga stok barang Bibit mangga menjadi 100'),
-(112, '03/01/2021 11:51:47', 'Bibit mangga', 'Bibit', 'Mengurangi stok barang Bibit mangga berjulmah 100 sebanyak 50 sehingga stok barang Bibit mangga menjadi 50'),
-(113, '07/01/2021 05:24:36', 'Bibit Nangka', 'Bibit', 'Mengubah nama barang Bibit Nangka menjadi Bibit Nangka dan mengubah jenis barang Bibit menjadi Bibit'),
-(114, '07/01/2021 05:25:35', 'Bibit Rambutan', 'Bibit', 'Mengubah nama barang Bibit Rambutan menjadi Bibit Rambutan dan mengubah jenis barang Bibit menjadi Bibit'),
-(115, '07/01/2021 05:29:21', 'Bibit Rambutan', 'Bibit', 'Mengubah nama barang Bibit Rambutan menjadi Bibit Rambutan dan mengubah jenis barang Bibit menjadi Bibit'),
-(116, '07/01/2021 05:31:30', 'Bibit mangga', 'Bibit', 'Mengubah nama barang Bibit mangga menjadi Bibit mangga dan mengubah jenis barang Bibit menjadi Bibit'),
-(117, '07/01/2021 05:31:58', 'Bibit mangga', 'Bibit', 'Mengubah nama barang Bibit mangga menjadi Bibit salak dan mengubah jenis barang Bibit menjadi Bibit'),
-(118, '07/01/2021 05:32:17', 'Bibit semangka', 'Bibit', 'Mengubah nama barang Bibit semangka menjadi Bibit semangka dan mengubah jenis barang Bibit menjadi Bibit'),
-(119, '18/01/2021 10:29:49', 'Bibit salak', 'Bibit', 'Menambah stok barang Bibit salak berjulmah 50 sebanyak 5 sehingga stok barang Bibit salak menjadi 55'),
-(120, '18/01/2021 11:31:20', '', '', 'Mengubah nama barang  menjadi Bibit Nangka dan mengubah jenis barang  menjadi Bibit'),
-(121, '27/01/2021 01:50:31', 'Bibit durian', 'Bibit', 'Meghapus nama barang Bibit durian dengan jenis barang Bibit'),
-(122, '27/01/2021 01:51:06', 'Bibit Nangka', 'Bibit', 'Menambah stok barang Bibit Nangka berjulmah 500 sebanyak 100 sehingga stok barang Bibit Nangka menjadi 600'),
-(123, '27/01/2021 01:51:20', 'Bibit Nangka', 'Bibit', 'Mengurangi stok barang Bibit Nangka berjulmah 600 sebanyak 400 sehingga stok barang Bibit Nangka menjadi 200');
+(112, '03/01/2021 11:51:47', 'Bibit mangga', 'Bibit', 'Mengurangi stok barang Bibit mangga berjulmah 100 sebanyak 50 sehingga stok barang Bibit mangga menjadi 50');
 
 -- --------------------------------------------------------
 
@@ -312,15 +266,12 @@ CREATE TABLE `pengguna` (
 --
 
 INSERT INTO `pengguna` (`username`, `password`, `level`, `nama`, `no_telepon`, `foto`, `alamat`) VALUES
-('abdul', 'e10adc3949ba59abbe56e057f20f883e', 'pengguna', 'abdul', '0812123123123', '', ''),
-('admin', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'Ahmad Alfanur Rohman', '082228905619', '60085ac55dfb6.jpg', 'Manggisan - Jember'),
-('bagus', '202cb962ac59075b964b07152d234b70', 'pengguna', 'bagus T', '081249138361', '', 'Jawa timur'),
-('dimas', '202cb962ac59075b964b07152d234b70', 'pengguna', 'dimas cr', '081211686202', '', 'jember'),
-('fahrel', '202cb962ac59075b964b07152d234b70', 'pengguna', 'Al Fahrelia', '081230192236', '', 'Jember'),
-('febript', '202cb962ac59075b964b07152d234b70', 'pengguna', 'Febri Putra Tris Budiono', '082131916101', '600854ede60e2.jpg', 'Tanggul, Jember'),
-('nanang', '202cb962ac59075b964b07152d234b70', 'pengguna', 'nanang', '0822', '', 'malang'),
-('prima', '202cb962ac59075b964b07152d234b70', 'pengguna', 'prima', '081230232820', '60110c044b9f8.jpg', 'tanggul'),
-('radit', '827ccb0eea8a706c4c34a16891f84e7b', 'pengguna', 'raditya', '0821', '6008582f7e547.jpg', 'malang');
+('admin', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'Ahmad Alfanur Rohman', '0822228905619', 'anime-anime-girls-picture-in-picture-karakai-jouzu-no-takagi-san-wallpaper-preview.jpg', 'Manggisan, Jember'),
+('bagus', '827ccb0eea8a706c4c34a16891f84e7b', 'pengguna', 'bagus T', '0822228905619', '6736f030f36046b24de35f882ff798ba.png', ''),
+('dimas', '202cb962ac59075b964b07152d234b70', 'pengguna', '', '08222222222', '6736f030f36046b24de35f882ff798ba.png', ''),
+('fahrel', '202cb962ac59075b964b07152d234b70', 'pengguna', 'Al Fahrelia', '0822222222', '6736f030f36046b24de35f882ff798ba.png', 'Jember'),
+('febript', '202cb962ac59075b964b07152d234b70', 'pengguna', 'Febri Putra Tris Budiono', '082131916101', 'foto.jpg', 'Tanggul - Jember'),
+('radit', '202cb962ac59075b964b07152d234b70', 'pengguna', 'raditya', '086757576', '6736f030f36046b24de35f882ff798ba.png', '');
 
 -- --------------------------------------------------------
 
@@ -329,7 +280,7 @@ INSERT INTO `pengguna` (`username`, `password`, `level`, `nama`, `no_telepon`, `
 --
 
 CREATE TABLE `tentang_kami` (
-  `about_us` text DEFAULT NULL,
+  `about_us` text,
   `business_time` varchar(35) DEFAULT NULL,
   `nama_facebook` varchar(35) DEFAULT NULL,
   `whatsapp` varchar(35) DEFAULT NULL,
@@ -341,18 +292,15 @@ CREATE TABLE `tentang_kami` (
   `highlight4` varchar(50) NOT NULL,
   `highlight5` varchar(50) NOT NULL,
   `highlight6` varchar(50) NOT NULL,
-  `highlight7` varchar(50) NOT NULL,
-  `banner1` varchar(100) NOT NULL,
-  `banner2` varchar(100) NOT NULL,
-  `banner3` varchar(100) NOT NULL
+  `highlight7` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tentang_kami`
 --
 
-INSERT INTO `tentang_kami` (`about_us`, `business_time`, `nama_facebook`, `whatsapp`, `logo_atas`, `logo_bawah`, `highlight1`, `highlight2`, `highlight3`, `highlight4`, `highlight5`, `highlight6`, `highlight7`, `banner1`, `banner2`, `banner3`) VALUES
-('Kami adalah pengusaha bibit yang menjunjung tinggi kejujuran dalam bertransaksi dan keaslian bibit yang dijual, dan juga Kami adalah pengusaha tanpa dinaungi oleh CV sehingga harga bibit yang kami jual jauh lebih murah dan bibit yang dihasilkan juga berkualitas.', 'Senin - Sabtu', 'AlfanAnekaMacamBibit', '082131916101', '60086d605e44a.png', '60086d605e808.png', 'Promo 20% bibit Durian', 'Promo 50% bibit Salak', 'Promo 30% bibit nangka', 'Promo 20% bibit kelengkeng', 'Promo 20% bibit jeruk', 'Promo 20% bibit mangga', 'Promo 15% bibit manggis', '60086cd1975ac.jpg', '60086cd197ced.jpg', '60086cd197f3f.jpg');
+INSERT INTO `tentang_kami` (`about_us`, `business_time`, `nama_facebook`, `whatsapp`, `logo_atas`, `logo_bawah`, `highlight1`, `highlight2`, `highlight3`, `highlight4`, `highlight5`, `highlight6`, `highlight7`) VALUES
+('Kami adalah pengusaha bibit yang menjunjung tinggi kejujuran dalam bertransaksi dan keaslian bibit yang dijual, dan juga Kami adalah pengusaha tanpa dinaungi oleh CV sehingga harga bibit yang kami jual jauh lebih murah dan bibit yang dihasilkan juga berkualitas.', 'Senin-Sabtu', 'AlfanAnekaMacamBibit', '082131916101', 'logobaru.png', 'logobaru2.png', 'Promo 20% bibit Durian', 'Promo 50% bibit Salak', 'Promo 30% bibit nangka', 'Promo 20% bibit kelengkeng', 'Promo 20% bibit jeruk', 'Promo 20% bibit mangga', 'Promo 15% bibit manggis');
 
 --
 -- Indexes for dumped tables
@@ -408,25 +356,25 @@ ALTER TABLE `pengguna`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `idcart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `idcart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `detailorder`
 --
 ALTER TABLE `detailorder`
-  MODIFY `detailid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `detailid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `idhistory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `idhistory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
 
 --
 -- AUTO_INCREMENT for table `keranjang`

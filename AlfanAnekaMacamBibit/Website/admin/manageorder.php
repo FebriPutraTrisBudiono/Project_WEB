@@ -171,7 +171,21 @@
 													}?></td>
 													<td><?php 
 													
-													echo "sudah di order";
+													//echo $p['status'] 
+													$orders = $p['orderid'];
+													$cekkonfirmasipembayaran = mysqli_query($koneksi,"select * from konfirmasi where orderid='$orders'");
+													$cekroww = mysqli_num_rows($cekkonfirmasipembayaran);
+													
+													if($cekroww > 0){
+														echo 'Confirmed';
+													} else {
+														if($p['status']!='Pengiriman'){
+															echo "Sudah di Order";
+														} else {
+															echo "Pengiriman";
+														};
+													}
+													
 													?></td>
 												</tr>		
 												<?php 
