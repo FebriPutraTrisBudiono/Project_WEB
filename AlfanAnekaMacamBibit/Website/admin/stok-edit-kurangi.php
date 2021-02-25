@@ -162,14 +162,14 @@ $koneksi->close();
                                 </div>
                                 	<br>
                                     <form method="post">
-          <div class="mb-3">
-            <p>ID : <?php echo $id; ?></p>
-            <p>Nama Barang : <?php echo $row->nama_barang;?></p><br>
-            <input type="number" name="jumlah" class="form-control" value="0" min="0" max="<?php echo $row->stok_barang;?>" placeholder="Jumlah" required><strong>*Jumlah</strong>
-          </div>
-          <br>
-          <button type="submit" name="ubah" class="btn btn-primary" style="background-color: #008000;">Ubah</button>
-        </form>
+                                      <div class="mb-3">
+                                        <p>ID : <?php echo $id; ?></p>
+                                        <p>Nama Barang : <?php echo $row->nama_barang;?></p><br>
+                                        <input type="number" name="jumlah" class="form-control" value="0" min="0" max="<?php echo $row->stok_barang;?>" placeholder="Jumlah" required><strong>*Jumlah</strong>
+                                      </div>
+                                      <br>
+                                      <button type="submit" name="ubah" class="btn btn-primary" style="background-color: #008000;">Ubah</button>
+                                    </form>
 								 </div>
                             </div>
                         </div>
@@ -189,51 +189,6 @@ $koneksi->close();
         <!-- footer area end-->
     </div>
     <!-- page container area end -->
-	
-	<!-- modal input -->
-			<div id="myModal" class="modal fade">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h4 class="modal-title">Tambah Produk</h4>
-						</div>
-						
-						<div class="modal-body">
-						<form action="produk.php" method="post" enctype="multipart/form-data" >
-								<div class="form-group">
-									<label>Nama Produk</label>
-									<input name="namabarang" type="text" class="form-control" required autofocus>
-								</div>
-								<div class="form-group">
-									<label>Jenis Barang</label>
-									<input name="jenis_barang" type="text" class="form-control" required autofocus>
-								</div>
-								<div class="form-group">
-									<label>umur</label>
-									<input name="umur" type="text" class="form-control" required>
-								</div>
-								<div class="form-group">
-									<label>Harga</label>
-									<input name="harga" type="number" class="form-control">
-								</div>
-								<div class="form-group">
-									<label>Deskripsi</label>
-									<input name="deskripsi" type="text" class="form-control">
-								</div>
-								<div class="form-group">
-									<label>Gambar</label>
-									<input name="uploadgambar" type="file" class="form-control">
-								</div>
-
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-								<input name="addproduct" type="submit" class="btn btn-primary" value="Tambah">
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
 	
 	<script>
 	$(document).ready(function() {

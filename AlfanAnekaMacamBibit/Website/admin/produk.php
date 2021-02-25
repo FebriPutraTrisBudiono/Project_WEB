@@ -7,6 +7,7 @@
 		$jenis_barang=$_POST['jenis_barang'];
 		$umur=$_POST['umur'];
 		$harga=$_POST['harga'];
+		$harga_partai=$_POST['harga_partai'];
 		$deskripsi=$_POST['deskripsi'];
 		
 //upload gambar
@@ -27,8 +28,8 @@ $nama_file = $_FILES['uploadgambar']['name'];
                 echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
             }
             
-$query = "INSERT into barang (nama_barang, jenis_barang, stok_barang, umur, foto_barang, harga, deskripsi)
-			  values('$namabarang','$jenis_barang','0','$umur','$nama_file','$harga','$deskripsi')";
+$query = "INSERT into barang (nama_barang, jenis_barang, stok_barang, umur, foto_barang, harga, harga_partai, deskripsi)
+			  values('$namabarang','$jenis_barang','0','$umur','$nama_file','$harga', '$harga_partai','$deskripsi')";
 			  $sql = mysqli_query($koneksi, $query); // Eksekusi/ Jalankan query dari variabel $query
 			  
 			  if($sql){ 
@@ -185,6 +186,7 @@ $query = "INSERT into barang (nama_barang, jenis_barang, stok_barang, umur, foto
 												<th>Jenis Barang</th>
 												<th>Umur</th>
 												<th>Harga</th>
+												<th>Harga Partai</th>
 												<th>Deskripsi Produk</th>
 												<th>Tanggal</th>
 												<th></th>
@@ -204,6 +206,7 @@ $query = "INSERT into barang (nama_barang, jenis_barang, stok_barang, umur, foto
 													<td><?php echo $p['jenis_barang'] ?></td>
 													<td><?php echo $p['umur'] ?></td>
 													<td><?php echo $p['harga'] ?></td>
+													<td><?php echo $p['harga_partai']; ?></td>
 													<td><?php echo $p['deskripsi'] ?></td>
 													<td><?php echo $p['tgldibuat'] ?></td>
 													<?php echo "<td><a class='edit'href='produk-edit.php?status=edit&&id=" .$p['idbarang']. "'>Ubah</a></td>"; ?>
@@ -268,6 +271,10 @@ $query = "INSERT into barang (nama_barang, jenis_barang, stok_barang, umur, foto
 								<div class="form-group">
 									<label>Harga</label>
 									<input name="harga" type="number" class="form-control">
+								</div>
+								<div class="form-group">
+									<label>Harga Partai</label>
+									<input name="harga_partai" type="number" class="form-control">
 								</div>
 								<div class="form-group">
 									<label>Deskripsi</label>

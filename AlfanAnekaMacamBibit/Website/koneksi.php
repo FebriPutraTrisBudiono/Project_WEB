@@ -1,5 +1,5 @@
 <?php
-$koneksi = mysqli_connect("localhost","root","","db_alfananekamacambibitbaru2");
+$koneksi = mysqli_connect("wsjti.com","u1011496","!X@I4H+4vP","u1011496_alfananekamacambibit");
 
 // Check connection
 if (mysqli_connect_errno()){
@@ -157,6 +157,7 @@ function edit($data){
 	$jenis_barang = htmlspecialchars($data['jenis_barang']);
 	$umur = htmlspecialchars($data['umur']);
 	$harga = htmlspecialchars($data['harga']);
+	$harga_partai = htmlspecialchars($data['harga_partai']);
 	$deskripsi = htmlspecialchars($data['deskripsi']);
 	$gambarLama = htmlspecialchars($data['gambarLama']);
 
@@ -169,7 +170,7 @@ function edit($data){
    		unlink("../foto_brg/" . $image); 
 	}
 
-	$sql = mysqli_query($koneksi, "UPDATE barang SET nama_barang='$nama_barang', jenis_barang='$jenis_barang', umur='$umur', foto_barang='$gambar', harga='$harga', deskripsi='$deskripsi' WHERE idbarang='$id'");
+	$sql = mysqli_query($koneksi, "UPDATE barang SET nama_barang='$nama_barang', jenis_barang='$jenis_barang', umur='$umur', foto_barang='$gambar', harga='$harga', harga_partai='$harga_partai' , deskripsi='$deskripsi' WHERE idbarang='$id'");
 
 	return mysqli_affected_rows($koneksi);
 }

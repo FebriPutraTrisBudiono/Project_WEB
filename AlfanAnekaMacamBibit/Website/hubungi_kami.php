@@ -423,7 +423,7 @@ if ($_SESSION['level'] != "admin") {
 
 <script>
     //no wa admin
-    $("#noAdmin").val("081230232820");
+    $("#noAdmin").val("082131916101");
     $('.whatsapp-btn').click(function () {
       $('#whatsapp').toggleClass('toggle');
     });

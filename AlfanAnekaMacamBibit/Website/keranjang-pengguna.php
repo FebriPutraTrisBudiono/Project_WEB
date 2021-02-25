@@ -16,6 +16,12 @@ if (!isset($_SESSION['username'])) {
     $itungtrans2 = mysqli_fetch_assoc($itungtrans);
     $itungtrans3 = $itungtrans2['jumlahtrans'];
     
+    if ($itungtrans3 == 0): { 
+        echo '<script language="javascript">alert("Tidak ada Bibit di keranjang!"); document.location="list_bibit-pengguna.php";</script>';
+    } elseif ($itungtrans3 > 0): {
+    }
+    endif;   
+
 if(isset($_POST["update"])){
     $kode = $_POST['idbarangnya'];
     $jumlah = $_POST['jumlah'];
@@ -292,19 +298,37 @@ if(isset($_POST["update"])){
                         <td class="invert">
                              <div class="quantity"> 
                                 <div class="quantity-SELECT">                     
-                                    <input type="number" name="jumlah" class="form-control" height="100px" value="<?php echo $b['qty'] ?>" min="1" \>
+                                    <input type="number" name="jumlah" class="form-control" height="100px" value="<?php echo $b['qty'] ?>" min="1" max="<?php echo $b['stok_barang']; ?>" \>
                                 </div>
                             </div>
                         </td>
                 
-                        <td class="invert">Rp<?php echo number_format($b['harga']) ?></td>
+                        <td class="invert">
+                            <?php if ($b['qty'] >= 1000): { 
+                                        echo "<p style='color: red;'>*partai</p>";
+                                        echo "Rp "; echo number_format($b['harga_partai']) ;
+                                } elseif ($b['qty'] < 1000): {
+                                    echo "Rp "; echo number_format($b['harga']);
+                                }
+                                ?>
+                            <?php endif ?>
+                                
+                        </td>
                         <td class="invert">
                             <?php
-                            $hrg = $b['harga'];
-                            $qtyy = $b['qty'];
-                            $totalharga = $hrg * $qtyy;
+                            if ($b['qty'] >= 1000) {
+                                $hrg = $b['harga_partai'];
+                                $qtyy = $b['qty'];
+                                $totalharga = $hrg * $qtyy;
+                            }
+                            elseif ($b['qty'] < 1000){
+                                $hrg = $b['harga'];
+                                $qtyy = $b['qty'];
+                                $totalharga = $hrg * $qtyy;
+                            }
+                            
                             ?>
-                            Rp<?php echo number_format($totalharga) ?></td>
+                            Rp <?php echo number_format($totalharga) ?></td>
                         <td class="invert">
                             <div class="rem">
                             
@@ -351,9 +375,17 @@ if(isset($_POST["update"])){
                             $no=1;
                             $subtotal = 0;
                         while($b=mysqli_fetch_array($brg)){
-                        $hrg = $b['harga'];
-                        $qtyy = $b['qty'];
-                        $totalharga = $hrg * $qtyy;
+                            if ($b['qty'] >= 1000) {
+                                $hrg = $b['harga_partai'];
+                                $qtyy = $b['qty'];
+                                $totalharga = $hrg * $qtyy;
+                            }
+                            elseif ($b['qty'] < 1000) {
+                                $hrg = $b['harga'];
+                                $qtyy = $b['qty'];
+                                $totalharga = $hrg * $qtyy;
+                            }
+
                         $subtotal += $totalharga
                         ?>
                         <?php

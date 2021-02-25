@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 28, 2021 at 10:22 AM
+-- Generation Time: Feb 25, 2021 at 07:41 PM
 -- Server version: 10.3.27-MariaDB
 -- PHP Version: 7.3.6
 
@@ -36,6 +36,7 @@ CREATE TABLE `barang` (
   `umur` varchar(10) DEFAULT NULL,
   `foto_barang` varchar(100) DEFAULT NULL,
   `harga` varchar(30) NOT NULL,
+  `harga_partai` int(11) NOT NULL,
   `deskripsi` text NOT NULL,
   `tgldibuat` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -44,14 +45,14 @@ CREATE TABLE `barang` (
 -- Dumping data for table `barang`
 --
 
-INSERT INTO `barang` (`idbarang`, `nama_barang`, `jenis_barang`, `stok_barang`, `umur`, `foto_barang`, `harga`, `deskripsi`, `tgldibuat`) VALUES
-(5, 'Bibit Nangka', 'Bibit', 200, '6 bulan', '600853b00a1d2.jpg', '6000', 'tes', '2021-01-03 04:59:12'),
-(7, 'Bibit salak', 'Bibit', 55, '3 bulan', 'salak.jpg', '5000', 'tes', '2021-01-03 04:59:12'),
-(9, 'Bibit Rambutan', 'Bibit', 0, '8 bulan', 'rambutan.jpg', '2000', 'tes', '2021-01-03 04:59:12'),
-(12, 'Bibit semangka', 'Bibit', 0, '10 bulan', 'semangka.jpg', '3000', 'tes', '2021-01-03 04:59:12'),
-(13, 'Bibit nanas', 'Bibit', 0, '10 bulan', '6008541b478dd.jpg', '8000', 'sada', '2021-01-10 05:04:10'),
-(14, 'Bibit sawo', 'Bibit', 600, '3 bulan', 'sawo.jpg', '4000', 'sada', '2021-01-10 05:09:25'),
-(15, 'bibit jambu', 'bibit', 0, '4 bulan', 'jambu.jpg', '5000', 'sas', '2021-01-10 05:14:05');
+INSERT INTO `barang` (`idbarang`, `nama_barang`, `jenis_barang`, `stok_barang`, `umur`, `foto_barang`, `harga`, `harga_partai`, `deskripsi`, `tgldibuat`) VALUES
+(5, 'Bibit Nangka', 'Bibit', 200, '6 bulan', '600853b00a1d2.jpg', '6000', 5000, 'Buah segar', '2021-01-03 04:59:12'),
+(7, 'Bibit salak', 'Bibit', 55, '3 bulan', 'salak.jpg', '7000', 6000, 'tes', '2021-01-03 04:59:12'),
+(9, 'Bibit Rambutan', 'Bibit', 90, '8 bulan', 'rambutan.jpg', '8000', 6000, 'tes', '2021-01-03 04:59:12'),
+(12, 'Bibit semangka', 'Bibit', 100, '10 bulan', 'semangka.jpg', '8000', 6000, 'tes', '2021-01-03 04:59:12'),
+(13, 'Bibit nanas', 'Bibit', 0, '10 bulan', '6008541b478dd.jpg', '8000', 6000, 'sada', '2021-01-10 05:04:10'),
+(14, 'Bibit sawo', 'Bibit', 1000, '3 bulan', 'sawo.jpg', '7000', 6000, 'sada', '2021-01-10 05:09:25'),
+(15, 'bibit jambu', 'bibit', 100, '4 bulan', 'jambu.jpg', '6000', 5000, 'sas', '2021-01-10 05:14:05');
 
 -- --------------------------------------------------------
 
@@ -74,8 +75,8 @@ CREATE TABLE `cart` (
 INSERT INTO `cart` (`idcart`, `orderid`, `username`, `tglorder`, `status`) VALUES
 (20, '16mjTQVqhD8Eo', 'admin', '2020-12-30 07:55:43', 'Cart'),
 (21, '16ff3tWDAkotU', 'febript', '2020-12-30 12:26:34', 'Payment'),
-(22, '16UpoZHn5meDw', 'dimas', '2020-12-30 12:33:06', 'Cart'),
-(23, '16F6BSjJCVl2Q', 'fahrel', '2021-01-08 12:45:53', 'Cart'),
+(22, '16UpoZHn5meDw', 'dimas', '2020-12-30 12:33:06', 'Payment'),
+(23, '16F6BSjJCVl2Q', 'fahrel', '2021-01-08 12:45:53', 'Payment'),
 (24, '167FRCA6bXzVw', 'febript', '2021-01-11 12:41:09', 'Payment'),
 (25, '16fDpvle/mdm6', 'febript', '2021-01-11 12:41:56', 'Payment'),
 (26, '16jbI4c6KJScE', 'febript', '2021-01-11 12:42:55', 'Payment'),
@@ -85,10 +86,16 @@ INSERT INTO `cart` (`idcart`, `orderid`, `username`, `tglorder`, `status`) VALUE
 (30, '16Nj9PS13AAcM', 'febript', '2021-01-12 04:07:12', 'Payment'),
 (31, '16rYGdcTSrGLA', 'febript', '2021-01-12 04:31:47', 'Payment'),
 (32, '16VTfD7z9FmWw', 'febript', '2021-01-12 04:32:25', 'Payment'),
-(33, '16UXFGQlRSp6g', 'febript', '2021-01-12 04:43:50', 'Cart'),
+(33, '16UXFGQlRSp6g', 'febript', '2021-01-12 04:43:50', 'Payment'),
 (34, '16f7leW4lLXPU', 'bagus', '2021-01-26 11:00:20', 'Cart'),
 (35, '16UdcS5RlZMQU', 'prima', '2021-01-27 06:43:19', 'Payment'),
-(36, '16bldTbdCcbR.', 'prima', '2021-01-27 06:45:56', 'Payment');
+(36, '16bldTbdCcbR.', 'prima', '2021-01-27 06:45:56', 'Payment'),
+(37, '16vJplsVRd2N2', 'febript', '2021-01-28 03:41:18', 'Payment'),
+(38, '164.lAOvy.XDk', 'dimas', '2021-01-28 06:08:58', 'Payment'),
+(39, '16GqMQbwIOjq.', 'abril', '2021-01-28 06:30:06', 'Payment'),
+(41, '16MDYpe2p6J1I', 'febript', '2021-02-11 04:31:17', 'Payment'),
+(42, '16uftygz5apyo', 'febript', '2021-02-14 00:11:52', 'Payment'),
+(43, '16guXXPIJyJ72', 'febript', '2021-02-14 12:34:01', 'Payment');
 
 -- --------------------------------------------------------
 
@@ -114,8 +121,6 @@ INSERT INTO `detailorder` (`detailid`, `orderid`, `idbarang`, `qty`) VALUES
 (38, '16ff3tWDAkotU', 12, 5),
 (39, '16ff3tWDAkotU', 5, 1),
 (40, '16F6BSjJCVl2Q', 5, 2),
-(41, '16mjTQVqhD8Eo', 12, 1),
-(42, '16mjTQVqhD8Eo', 9, 1),
 (43, '167FRCA6bXzVw', 7, 1),
 (44, '16fDpvle/mdm6', 7, 1),
 (45, '16jbI4c6KJScE', 9, 1),
@@ -125,11 +130,25 @@ INSERT INTO `detailorder` (`detailid`, `orderid`, `idbarang`, `qty`) VALUES
 (49, '16Nj9PS13AAcM', 5, 1),
 (50, '16rYGdcTSrGLA', 5, 1),
 (51, '16VTfD7z9FmWw', 5, 1),
-(52, '16UXFGQlRSp6g', 5, -5),
+(52, '16UXFGQlRSp6g', 5, 5),
 (55, '16UdcS5RlZMQU', 5, 5),
 (56, '16UdcS5RlZMQU', 7, 1),
 (57, '16bldTbdCcbR.', 5, 5),
-(58, '16bldTbdCcbR.', 7, 1);
+(58, '16bldTbdCcbR.', 7, 1),
+(59, '16vJplsVRd2N2', 5, 5),
+(60, '16F6BSjJCVl2Q', 14, 1),
+(61, '16f7leW4lLXPU', 14, 1),
+(63, '16f7leW4lLXPU', 5, 1),
+(64, '164.lAOvy.XDk', 13, 200),
+(65, '16mjTQVqhD8Eo', 15, 1),
+(66, '16GqMQbwIOjq.', 14, 1),
+(67, '16GqMQbwIOjq.', 12, 10),
+(68, '16MDYpe2p6J1I', 5, 1),
+(69, '16MDYpe2p6J1I', 12, 1),
+(70, '16uftygz5apyo', 5, 2),
+(71, '16guXXPIJyJ72', 5, 1),
+(72, '16guXXPIJyJ72', 12, 1),
+(73, '16guXXPIJyJ72', 14, 1000);
 
 -- --------------------------------------------------------
 
@@ -272,7 +291,17 @@ INSERT INTO `history` (`idhistory`, `waktu`, `jenis_barang`, `nama_barang`, `keg
 (120, '18/01/2021 11:31:20', '', '', 'Mengubah nama barang  menjadi Bibit Nangka dan mengubah jenis barang  menjadi Bibit'),
 (121, '27/01/2021 01:50:31', 'Bibit durian', 'Bibit', 'Meghapus nama barang Bibit durian dengan jenis barang Bibit'),
 (122, '27/01/2021 01:51:06', 'Bibit Nangka', 'Bibit', 'Menambah stok barang Bibit Nangka berjulmah 500 sebanyak 100 sehingga stok barang Bibit Nangka menjadi 600'),
-(123, '27/01/2021 01:51:20', 'Bibit Nangka', 'Bibit', 'Mengurangi stok barang Bibit Nangka berjulmah 600 sebanyak 400 sehingga stok barang Bibit Nangka menjadi 200');
+(123, '27/01/2021 01:51:20', 'Bibit Nangka', 'Bibit', 'Mengurangi stok barang Bibit Nangka berjulmah 600 sebanyak 400 sehingga stok barang Bibit Nangka menjadi 200'),
+(124, '28/01/2021 11:49:30', 'bibit jambu', 'bibit', 'Menambah stok barang bibit jambu berjulmah 0 sebanyak 100 sehingga stok barang bibit jambu menjadi 100'),
+(125, '28/01/2021 11:49:37', 'Bibit nanas', 'Bibit', 'Menambah stok barang Bibit nanas berjulmah 0 sebanyak 400 sehingga stok barang Bibit nanas menjadi 400'),
+(126, '28/01/2021 11:49:48', 'Bibit semangka', 'Bibit', 'Menambah stok barang Bibit semangka berjulmah 0 sebanyak 50 sehingga stok barang Bibit semangka menjadi 50'),
+(127, '28/01/2021 11:49:50', 'Bibit semangka', 'Bibit', 'Menambah stok barang Bibit semangka berjulmah 50 sebanyak 50 sehingga stok barang Bibit semangka menjadi 100'),
+(128, '28/01/2021 12:20:49', 'Bibit sawo', 'Bibit', 'Menambah stok barang Bibit sawo berjulmah 600 sebanyak 400 sehingga stok barang Bibit sawo menjadi 1000'),
+(129, '28/01/2021 12:21:12', 'Bibit nanas', 'Bibit', 'Menambah stok barang Bibit nanas berjulmah 400 sebanyak 600 sehingga stok barang Bibit nanas menjadi 1000'),
+(130, '28/01/2021 01:17:34', 'Bibit nanas', 'Bibit', 'Mengurangi stok barang Bibit nanas berjulmah 1000 sebanyak 1000 sehingga stok barang Bibit nanas menjadi 0'),
+(131, '28/01/2021 01:38:50', 'bibit kelengkeng', 'bibit', 'Meghapus nama barang bibit kelengkeng dengan jenis barang bibit'),
+(132, '28/01/2021 01:39:23', 'Bibit Rambutan', 'Bibit', 'Menambah stok barang Bibit Rambutan berjulmah 0 sebanyak 100 sehingga stok barang Bibit Rambutan menjadi 100'),
+(133, '28/01/2021 01:39:43', 'Bibit Rambutan', 'Bibit', 'Mengurangi stok barang Bibit Rambutan berjulmah 100 sebanyak 10 sehingga stok barang Bibit Rambutan menjadi 90');
 
 -- --------------------------------------------------------
 
@@ -313,6 +342,7 @@ CREATE TABLE `pengguna` (
 
 INSERT INTO `pengguna` (`username`, `password`, `level`, `nama`, `no_telepon`, `foto`, `alamat`) VALUES
 ('abdul', 'e10adc3949ba59abbe56e057f20f883e', 'pengguna', 'abdul', '0812123123123', '', ''),
+('abril', '202cb962ac59075b964b07152d234b70', 'pengguna', 'abrilian', '08213', '60125ac81369b.png', 'jember'),
 ('admin', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'Ahmad Alfanur Rohman', '082228905619', '60085ac55dfb6.jpg', 'Manggisan - Jember'),
 ('bagus', '202cb962ac59075b964b07152d234b70', 'pengguna', 'bagus T', '081249138361', '', 'Jawa timur'),
 ('dimas', '202cb962ac59075b964b07152d234b70', 'pengguna', 'dimas cr', '081211686202', '', 'jember'),
@@ -352,7 +382,7 @@ CREATE TABLE `tentang_kami` (
 --
 
 INSERT INTO `tentang_kami` (`about_us`, `business_time`, `nama_facebook`, `whatsapp`, `logo_atas`, `logo_bawah`, `highlight1`, `highlight2`, `highlight3`, `highlight4`, `highlight5`, `highlight6`, `highlight7`, `banner1`, `banner2`, `banner3`) VALUES
-('Kami adalah pengusaha bibit yang menjunjung tinggi kejujuran dalam bertransaksi dan keaslian bibit yang dijual, dan juga Kami adalah pengusaha tanpa dinaungi oleh CV sehingga harga bibit yang kami jual jauh lebih murah dan bibit yang dihasilkan juga berkualitas.', 'Senin - Sabtu', 'AlfanAnekaMacamBibit', '082131916101', '60086d605e44a.png', '60086d605e808.png', 'Promo 20% bibit Durian', 'Promo 50% bibit Salak', 'Promo 30% bibit nangka', 'Promo 20% bibit kelengkeng', 'Promo 20% bibit jeruk', 'Promo 20% bibit mangga', 'Promo 15% bibit manggis', '60086cd1975ac.jpg', '60086cd197ced.jpg', '60086cd197f3f.jpg');
+('Kami adalah pengusaha bibit dengan harga petani yang tidak dinaungi oleh CV sehingga harga bibit yang kami jual jauh lebih murah dan bibit yang dihasilkan juga berkualitas.', 'Senin - Sabtu', 'AlfanAnekaMacamBibit', '082131916101', '60086d605e44a.png', '60086d605e808.png', 'Promo 20% bibit Durian', 'Promo 50% bibit Salak', 'Promo 30% bibit nangka', 'Promo 20% bibit kelengkeng', 'Promo 20% bibit jeruk', 'Promo 20% bibit mangga', 'Promo 15% bibit manggis', '60086cd1975ac.jpg', '60086cd197ced.jpg', '60086cd197f3f.jpg');
 
 --
 -- Indexes for dumped tables
@@ -408,25 +438,25 @@ ALTER TABLE `pengguna`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `idbarang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `idcart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `idcart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `detailorder`
 --
 ALTER TABLE `detailorder`
-  MODIFY `detailid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `detailid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `idhistory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `idhistory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 
 --
 -- AUTO_INCREMENT for table `keranjang`

@@ -180,6 +180,10 @@ if(isset($_POST["edit"])){
                                         <input type="text" name="harga" class="form-control" value="<?php echo $data['harga']; ?>" placeholder="Harga" required>
                                       </div>
                                       <div class="mb-3">
+                                        <label for="exampleInputPassword1" class="form-label">Harga Partai</label>
+                                        <input type="text" name="harga_partai" class="form-control" value="<?php echo $data['harga_partai']; ?>" placeholder="Harga Partai" required>
+                                      </div>
+                                      <div class="mb-3">
                                         <label for="exampleInputPassword1" class="form-label">Deskripsi Produk</label>
                                         <textarea name="deskripsi" class="form-control" required><?php echo $data['deskripsi']; ?></textarea>
                                       </div>

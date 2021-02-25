@@ -1,26 +1,22 @@
 <?php 
-	session_start();
-	include '../koneksi.php';
-		
-	$itungcust = mysqli_query($koneksi,"SELECT count(username) as jumlahcust from pengguna where level='pengguna'");
-	$itungcust2 = mysqli_fetch_assoc($itungcust);
-	$itungcust3 = $itungcust2['jumlahcust'];
-	
-	$itungorder = mysqli_query($koneksi,"SELECT count(idcart) as jumlahorder from cart where status not like 'Selesai' and status not like 'Canceled'");
-	$itungorder2 = mysqli_fetch_assoc($itungorder);
-	$itungorder3 = $itungorder2['jumlahorder'];
-	
-	$itungtrans = mysqli_query($koneksi,"SELECT count(orderid) as jumlahtrans from konfirmasi");
-	$itungtrans2 = mysqli_fetch_assoc($itungtrans);
-	$itungtrans3 = $itungtrans2['jumlahtrans'];
-	
-	?>
+    session_start();
+    include '../koneksi.php';
+        
+    $itungcust = mysqli_query($koneksi,"SELECT count(username) as jumlahcust from pengguna where level='pengguna'");
+    $itungcust2 = mysqli_fetch_assoc($itungcust);
+    $itungcust3 = $itungcust2['jumlahcust'];
+    
+    $itungorder = mysqli_query($koneksi,"SELECT count(idcart) as jumlahorder from cart where status not like 'Selesai' and status not like 'Canceled'");
+    $itungorder2 = mysqli_fetch_assoc($itungorder);
+    $itungorder3 = $itungorder2['jumlahorder'];
+    
+    ?>
 
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-	<link rel="icon" 
+    <link rel="icon" 
       type="image/png" 
       href="../favicon.png">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -33,7 +29,7 @@
     <link rel="stylesheet" href="assets/css/metisMenu.css">
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/css/slicknav.min.css">
-	
+    
     <!-- amchart css -->
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <!-- others css -->
@@ -62,21 +58,21 @@
                 <div class="menu-inner">
                     <nav>
                         <ul class="metismenu" id="menu">
-							<li class="active"><a href="index.php"><span>Home</span></a></li>
-							<li><a href="../halaman_admin.php"><span>Kembali ke Toko</span></a></li>
-							<li>
+                            <li class="active"><a href="index.php"><span>Home</span></a></li>
+                            <li><a href="../halaman_admin.php"><span>Kembali ke Toko</span></a></li>
+                            <li>
                                 <a href="manageorder.php"><i class="ti-dashboard"></i><span>Kelola Pesanan</span></a>
                             </li>
-							<li>
+                            <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout"></i><span>Kelola Toko
                                     </span></a>
                                 <ul class="collapse">
                                     <li><a href="produk.php">Produk</a></li>
                                     <li><a href="stok.php">Stok</a></li>
-									<li><a href="informasi_toko.php">Informasi Toko</a></li>
+                                    <li><a href="informasi_toko.php">Informasi Toko</a></li>
                                 </ul>
                             </li>
-							<li><a href="customer.php"><span>Kelola Pelanggan</span></a></li>
+                            <li><a href="customer.php"><span>Kelola Pelanggan</span></a></li>
                             <li>
                                 <a href="logout.php"><span>Logout</span></a>
                                 
@@ -105,53 +101,53 @@
                     <div class="col-md-6 col-sm-4 clearfix">
                         <ul class="notification-area pull-right">
                             <li><h3><div class="date">
-								<script type='text/javascript'>
-						<!--
-						var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-						var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-						var date = new Date();
-						var day = date.getDate();
-						var month = date.getMonth();
-						var thisDay = date.getDay(),
-							thisDay = myDays[thisDay];
-						var yy = date.getYear();
-						var year = (yy < 1000) ? yy + 1900 : yy;
-						document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year);		
-						//-->
-						</script></b></div></h3>
+                                <script type='text/javascript'>
+                        <!--
+                        var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                        var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                        var date = new Date();
+                        var day = date.getDate();
+                        var month = date.getMonth();
+                        var thisDay = date.getDay(),
+                            thisDay = myDays[thisDay];
+                        var yy = date.getYear();
+                        var year = (yy < 1000) ? yy + 1900 : yy;
+                        document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year);        
+                        //-->
+                        </script></b></div></h3>
 
-						</li>
+                        </li>
                         </ul>
                     </div>
                 </div>
             </div>
-			
-			
-			<!-- header area end -->
-			<?php 
-			/*
-				$periksa_bahan=mysqli_query($conn,"select * from stock_brg where stock <10");
-				while($p=mysqli_fetch_array($periksa_bahan)){	
-					if($p['stock']>=1){	
-						?>	
-						<script>
-							$(document).ready(function(){
-								$('#pesan_sedia').css("color","white");
-								$('#pesan_sedia').append("<i class='ti-flag'></i>");
-							});
-						</script>
-						<?php
-						echo "<div class='alert alert-danger alert-dismissible fade show'><button type='button' class='close' data-dismiss='alert'>&times;</button>Stok  <strong><u>".$p['nama']. "</u> <u>".($p['jenis'])."</u></strong> yang tersisa kurang dari 10</div>";		
-					}
-				}
-				
-				*/
-				?>
-			
+            
+            
+            <!-- header area end -->
+            <?php 
+            /*
+                $periksa_bahan=mysqli_query($conn,"select * from stock_brg where stock <10");
+                while($p=mysqli_fetch_array($periksa_bahan)){   
+                    if($p['stock']>=1){ 
+                        ?>  
+                        <script>
+                            $(document).ready(function(){
+                                $('#pesan_sedia').css("color","white");
+                                $('#pesan_sedia').append("<i class='ti-flag'></i>");
+                            });
+                        </script>
+                        <?php
+                        echo "<div class='alert alert-danger alert-dismissible fade show'><button type='button' class='close' data-dismiss='alert'>&times;</button>Stok  <strong><u>".$p['nama']. "</u> <u>".($p['jenis'])."</u></strong> yang tersisa kurang dari 10</div>";       
+                    }
+                }
+                
+                */
+                ?>
+            
             
             <!-- page title area end -->
             <div class="main-content-inner">
-			
+            
                 
                 <div class="sales-report-area mt-5 mb-5">
                     <div class="row">
@@ -165,7 +161,7 @@
                                     <div class="d-flex justify-content-between pb-2">
                                         <h1><?php echo $itungcust3 ?></h1>
                                     </div>
-									</div>
+                                    </div>
                             </div>
                         </div>
                         
@@ -193,13 +189,13 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-sm-flex justify-content-between align-items-center">
-									<h2>Selamat Datang</h2>
+                                    <h2>Selamat Datang</h2>
                                 </div>
                                 <div class="market-status-table mt-4">
                                     Anda masuk sebagai <strong><?php echo $_SESSION['username'] ?></strong>
-									<br>
-									<p>Pada halaman admin, Anda dapat menambah produk, mengelola produk, 
-									mengelola user dan admin, dan mengelola toko</p>
+                                    <br>
+                                    <p>Pada halaman admin, Anda dapat menambah produk, mengelola produk, 
+                                    mengelola user dan admin, dan mengelola toko</p>
                                 </div>
                             </div>
                         </div>
@@ -211,9 +207,9 @@
             </div>
         </div>
         <!-- main content area end -->
-		
-		
-		
+        
+        
+        
         <!-- footer area start-->
         <footer>
             <div class="footer-area">

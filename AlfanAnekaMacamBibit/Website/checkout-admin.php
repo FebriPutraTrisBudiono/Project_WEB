@@ -276,10 +276,18 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
     $no = 1;
     $subtotal = 0;
     while ($b = mysqli_fetch_array($brg)) {
-        $hrg = $b['harga'];
+        if ($b['qty'] >= 1000) {
+            $hrg = $b['harga_partai'];
             $qtyy = $b['qty'];
             $totalharga = $hrg * $qtyy;
-            $subtotal += $totalharga
+        }
+        elseif ($b['qty'] < 1000) {
+            $hrg = $b['harga'];
+            $qtyy = $b['qty'];
+            $totalharga = $hrg * $qtyy;
+        }
+        
+        $subtotal += $totalharga
     ?>
     <div class="row">
         <div class="col">
@@ -287,13 +295,37 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
             <input class="input100 namabarang" type="text" style="background-color: white; border-style: none; position: absolute; color: black;" value=" <?php echo $b['nama_barang'] ?>" disabled>
         </div>
         <div class="col">
-            <input class="input100 harga" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo $b['harga'] ?>/bibit" disabled>
+            <input class="input100 harga" type="text" style="background-color: white; border-style: none; color: black;"
+            value="<?php
+            if ($b['qty'] >= 1000){
+                echo 'Rp '; echo $b['harga_partai']; echo '/bibit';
+            }
+            elseif ($b['qty'] < 1000){
+                echo 'Rp '; echo $b['harga']; echo '/bibit';
+            }
+            ?>" 
+
+            disabled>
         </div>
         <div class="col">
             <input class="input100 qty" type="text" style="background-color: white; border-style: none; color: black;" value="<?php echo $b['qty'] ?>x" disabled>
         </div>
         <div class="col">
-            <input class="input100 subtotal" type="text" style="background-color: white; border-style: none; color: black;" value="Rp<?php echo number_format($subtotal) ?>" disabled>
+            <input class="input100 subtotal" type="text" style="background-color: white; border-style: none; color: black;" 
+            value="Rp<?php 
+            if ($b['qty'] >= 1000){
+                $hrg = $b['harga_partai'];
+                $qtyy = $b['qty'];
+                $totalharga = $hrg * $qtyy;
+                echo number_format($totalharga);
+            }
+            elseif ($b['qty'] < 1000){
+                $hrg = $b['harga'];
+                $qtyy = $b['qty'];
+                $totalharga = $hrg * $qtyy;
+                echo number_format($totalharga);
+            }
+            ?>" disabled>
         </div>
     </div>
     <?php
@@ -415,7 +447,7 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
 
     <script>
         //no wa admin
-        $("#noAdmin").val("081230232820");
+        $("#noAdmin").val("082131916101");
         $('.whatsapp-btn').click(function() {
             $('#whatsapp').toggleClass('toggle');
         });
@@ -502,9 +534,9 @@ $itungtrans3 = $itungtrans2['jumlahtrans'];
                 let dataBrg = JSON.parse(dete);
                 let deteBrg = [...dataBrg];
                 let subTotal = 0;
-                Array.from(deteBrg, item => parseInt(subTotal += parseInt(item.harga * item.qty)))
-
-                $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Whatsapp: ' + nowhatsapp + '%0AAlamat: ' + alamat + '%0A======================' + Array.from(deteBrg, item => `%0ANama Barang: ${item.nama_barang} %0AHarga: Rp. ${parseInt(item.harga).toLocaleString("id-ID")} %0Aqty: ${item.qty} %0ASubTotal: Rp. ${parseInt(item.harga*item.qty).toLocaleString("id-ID")} %0A`) + `%0ATotal: Rp. ${subTotal.toLocaleString("id-ID")}` + '%0A%0Avia ' + via_url);
+                Array.from(deteBrg, item => parseInt(subTotal += parseInt(item.qty >= 1000 ? item.harga_partai*item.qty : item.harga*item.qty)));
+                
+                $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Whatsapp: ' + nowhatsapp + '%0AAlamat: ' + alamat + '%0A======================' + Array.from(deteBrg, item => `%0ANama Barang: ${item.nama_barang} %0AHarga: Rp. ${parseInt(item.qty >= 1000 ? item.harga_partai : item.harga).toLocaleString("id-ID")} %0Aqty: ${item.qty} %0ASubTotal: Rp. ${parseInt(item.qty >= 1000 ? item.harga_partai*item.qty : item.harga*item.qty).toLocaleString("id-ID")} %0A`) + `%0ATotal: Rp. ${subTotal.toLocaleString("id-ID")}` + '%0A%0Avia ' + via_url);
 
                 var w = 960,
                     h = 540,

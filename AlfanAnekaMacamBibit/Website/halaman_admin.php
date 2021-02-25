@@ -283,7 +283,7 @@ $banner = mysqli_fetch_array($sql_banner);
 
 <?php
 
-$query_mysqli2 = mysqli_query($koneksi,"SELECT * FROM barang WHERE stok_barang = 1000 ORDER BY stok_barang DESC");
+$query_mysqli2 = mysqli_query($koneksi,"SELECT * FROM barang WHERE stok_barang >= 1000 ORDER BY stok_barang DESC");
 
 ?>
     <div class="box-add-products">

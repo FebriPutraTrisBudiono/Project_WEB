@@ -229,11 +229,14 @@
             <!-- start span1_of_1 -->
             <div class="span1_of_1_des">
                 <div class="desc1">
-                    <h3 style="color: black; font-weight: bold;"><?=$review['nama_barang']?></h3>                   
-                    <h5 style="color: red;">Rp. <?=number_format($review['harga'])?></h5>
-                    <label style="color: black; font-size: 18px;">Umur : <?=$review['umur']?></label>
-                    <div class="available">
-                        <span class="span_left"><a href="login.php">login to add in cart </a></span>
+                    <h3 style="color: black; font-weight: bold;"><?=$review['nama_barang']?></h3>
+                    <h4 style="color: black;">* Umur : <?=$review['umur']?> <strong style="color: #C0C0C0;">|</strong> *stok : <?=$review['stok_barang']?></h4><br>               
+                    <h5 style="color: red; background-color: #FAFAFA; font-weight: bold;">Rp.<?=number_format($review['harga'])?> (eceran)</h5>
+                    <h5 style="color: red;">Rp.<?=number_format($review['harga_partai'])?> (partai)</h5>
+                    <h6>*minimal pembelian partai, 1000 bibit</h6><br>
+                    
+                    <div class="">
+                        <span class="span_center"><a href="login.php">login to add in cart </a></span>
                         <div class="clear"></div>
                         <br>
                         <a href="checkout-guest.php?idbarang=<?=$review['idbarang']?>" class="btn btn-success btn-sm fab fa-whatsapp" style="width: 300px; color: white; height: 50px; font-size: 20px; padding-top: 12px;"> Beli Sekarang</a>
